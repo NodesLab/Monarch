@@ -44,15 +44,13 @@ public final class MessageRecyclerViewAdapter extends RecyclerView.Adapter {
 
   @Override
   public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-    // this method is use to set data to our layout file.
     MessageModal modal = messageModalArrayList.get(position);
+
     switch (modal.getSender()) {
       case "user":
-        // below line is to set the text to our text view of user layout
         ((UserViewHolder) holder).userTextView.setText(modal.getMessageText());
         break;
       case "bot":
-        // below line is to set the text to our text view of bot layout
         ((BotViewHolder) holder).botTextView.setText(modal.getMessageText());
         break;
     }
@@ -60,13 +58,11 @@ public final class MessageRecyclerViewAdapter extends RecyclerView.Adapter {
 
   @Override
   public int getItemCount() {
-    // return the size of array list
     return messageModalArrayList.size();
   }
 
   @Override
   public int getItemViewType(int position) {
-    // below line of code is to set position.
     switch (messageModalArrayList.get(position).getSender()) {
       case "user":
         return 0;

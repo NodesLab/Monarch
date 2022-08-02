@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import me.hepller.helioapp.message.MessageModal;
 import me.hepller.helioapp.message.MessageRecyclerViewAdapter;
+import me.hepller.helioapp.message.MessageSender;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,10 +55,9 @@ public abstract class Command {
   /**
    * Выполняет функцию команды.
    *
-   * @param vk Методы VK API.
    * @param message Объект сообщения.
    *
    * @throws Exception Возможная ошибка.
    */
-  public abstract void execute(final @NotNull String message, final ArrayList<MessageModal> messageModalArrayList, final MessageRecyclerViewAdapter messageRecyclerViewAdapter, final String @NotNull [] arguments) throws Exception;
+  public abstract void execute(final @NotNull String message, final MessageSender messageSender, final String @NotNull [] arguments) throws Exception;
 }

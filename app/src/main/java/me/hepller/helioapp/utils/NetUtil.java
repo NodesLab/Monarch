@@ -58,11 +58,12 @@ public class NetUtil {
    *
    * @return {@link Object}
    *
-   *
    * @author _Novit_ (novitpw)
    */
   public @Nullable <T> T readObject(final String address, final Class<@NotNull T> clazz) {
     final Optional<JsonObject> readResponse = readJsonObject(address);
+
+    System.out.println(readResponse);
 
     if (readResponse.isEmpty()) {
       return null;

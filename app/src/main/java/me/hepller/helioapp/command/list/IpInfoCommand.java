@@ -9,7 +9,7 @@ import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import me.hepller.helioapp.command.Command;
 import me.hepller.helioapp.message.MessageModal;
-import me.hepller.helioapp.message.MessageRecyclerViewAdapter;
+import me.hepller.helioapp.message.MessageSender;
 import me.hepller.helioapp.utils.NetUtil;
 import me.hepller.helioapp.utils.TextUtil;
 import me.hepller.helioapp.utils.ValidateUtil;
@@ -20,7 +20,6 @@ import java.net.IDN;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author hepller
@@ -33,14 +32,9 @@ public final class IpInfoCommand extends Command {
 
   @Override
   @SneakyThrows
-  public void execute(@NotNull String message, @NonNull ArrayList<MessageModal> messageModalArrayList, MessageRecyclerViewAdapter messageRecyclerViewAdapter, String @NotNull [] arguments) throws UnknownHostException {
-//    System.out.println(arguments[1]);
-//    messageModalArrayList.add(new MessageModal("1", "bot"));
-    System.out.println(arguments.length);
-
+  public void execute(@NotNull String message, MessageSender messageSender, String @NotNull [] arguments) throws UnknownHostException {
     if (arguments.length < 2) {
-      messageModalArrayList.add(new MessageModal("⛔ Укажите IP / домен, о котором необходимо получить информацию", "bot"));
-      messageRecyclerViewAdapter.notifyDataSetChanged();
+      messageSender.sendBotMessage("⛔ Укажите IP / домен, о котором необходимо получить информацию");
 
       return;
     }
@@ -54,19 +48,17 @@ public final class IpInfoCommand extends Command {
     if (ValidateUtil.isNumber(cleanedIp)) cleanedIp = NetUtil.longToIPv4(Long.parseLong(cleanedIp.split(":")[0]));
 
     if (!ValidateUtil.isValidDomain(cleanedIp) && !ValidateUtil.isValidIPv4(cleanedIp) && !ValidateUtil.isValidIPv6(cleanedIp) && !ValidateUtil.isValidDomain(IDN.toUnicode(cleanedIp))) {
-      messageModalArrayList.add(new MessageModal("⚠ Вы указали некорректный IP", "bot"));
-      messageRecyclerViewAdapter.notifyDataSetChanged();
+      messageSender.sendBotMessage("⚠ Вы указали некорректный IP");
 
       return;
     }
 
+    messageSender.sendBotMessage("⚙ Получение информации об IP ...");
+
     final IpInfoWrapper wrapper = NetUtil.readObject("http://ip-api.com/json/" + cleanedIp + "?lang=ru&fields=4259583", IpInfoWrapper.class);
 
-    System.out.println(wrapper);
-
     if (wrapper == null || !wrapper.getStatus().equals("success")) {
-      messageModalArrayList.add(new MessageModal("⚠ Не удалось получить информацию о данном IP", "bot"));
-      messageRecyclerViewAdapter.notifyDataSetChanged();
+      messageSender.sendBotMessage("⚠ Не удалось получить информацию о данном IP");
 
       return;
     }
@@ -84,8 +76,7 @@ public final class IpInfoCommand extends Command {
       "– PTR: " + (wrapper.getReverse().equals("") ? InetAddress.getByName(wrapper.getIp()).getCanonicalHostName() : wrapper.getReverse())
     };
 
-    messageModalArrayList.add(new MessageModal(String.join("\n", TextUtil.filterStringsWithNullPlaceholder(messageScheme)), "bot"));
-    messageRecyclerViewAdapter.notifyDataSetChanged();
+    messageSender.sendBotMessage(String.join("\n", TextUtil.filterStringsWithNullPlaceholder(messageScheme)));
   }
 }
 

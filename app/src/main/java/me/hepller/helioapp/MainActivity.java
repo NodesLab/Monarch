@@ -16,6 +16,7 @@ import me.hepller.helioapp.command.CommandHandler;
 import me.hepller.helioapp.command.CommandManager;
 import me.hepller.helioapp.message.MessageModal;
 import me.hepller.helioapp.message.MessageRecyclerViewAdapter;
+import me.hepller.helioapp.message.MessageSender;
 
 /**
  * Основная активити.
@@ -26,15 +27,16 @@ public final class MainActivity extends AppCompatActivity {
   private ImageButton sendMessageButton;
   private EditText editText;
 
-  private final String USER_KEY = "user";
-  private final String BOT_KEY = "bot";
-
   private ArrayList<MessageModal> messageModalArrayList;
   private MessageRecyclerViewAdapter messageRecyclerViewAdapter;
+
+  private MessageSender messageSender;
+  private CommandHandler commandHandler;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.activity_main);
 
     CommandManager.registerAllCommands();
@@ -50,6 +52,7 @@ public final class MainActivity extends AppCompatActivity {
 
       if (userText.isEmpty()) {
         Toast.makeText(MainActivity.this, "Введите команду", Toast.LENGTH_SHORT).show();
+
         return;
       }
 
@@ -65,17 +68,16 @@ public final class MainActivity extends AppCompatActivity {
     chatsRecyclerView.setLayoutManager(linearLayoutManager);
     chatsRecyclerView.setAdapter(messageRecyclerViewAdapter);
 
-    messageModalArrayList.add(new MessageModal("Helio запущен, введите команду", BOT_KEY));
-    messageRecyclerViewAdapter.notifyDataSetChanged();
+    messageSender = new MessageSender(messageModalArrayList, messageRecyclerViewAdapter, chatsRecyclerView);
+    commandHandler = new CommandHandler(messageSender);
+
+    messageSender.sendBotMessage("Helio запущен, введите команду (для просмотра списка команд введите \"help\")");
   }
 
   private void sendMessage(String userMessage) {
-    messageModalArrayList.add(new MessageModal(userMessage, USER_KEY));
-    messageRecyclerViewAdapter.notifyDataSetChanged();
+    messageSender.sendUserMessage(userMessage);
 
-    CompletableFuture.runAsync(() -> CommandHandler.handleCommand(userMessage, messageModalArrayList, messageRecyclerViewAdapter));
-
-    messageRecyclerViewAdapter.notifyDataSetChanged();
+    CompletableFuture.runAsync(() -> commandHandler.handleCommand(userMessage));
   }
 }
 

@@ -6,6 +6,7 @@ import me.hepller.helioapp.command.Command;
 import me.hepller.helioapp.command.CommandManager;
 import me.hepller.helioapp.message.MessageModal;
 import me.hepller.helioapp.message.MessageRecyclerViewAdapter;
+import me.hepller.helioapp.message.MessageSender;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -23,14 +24,14 @@ public final class HelpCommand extends Command {
   }
 
   @Override
-  public void execute(@NotNull String message, @NonNull ArrayList<MessageModal> messageModalArrayList, MessageRecyclerViewAdapter messageRecyclerViewAdapter, String @NotNull [] arguments) {
+  public void execute(@NotNull String message, MessageSender messageSender, String @NotNull [] arguments) {
     final String[] messageScheme = {
       "\uD83C\uDF35 Доступные команды:",
       "",
       String.join("\n", getCommandList()),
     };
 
-    messageModalArrayList.add(new MessageModal(String.join("\n", messageScheme), "bot"));
+    messageSender.sendBotMessage(String.join("\n", messageScheme));
   }
 
   /**

@@ -1,7 +1,11 @@
 package me.hepller.helioapp.command;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import lombok.experimental.UtilityClass;
 import me.hepller.helioapp.message.MessageRecyclerViewAdapter;
+import me.hepller.helioapp.message.MessageSender;
 import me.hepller.helioapp.utils.config.ConfigWrapper;
 import me.hepller.helioapp.message.MessageModal;
 
@@ -15,33 +19,38 @@ import java.util.regex.Pattern;
  *
  * @author hepller
  */
-@UtilityClass
 public final class CommandHandler {
+
+  private MessageSender messageSender;
+
+  public CommandHandler(MessageSender messageSender) {
+    this.messageSender = messageSender;
+  }
 
   /**
    * Обрабатывает команды.
    *
    * @param message Объект сообщения.
    */
-  public void handleCommand(final String message, final ArrayList<MessageModal> messageModalArrayList, final MessageRecyclerViewAdapter messageRecyclerViewAdapter) {
+  public void handleCommand(final String message) {
     final String[] arguments = decomposeIntoArguments(message);
     final Command command = CommandManager.getCommand(arguments[0].toLowerCase());
 
-    if (command == null) messageModalArrayList.add(new MessageModal("⚠ Команда не обнаружена, для просмотра списка команд введите \"help\"", "bot"));
+    if (command == null) messageSender.sendBotMessage("⚠ Команда не обнаружена");
 
-    executeCommand(message, messageModalArrayList, messageRecyclerViewAdapter, arguments, command);
+    executeCommand(message, arguments, command);
   }
 
   /**
    * Выполняет команду.
    *
-   * @param command Объект команды
-   * @param inputMessage Объект входящего сообщения
-   * @param arguments Аргументы команды
+   * @param command Объект команды.
+   * @param inputMessage Объект входящего сообщения.
+   * @param arguments Аргументы команды.
    */
-  private void executeCommand(final String inputMessage, final ArrayList<MessageModal> messageModalArrayList, final MessageRecyclerViewAdapter messageRecyclerViewAdapter, final String[] arguments, final Command command) {
+  private void executeCommand(final String inputMessage, final String[] arguments, final Command command) {
     try {
-      command.execute(inputMessage, messageModalArrayList, messageRecyclerViewAdapter, arguments);
+      command.execute(inputMessage, messageSender, arguments);
     } catch (Exception exception) {
       System.out.println("error");
     }
@@ -52,8 +61,9 @@ public final class CommandHandler {
    *
    * Разложение происходит по пробелам (каждое следующее слово = новый аргумент).
    *
-   * @param message Объект сообщения
-   * @return Массив аргументов
+   * @param message Объект сообщения.
+   *
+   * @return Массив аргументов.
    */
   private String @NotNull [] decomposeIntoArguments(final @NotNull String message) {
     return message.split("\\s+");
