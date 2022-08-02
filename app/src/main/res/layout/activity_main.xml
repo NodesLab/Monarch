@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/globalBackground"
+  tools:context=".MainActivity" >
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/id_recyclerview_chats"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@id/id_linearlayout_message" />
+
+  <LinearLayout
+    android:id="@+id/id_linearlayout_message"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/editCommandBackground"
+    android:orientation="horizontal"
+    android:weightSum="6" >
+
+<!--    https://www.geeksforgeeks.org/how-to-create-a-chatbot-in-android-with-brainshop-api/-->
+
+    <EditText
+      android:id="@+id/id_edit_text"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginStart="10dp"
+      android:layout_weight="6"
+      android:background="@android:color/transparent"
+      android:hint="Введите команду"
+      android:maxLines="6"
+      android:textColor="@color/white"
+      android:textColorHint="@color/lightGray"
+      tools:ignore="Autofill" />
+
+    <ImageButton
+      android:id="@+id/id_send_button"
+      android:layout_width="44.5dp"
+      android:layout_height="44.5dp"
+      android:layout_gravity="center_vertical"
+      android:layout_weight="0"
+      android:background="@android:color/transparent"
+      android:src="@drawable/ic_send_icon"
+      app:tint="@color/white" />
+  </LinearLayout>
+</RelativeLayout>
