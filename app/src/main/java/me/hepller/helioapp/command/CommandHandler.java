@@ -1,18 +1,8 @@
 package me.hepller.helioapp.command;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import lombok.experimental.UtilityClass;
-import me.hepller.helioapp.message.MessageRecyclerViewAdapter;
 import me.hepller.helioapp.message.MessageSender;
-import me.hepller.helioapp.utils.config.ConfigWrapper;
-import me.hepller.helioapp.message.MessageModal;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * Обработчик команд.
@@ -36,7 +26,7 @@ public final class CommandHandler {
     final String[] arguments = decomposeIntoArguments(message);
     final Command command = CommandManager.getCommand(arguments[0].toLowerCase());
 
-    if (command == null) messageSender.sendBotMessage("⚠ Команда не обнаружена");
+    if (command == null) messageSender.viewBotMessage("⚠ Команда не обнаружена");
 
     executeCommand(message, arguments, command);
   }

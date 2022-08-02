@@ -1,18 +1,14 @@
 package me.hepller.helioapp.command.list;
 
-import androidx.annotation.NonNull;
-
-import me.hepller.helioapp.command.Command;
-import me.hepller.helioapp.command.CommandManager;
-import me.hepller.helioapp.message.MessageModal;
-import me.hepller.helioapp.message.MessageRecyclerViewAdapter;
-import me.hepller.helioapp.message.MessageSender;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+
+import me.hepller.helioapp.command.Command;
+import me.hepller.helioapp.command.CommandManager;
+import me.hepller.helioapp.message.MessageSender;
 
 /**
  * @author hepller
@@ -31,7 +27,7 @@ public final class HelpCommand extends Command {
       String.join("\n", getCommandList()),
     };
 
-    messageSender.sendBotMessage(String.join("\n", messageScheme));
+    messageSender.viewBotMessage(String.join("\n", messageScheme));
   }
 
   /**

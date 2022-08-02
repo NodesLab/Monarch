@@ -1,14 +1,11 @@
 package me.hepller.helioapp.command.list;
 
-import androidx.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import me.hepller.helioapp.command.Command;
-import me.hepller.helioapp.message.MessageModal;
 import me.hepller.helioapp.message.MessageSender;
 import me.hepller.helioapp.utils.NetUtil;
 import me.hepller.helioapp.utils.TextUtil;
@@ -19,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import java.net.IDN;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 /**
  * @author hepller
@@ -34,7 +30,7 @@ public final class IpInfoCommand extends Command {
   @SneakyThrows
   public void execute(@NotNull String message, MessageSender messageSender, String @NotNull [] arguments) throws UnknownHostException {
     if (arguments.length < 2) {
-      messageSender.sendBotMessage("⛔ Укажите IP / домен, о котором необходимо получить информацию");
+      messageSender.viewBotMessage("⛔ Укажите IP / домен, о котором необходимо получить информацию");
 
       return;
     }
@@ -48,17 +44,17 @@ public final class IpInfoCommand extends Command {
     if (ValidateUtil.isNumber(cleanedIp)) cleanedIp = NetUtil.longToIPv4(Long.parseLong(cleanedIp.split(":")[0]));
 
     if (!ValidateUtil.isValidDomain(cleanedIp) && !ValidateUtil.isValidIPv4(cleanedIp) && !ValidateUtil.isValidIPv6(cleanedIp) && !ValidateUtil.isValidDomain(IDN.toUnicode(cleanedIp))) {
-      messageSender.sendBotMessage("⚠ Вы указали некорректный IP");
+      messageSender.viewBotMessage("⚠ Вы указали некорректный IP");
 
       return;
     }
 
-    messageSender.sendBotMessage("⚙ Получение информации об IP ...");
+    messageSender.viewBotMessage("⚙ Получение информации об IP ...");
 
     final IpInfoWrapper wrapper = NetUtil.readObject("http://ip-api.com/json/" + cleanedIp + "?lang=ru&fields=4259583", IpInfoWrapper.class);
 
     if (wrapper == null || !wrapper.getStatus().equals("success")) {
-      messageSender.sendBotMessage("⚠ Не удалось получить информацию о данном IP");
+      messageSender.viewBotMessage("⚠ Не удалось получить информацию о данном IP");
 
       return;
     }
@@ -76,7 +72,7 @@ public final class IpInfoCommand extends Command {
       "– PTR: " + (wrapper.getReverse().equals("") ? InetAddress.getByName(wrapper.getIp()).getCanonicalHostName() : wrapper.getReverse())
     };
 
-    messageSender.sendBotMessage(String.join("\n", TextUtil.filterStringsWithNullPlaceholder(messageScheme)));
+    messageSender.viewBotMessage(String.join("\n", TextUtil.filterStringsWithNullPlaceholder(messageScheme)));
   }
 }
 

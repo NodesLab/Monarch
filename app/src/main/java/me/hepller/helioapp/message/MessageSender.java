@@ -1,6 +1,5 @@
 package me.hepller.helioapp.message;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -16,15 +15,15 @@ public class MessageSender {
     this.chatsRecyclerView = chatsRecyclerView;
   }
 
-  public void sendBotMessage(final String text) {
-    sendMessage(text, "bot");
+  public void viewBotMessage(final String text) {
+    viewMessage(text, "bot");
   }
 
-  public void sendUserMessage(final String text) {
-    sendMessage(text, "user");
+  public void viewUserMessage(final String text) {
+    viewMessage(text, "user");
   }
 
-  private void sendMessage(final String text, final String sender) {
+  private void viewMessage(final String text, final String sender) {
     this.messageModalArrayList.add(new MessageModal(text, sender));
 
     this.messageRecyclerViewAdapter.notifyItemChanged(0);

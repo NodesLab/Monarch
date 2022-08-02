@@ -71,11 +71,11 @@ public final class MainActivity extends AppCompatActivity {
     messageSender = new MessageSender(messageModalArrayList, messageRecyclerViewAdapter, chatsRecyclerView);
     commandHandler = new CommandHandler(messageSender);
 
-    messageSender.sendBotMessage("Helio запущен, введите команду (для просмотра списка команд введите \"help\")");
+    messageSender.viewBotMessage("Helio запущен, введите команду (для просмотра списка команд введите \"help\")");
   }
 
   private void sendMessage(String userMessage) {
-    messageSender.sendUserMessage(userMessage);
+    messageSender.viewUserMessage(userMessage);
 
     CompletableFuture.runAsync(() -> commandHandler.handleCommand(userMessage));
   }
