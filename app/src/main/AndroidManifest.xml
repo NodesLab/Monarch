@@ -15,7 +15,9 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/MainTheme"
+    android:usesCleartextTraffic="true"
     tools:targetApi="33">
+
     <activity
       android:name="me.hepller.helioapp.MainActivity"
       android:screenOrientation="portrait"
