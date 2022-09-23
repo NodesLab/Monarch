@@ -20,5 +20,5 @@ data class Message(
   /**
    * Дата создания.
    */
-  val date: String
+  val time: String
 )
