@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-//buildscript {
-//  ext {
-//    compose_version = "1.1.0-beta01"
-//  }
-//}
+package net.helio.app
 
-plugins {
-  id("com.android.application") version "7.2.2" apply false
-  id("com.android.library") version "7.2.2" apply false
-  id("org.jetbrains.kotlin.android") version "1.5.31" apply false
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+  @Test
+  fun addition_isCorrect() {
+    assertEquals(4, 2 + 2)
+  }
 }
-
-// todo: Сделать задачу удаления "build" директорий.
-
-//task clean(type: Delete) {
-//  delete rootProject.buildDir
-//}

@@ -14,20 +14,30 @@
  * limitations under the License.
  */
 
-//buildscript {
-//  ext {
-//    compose_version = "1.1.0-beta01"
-//  }
-//}
+package net.helio.app
 
-plugins {
-  id("com.android.application") version "7.2.2" apply false
-  id("com.android.library") version "7.2.2" apply false
-  id("org.jetbrains.kotlin.android") version "1.5.31" apply false
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import net.helio.app.ui.scaffold.AppScaffold
+import net.helio.app.ui.theme.HelioTheme
+import net.helio.app.utility.MessageUtility
+
+/**
+ * Главный активити.
+ *
+ * @author hepller
+ */
+class MainActivity : ComponentActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    setContent {
+      HelioTheme {
+        MessageUtility.addBotMessage("test")
+
+        AppScaffold()
+      }
+    }
+  }
 }
-
-// todo: Сделать задачу удаления "build" директорий.
-
-//task clean(type: Delete) {
-//  delete rootProject.buildDir
-//}

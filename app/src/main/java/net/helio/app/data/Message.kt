@@ -14,20 +14,29 @@
  * limitations under the License.
  */
 
-//buildscript {
-//  ext {
-//    compose_version = "1.1.0-beta01"
-//  }
-//}
+package net.helio.app.data
 
-plugins {
-  id("com.android.application") version "7.2.2" apply false
-  id("com.android.library") version "7.2.2" apply false
-  id("org.jetbrains.kotlin.android") version "1.5.31" apply false
-}
+/**
+ * Объект сообщения.
+ *
+ * @author hepller
+ *
+ * todo: жесткое ограничение на имя автора (bot | user)
+ */
+data class Message(
 
-// todo: Сделать задачу удаления "build" директорий.
+  /**
+   * Автор сообщения.
+   */
+  val author: String,
 
-//task clean(type: Delete) {
-//  delete rootProject.buildDir
-//}
+  /**
+   * Текст сообщения.
+   */
+  val text: String,
+
+  /**
+   * Дата создания.
+   */
+  val time: String
+)

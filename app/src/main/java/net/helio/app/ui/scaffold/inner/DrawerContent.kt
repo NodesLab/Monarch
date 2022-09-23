@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-//buildscript {
-//  ext {
-//    compose_version = "1.1.0-beta01"
-//  }
-//}
+package net.helio.app.ui.scaffold.inner
 
-plugins {
-  id("com.android.application") version "7.2.2" apply false
-  id("com.android.library") version "7.2.2" apply false
-  id("org.jetbrains.kotlin.android") version "1.5.31" apply false
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+
+/**
+ * Содержимое меню.
+ *
+ * todo: Сделать меню.
+ */
+@Composable
+fun DrawerContent() {
+  Text(text = "Test")
+
+  Divider()
 }
-
-// todo: Сделать задачу удаления "build" директорий.
-
-//task clean(type: Delete) {
-//  delete rootProject.buildDir
-//}

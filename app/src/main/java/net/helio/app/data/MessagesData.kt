@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-//buildscript {
-//  ext {
-//    compose_version = "1.1.0-beta01"
-//  }
-//}
+package net.helio.app.data
 
-plugins {
-  id("com.android.application") version "7.2.2" apply false
-  id("com.android.library") version "7.2.2" apply false
-  id("org.jetbrains.kotlin.android") version "1.5.31" apply false
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
+
+/**
+ * Объект данных о сообщениях.
+ *
+ * @author hepller
+ */
+object MessagesData {
+
+  /**
+   * Список всех сообщений.
+   */
+  var messageList: SnapshotStateList<Message> = mutableStateListOf()
 }
-
-// todo: Сделать задачу удаления "build" директорий.
-
-//task clean(type: Delete) {
-//  delete rootProject.buildDir
-//}
