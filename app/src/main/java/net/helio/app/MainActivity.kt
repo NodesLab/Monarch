@@ -24,7 +24,7 @@ import net.helio.app.ui.theme.HelioTheme
 import net.helio.app.utility.MessageUtility
 
 /**
- * Главный активити.
+ * Главное активити.
  *
  * @author hepller
  */
@@ -33,8 +33,9 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
 
     setContent {
+
       HelioTheme {
-        MessageUtility.addBotMessage("test")
+        MessageUtility.addBotMessage("Активити запущено")
 
         AppScaffold()
       }

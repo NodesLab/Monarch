@@ -18,7 +18,6 @@ package net.helio.app.utility
 
 import net.helio.app.data.Message
 import net.helio.app.data.MessagesData.messageList
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -30,30 +29,40 @@ class MessageUtility {
   companion object {
 
     /**
-     * Получает время в формате `HH:mm`.
+     * Добавляет сообщение в список сообщений.
      *
-     * @return Время в формате `HH:mm`.
+     * @param author Автор сообщения (bot | user).
+     * @param text Текст сообщения.
      */
-    private fun getTime(): String {
-      return SimpleDateFormat("HH:mm", Locale.US).format(Date())
+    private fun addMessage(author: String, text: String) {
+      messageList.add(Message(author, text, Date()))
     }
 
     /**
      * Добавляет сообщение бота в лист сообщений.
      *
-     * @param messageText Текст сообщения.
+     * @param text Текст сообщения.
      */
-    fun addBotMessage(messageText: String) {
-      messageList.add(Message("bot", messageText, getTime()))
+    fun addBotMessage(text: String) {
+      addMessage("bot", text)
     }
 
     /**
      * Добавляет сообщение пользователя в лист сообщений.
      *
-     * @param messageText Текст сообщения.
+     * @param text Текст сообщения.
      */
-    fun addUserMessage(messageText: String) {
-      messageList.add(Message("user", messageText, getTime()))
+    fun addUserMessage(text: String) {
+      addMessage("user", text)
+    }
+
+    /**
+     * Удаляет сообщение из списка.
+     *
+     * @param message Сообщение, которое будет удалено.
+     */
+    fun removeMessage(message: Message) {
+      messageList.remove(message)
     }
   }
 }

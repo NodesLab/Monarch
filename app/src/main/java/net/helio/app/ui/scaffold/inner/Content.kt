@@ -31,23 +31,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import net.helio.app.R
 import net.helio.app.data.Message
 import net.helio.app.data.MessagesData
 import net.helio.app.ui.theme.BotMessageBackgroundDark
 import net.helio.app.ui.theme.UserMessageBackgroundDark
+import net.helio.app.utility.MessageUtility
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
- * Карта сообщения.
+ * Отрисовывает карточку сообщения.
  *
  * @param message Объект сообщения.
  */
 @Composable
 fun MessageCard(message: Message) {
-  val color: Color = if (message.author == "bot") BotMessageBackgroundDark else UserMessageBackgroundDark
-  val alignment: Alignment = if (message.author == "bot") Alignment.TopStart else Alignment.TopEnd
-  val author: String = if (message.author == "bot") "Helio" else "User"
+  val color: Color = if (message.isFromBot) BotMessageBackgroundDark else UserMessageBackgroundDark
+  val alignment: Alignment = if (message.isFromBot) Alignment.TopStart else Alignment.TopEnd
+  val author: String = if (message.isFromBot) stringResource(R.string.message_bot_name) else stringResource(R.string.message_user_name)
 
   Box(
     modifier = Modifier.fillMaxWidth()
@@ -58,7 +63,7 @@ fun MessageCard(message: Message) {
       modifier = Modifier.align(alignment)
     ) {
       Column(
-        modifier = Modifier.defaultMinSize(100.dp),
+        modifier = Modifier.defaultMinSize(minWidth = 100.dp),
       ) {
         Text(
           text = author,
@@ -77,14 +82,14 @@ fun MessageCard(message: Message) {
         }
 
         Text(
-          text = message.time,
+          text = SimpleDateFormat("HH:mm", Locale.US).format(message.date),
           style = MaterialTheme.typography.body2,
           color = Color.Gray,
           modifier = Modifier
             .align(Alignment.End)
             .padding(end = 8.dp, bottom = 4.dp, top = 4.dp)
             .clickable {
-              MessagesData.messageList.remove(message)
+              MessageUtility.removeMessage(message)
             }
         )
       }
@@ -93,7 +98,7 @@ fun MessageCard(message: Message) {
 }
 
 /**
- * Лист из сообщений.
+ * Отрисовывает список сообщений.
  *
  * @param messages Сообщения.
  */
@@ -111,7 +116,7 @@ fun MessageList(messages: List<Message>) {
 }
 
 /**
- * Содержимое основного поля.
+ * Отрисовывает содержимое основного поля.
  */
 @Composable
 fun Content() {

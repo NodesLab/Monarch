@@ -16,27 +16,25 @@
 
 package net.helio.app.data
 
+import java.util.*
+
 /**
  * Объект сообщения.
+ *
+ * @param author Автор сообщения (bot | user).
+ * @param text Текст сообщения.
+ * @param date Время создания сообщения.
+ * @param isFromBot Является ли сообщение созданным ботом.
+ * @param isFromUser Является ли сообщение созданным пользователем.
  *
  * @author hepller
  *
  * todo: жесткое ограничение на имя автора (bot | user)
  */
 data class Message(
-
-  /**
-   * Автор сообщения.
-   */
-  val author: String,
-
-  /**
-   * Текст сообщения.
-   */
+  private val author: String,
   val text: String,
-
-  /**
-   * Дата создания.
-   */
-  val time: String
+  val date: Date,
+  val isFromBot: Boolean = author == "bot",
+  val isFromUser: Boolean = author == "user"
 )

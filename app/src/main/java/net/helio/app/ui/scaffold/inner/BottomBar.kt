@@ -16,6 +16,7 @@
 
 package net.helio.app.ui.scaffold.inner
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,14 +30,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import net.helio.app.R
 import net.helio.app.data.MessagesData
 import net.helio.app.utility.MessageUtility
+import net.helio.app.utility.ToastUtility
 
 /**
- * Нижняя панель.
+ * Отрисовывает нижнюю панель.
  *
  * @param scope Область видимости.
  * @param listState Состояние листа сообщений.
@@ -46,11 +51,17 @@ fun BottomBar(scope: CoroutineScope, listState: LazyListState) {
   var input: String by rememberSaveable { mutableStateOf("") }
   val isValid: Boolean = input.isNotEmpty()
 
+  // Контекст для отображения тостов.
+  val context: Context = LocalContext.current
+
+  val emptyInputString: String = stringResource(R.string.empty_input_toast)
+
   Surface(
     color = MaterialTheme.colors.primary,
     modifier = Modifier
       .fillMaxWidth()
-      .height(60.dp)
+      .height(60.dp),
+    elevation = 40.dp
   ) {
     Row(
       modifier = Modifier.fillMaxSize()
@@ -61,7 +72,7 @@ fun BottomBar(scope: CoroutineScope, listState: LazyListState) {
           input = newText.trimStart { it == '0' }
         },
         placeholder = {
-          Text(text = "Введите команду")
+          Text(text = stringResource(R.string.input_placeholder))
         },
         isError = !isValid,
         colors = TextFieldDefaults.textFieldColors(
@@ -82,7 +93,15 @@ fun BottomBar(scope: CoroutineScope, listState: LazyListState) {
 
       Button(
         onClick = {
+          if (input.isEmpty()) {
+            ToastUtility.makeShortToast(context, emptyInputString)
+
+            return@Button
+          }
+
           MessageUtility.addUserMessage(input)
+
+          // todo: Обработка команд.
 
           input = ""
 
@@ -91,20 +110,18 @@ fun BottomBar(scope: CoroutineScope, listState: LazyListState) {
           }
         },
         shape = RoundedCornerShape(10.dp),
-        elevation =  ButtonDefaults.elevation(
+        elevation = ButtonDefaults.elevation(
           defaultElevation = 0.dp,
           pressedElevation = 15.dp,
           disabledElevation = 0.dp
         ),
-        modifier = Modifier
-          .padding(start = 12.dp, top = 6.dp)
+        modifier = Modifier.padding(start = 12.dp, top = 6.dp)
       ) {
         Icon(
           imageVector = Icons.Default.Send,
           contentDescription = null,
           tint = Color.White,
-          modifier = Modifier
-            .size(30.dp)
+          modifier = Modifier.size(30.dp)
         )
       }
     }

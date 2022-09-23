@@ -29,11 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
 import net.helio.app.R
 
 /**
@@ -82,7 +82,9 @@ fun Title() {
   Column(
     modifier = Modifier.padding(start = 10.dp)
   ) {
-    Text(text = "Helio", color = Color.White, fontSize = 18.sp)
+    val appName: String = stringResource(R.string.app_name)
+
+    Text(text = appName, color = Color.White, fontSize = 18.sp)
 
     Text(text = "v0.0.1", color = Color.Gray, fontSize = 14.sp)
   }
@@ -99,6 +101,7 @@ fun TopBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
   TopAppBar(
     navigationIcon = { NavigationIcon(scope, scaffoldState) },
     title = { Title() },
-    backgroundColor = MaterialTheme.colors.primary
+    backgroundColor = MaterialTheme.colors.primary,
+    elevation = 4.dp
   )
 }

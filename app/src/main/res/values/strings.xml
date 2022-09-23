@@ -16,4 +16,12 @@
 
 <resources>
     <string name="app_name">Helio</string>
+
+    <string name="message_bot_name">Helio</string>
+    <string name="message_user_name">User</string>
+
+    <string name="input_placeholder">Введите команду</string>
+    <string name="empty_input_toast">Вы не указали команду</string>
+
+<!--    <string name="start_activity_message">Активити запущено</string>-->
 </resources>

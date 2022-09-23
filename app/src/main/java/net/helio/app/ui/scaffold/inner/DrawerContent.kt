@@ -27,7 +27,7 @@ import androidx.compose.runtime.Composable
  */
 @Composable
 fun DrawerContent() {
-  Text(text = "Test")
+  Text(text = "No functional")
 
   Divider()
 }
