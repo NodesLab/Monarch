@@ -16,6 +16,7 @@
 
 package net.helio.app.data
 
+import androidx.compose.runtime.Immutable
 import java.util.*
 
 /**
@@ -27,6 +28,7 @@ import java.util.*
  *
  * @author hepller
  */
+@Immutable
 data class Message(private val author: String, val text: String, val date: Date) {
 
   /**

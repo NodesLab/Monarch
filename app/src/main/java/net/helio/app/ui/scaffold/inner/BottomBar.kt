@@ -43,7 +43,6 @@ import net.helio.app.utility.ToastUtility
 @Composable
 fun BottomBar() {
   var input: String by rememberSaveable { mutableStateOf("") }
-  val isValid: Boolean = input.isNotEmpty()
 
   // Контекст для отображения тостов.
   val context: Context = LocalContext.current
@@ -68,12 +67,12 @@ fun BottomBar() {
         placeholder = {
           Text(text = stringResource(R.string.input_placeholder))
         },
-        isError = !isValid,
+//        isError = input.isEmpty(),
         colors = TextFieldDefaults.textFieldColors(
-          textColor = Color.White,
+          textColor = MaterialTheme.colors.onPrimary,
           backgroundColor = Color.Transparent,
-          placeholderColor = Color.Gray,
-          cursorColor = Color.White,
+          placeholderColor = MaterialTheme.colors.onSecondary,
+          cursorColor = MaterialTheme.colors.onPrimary,
           focusedIndicatorColor = Color.Transparent,
           unfocusedIndicatorColor = Color.Transparent,
           disabledIndicatorColor = Color.Transparent
@@ -110,7 +109,7 @@ fun BottomBar() {
         Icon(
           imageVector = Icons.Default.Send,
           contentDescription = null,
-          tint = Color.White,
+          tint = MaterialTheme.colors.onPrimary,
           modifier = Modifier.size(30.dp)
         )
       }

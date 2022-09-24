@@ -20,14 +20,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 
 /**
- * Объект данных о сообщениях.
- *
- * @author hepller
+ * Список всех сообщений.
  */
-object MessagesData {
-
-  /**
-   * Список всех сообщений.
-   */
-  var messageList: SnapshotStateList<Message> = mutableStateListOf()
-}
+var messageList: SnapshotStateList<Message> = mutableStateListOf()

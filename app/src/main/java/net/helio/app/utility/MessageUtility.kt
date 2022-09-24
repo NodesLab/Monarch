@@ -17,7 +17,7 @@
 package net.helio.app.utility
 
 import net.helio.app.data.Message
-import net.helio.app.data.MessagesData.messageList
+import net.helio.app.data.messageList
 import java.util.*
 
 /**

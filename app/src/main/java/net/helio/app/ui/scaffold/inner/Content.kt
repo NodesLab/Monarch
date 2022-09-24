@@ -37,9 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import net.helio.app.R
 import net.helio.app.data.Message
-import net.helio.app.data.MessagesData
-import net.helio.app.ui.theme.BotMessageBackgroundDark
-import net.helio.app.ui.theme.UserMessageBackgroundDark
+import net.helio.app.data.messageList
+import net.helio.app.ui.theme.Accent
 import net.helio.app.utility.MessageUtility
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,7 +50,7 @@ import java.util.*
  */
 @Composable
 fun MessageCard(message: Message) {
-  val color: Color = if (message.isFromBot()) BotMessageBackgroundDark else UserMessageBackgroundDark
+  val color: Color = if (message.isFromBot()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
   val alignment: Alignment = if (message.isFromBot()) Alignment.TopStart else Alignment.TopEnd
   val author: String = if (message.isFromBot()) stringResource(R.string.message_bot_name) else stringResource(R.string.message_user_name)
 
@@ -61,6 +60,7 @@ fun MessageCard(message: Message) {
     Surface(
       shape = RoundedCornerShape(16.dp),
       color = color,
+      elevation = 4.dp,
       modifier = Modifier
         .align(alignment)
         .defaultMinSize(minWidth = 100.dp) // Устанавливает минимальную ширину сообщения.
@@ -71,7 +71,7 @@ fun MessageCard(message: Message) {
       ) {
         Text(
           text = author,
-          color = MaterialTheme.colors.secondary,
+          color = Accent,
           style = MaterialTheme.typography.subtitle2,
           fontWeight = FontWeight.SemiBold,
           modifier = Modifier.padding(start = 10.dp, top = 4.dp)
@@ -80,6 +80,7 @@ fun MessageCard(message: Message) {
         SelectionContainer {
           Text(
             text = message.text,
+            color = MaterialTheme.colors.onPrimary,
             style = MaterialTheme.typography.body2,
             modifier = Modifier.padding(start = 10.dp, top = 4.dp, end = 10.dp),
           )
@@ -88,7 +89,7 @@ fun MessageCard(message: Message) {
         Text(
           text = SimpleDateFormat("HH:mm", Locale.US).format(message.date),
           style = MaterialTheme.typography.body2,
-          color = Color.Gray,
+          color = MaterialTheme.colors.onSecondary,
           modifier = Modifier
             .align(Alignment.End)
             .padding(end = 8.dp, bottom = 4.dp, top = 4.dp)
@@ -102,7 +103,7 @@ fun MessageCard(message: Message) {
 }
 
 /**
- * Добавляет автопрокрутку списка до нижнего элемента.
+ * Добавляет автопрокрутку списка до последнего элемента.
  */
 @Composable
 fun AutoScroll(listState: LazyListState) {
@@ -144,6 +145,6 @@ fun Content() {
       .padding(bottom = 60.dp),
     color = MaterialTheme.colors.background
   ) {
-    MessageList(messages = MessagesData.messageList)
+    MessageList(messages = messageList)
   }
 }

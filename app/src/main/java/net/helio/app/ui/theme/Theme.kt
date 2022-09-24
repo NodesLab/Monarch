@@ -16,6 +16,7 @@
 
 package net.helio.app.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
@@ -31,13 +32,20 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
  *
  * @author hepller
  */
+@SuppressLint("ConflictingOnColor")
 private val DarkColorPalette = darkColors(
   primary = PrimaryDark,
   primaryVariant = PrimaryVariantDark,
-  secondary = Secondary400,
-  secondaryVariant = SecondaryVariant600,
+  secondary = SecondaryDark,
+  secondaryVariant = SecondaryVariantDark,
   background = BackgroundDark,
-  surface = BotMessageBackgroundDark
+  surface = SurfaceDark,
+  error = ErrorDark,
+  onPrimary = OnPrimaryDark,
+  onSecondary = OnSecondaryDark,
+  onBackground = OnBackgroundDark,
+  onSurface = OnSurfaceDark,
+  onError = OnErrorDark
 )
 
 /**
@@ -45,35 +53,21 @@ private val DarkColorPalette = darkColors(
  *
  * @author hepller
  */
+@SuppressLint("ConflictingOnColor")
 private val LightColorPalette = lightColors(
   primary = PrimaryLight,
   primaryVariant = PrimaryVariantLight,
-  secondary = Secondary400,
-  secondaryVariant = SecondaryVariant600,
-  background = backgroundLight,
-  surface = botMessageBackgroundLight
+  secondary = SecondaryLight,
+  secondaryVariant = SecondaryVariantLight,
+  background = BackgroundLight,
+  surface = SurfaceLight,
+  error = ErrorLight,
+  onPrimary = OnPrimaryLight,
+  onSecondary = OnSecondaryLight,
+  onBackground = OnBackgroundLight,
+  onSurface = OnSurfaceLight,
+  onError = OnErrorLight
 )
-
-//private val DarkColorPalette = darkColors(
-//  primary = Purple200,
-//  primaryVariant = Purple700,
-//  secondary = Teal200
-//)
-
-//private val LightColorPalette = lightColors(
-//  primary = Purple500,
-//  primaryVariant = Purple700,
-//  secondary = Teal200
-//
-//  /* Other default colors to override
-//    background = Color.White,
-//    surface = Color.White,
-//    onPrimary = Color.White,
-//    onSecondary = Color.Black,
-//    onBackground = Color.Black,
-//    onSurface = Color.Black,
-//    */
-//)
 
 /**
  * Тема приложения.
@@ -88,36 +82,34 @@ fun HelioTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
     LightColorPalette
   }
 
+  SystemUiColor(colors)
+
   MaterialTheme(
     colors = colors,
     typography = Typography,
     shapes = Shapes,
     content = content
   )
+}
 
+/**
+ * Перекрашивает панель состояния и панель навигации.
+ *
+ * @author hepller
+ */
+@Composable
+fun SystemUiColor(colors: Colors) {
   val systemUiController: SystemUiController = rememberSystemUiController()
 
   SideEffect {
-    if (darkTheme) {
-      systemUiController.setStatusBarColor(
-        color = PrimaryVariantDark,
-        darkIcons = false
-      )
+    systemUiController.setStatusBarColor(
+      color = colors.primary,
+      darkIcons = false
+    )
 
-      systemUiController.setNavigationBarColor(
-        color = PrimaryVariantDark,
-        darkIcons = false
-      )
-    } else {
-      systemUiController.setStatusBarColor(
-        color = PrimaryVariantLight,
-        darkIcons = true
-      )
-
-      systemUiController.setNavigationBarColor(
-        color = PrimaryVariantLight,
-        darkIcons = true
-      )
-    }
+    systemUiController.setNavigationBarColor(
+      color = colors.primary,
+      darkIcons = false
+    )
   }
 }

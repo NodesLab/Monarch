@@ -24,11 +24,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -54,17 +55,17 @@ fun NavigationIcon(scope: CoroutineScope, scaffoldState: ScaffoldState) {
       .size(40.dp)
       .padding(start = 6.dp)
   ) {
-    Image(
-      painter = painterResource(R.drawable.ic_menu),
+    Icon(
+      imageVector = Icons.Default.Menu,
       contentDescription = null,
-      modifier = Modifier
-        .clickable {
-          scope.launch {
-            scaffoldState.drawerState.apply {
-              if (isClosed) open() else close()
-            }
+      tint = MaterialTheme.colors.onPrimary,
+      modifier = Modifier.clickable {
+        scope.launch {
+          scaffoldState.drawerState.apply {
+            if (isClosed) open() else close()
           }
         }
+      }
     )
   }
 }
@@ -90,8 +91,8 @@ fun Title() {
     val motdList: List<String> = stringArrayResource(id = R.array.motd_strings).toList()
     val motdMessage: String = remember { getRandomListElement(motdList) ?: "null" } // remember для исправления рекомпозиции.
 
-    Text(text = appName, color = Color.White, fontSize = 18.sp)
-    Text(text = motdMessage, color = Color.Gray, fontSize = 14.sp)
+    Text(text = appName, color = MaterialTheme.colors.onPrimary, fontSize = 18.sp)
+    Text(text = motdMessage, color = MaterialTheme.colors.onSecondary, fontSize = 14.sp)
   }
 }
 

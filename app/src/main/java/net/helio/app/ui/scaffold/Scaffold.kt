@@ -37,9 +37,14 @@ fun AppScaffold() {
 
   Scaffold(
     scaffoldState = scaffoldState,
+
     topBar = { TopBar(scope = scope, scaffoldState = scaffoldState) },
     drawerContent = { DrawerContent() },
     content = { Content() },
-    bottomBar = { BottomBar() }
+    bottomBar = { BottomBar() },
+
+    drawerBackgroundColor = MaterialTheme.colors.background,
+    drawerScrimColor = MaterialTheme.colors.surface,
+    drawerShape = MaterialTheme.shapes.small
   )
 }

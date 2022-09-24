@@ -18,44 +18,62 @@ package net.helio.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+// region Пояснение к использованию цветов.
 
-// region Общие цвета.
+// Accent - Цвет акцента.
 
-val Secondary400 = Color(0xFF42A5F5)
-val SecondaryVariant600 = Color(0xFF1E88E5)
+// Primary<Type> - Для меню и панелей.
+// * PrimaryVariant<Type> - Не используется.
+// Secondary<Type> - Фон сообщения пользователя.
+// SecondaryVariant<Type> - Фон сообщения бота.
+// Background<Type> - Фон списка сообщений.
+// Surface<Type> - Эффект тени для выдвижных меню.
+// Error<Type> - Цвет для ошибок.
+// OnPrimary<Type> - Цвет для основных текстов.
+// OnSecondary<Type> - Цвет для дополнительных текстов.
+// * OnBackground<Type> - Не используется.
+// * OnSurface<Type> - Не используется.
+// * OnError<Type> - Не используется.
+
+// endregion
+
+// region Цвета вне тем.
+val Accent: Color = Color(0xFF42A5F5)
 
 // endregion
 
 // region Тёмная тема.
 
-val PrimaryDark = Color(0xFF212121)
-val PrimaryVariantDark = Color(0xFF181818)
-val BackgroundDark = Color(0xFF1B1B1B)
-val UserMessageBackgroundDark = Color(0xFF3F3F3F)
-val BotMessageBackgroundDark = Color(0xFF313131)
-val EditCommandBackgroundDark = Color(0xFF242424)
+val PrimaryDark: Color = Color(0xFF212121)
+val PrimaryVariantDark: Color = Color(0xFFFFFFFF)
+val SecondaryDark: Color = Color(0xFF3F3F3F)
+val SecondaryVariantDark: Color = Color(0xFF313131)
+val BackgroundDark: Color = Color(0xFF1B1B1B)
+val SurfaceDark: Color = Color(0xB31B1B1B)
+val ErrorDark: Color = Color(0xFFFFFFFF)
+val OnPrimaryDark: Color = Color(0xFFFFFFFF)
+val OnSecondaryDark: Color = Color(0xFF888888)
+val OnBackgroundDark: Color = Color(0xFFFFFFFF)
+val OnSurfaceDark: Color = Color(0xFFFFFFFF)
+val OnErrorDark: Color = Color(0xFFFFFFFF)
 
 // endregion
 
 // region Светлая тема.
 
-val PrimaryLight = Color(0xFFFFFFFF)
-val PrimaryVariantLight = Color(0xFFFFFFFF)
-val backgroundLight = Color(0xFFFFFFFF)
-val userMessageBackgroundLight = Color(0xFFFFFFFF)
-val botMessageBackgroundLight = Color(0xFFFFFFFF)
-val editCommandBackgroundLight = Color(0xFFFFFFFF)
+// todo: Доделать.
+
+val PrimaryLight: Color = Color(0xFFFFFFFF)
+val PrimaryVariantLight: Color = Color(0xFFFFFFFF)
+val SecondaryLight: Color = Color(0xFFFFFFFF)
+val SecondaryVariantLight: Color = Color(0xFFFFFFFF)
+val BackgroundLight: Color = Color(0xFFFFFFFF)
+val SurfaceLight: Color = Color(0xB3FFFFFF)
+val ErrorLight: Color = Color(0xFF000000)
+val OnPrimaryLight: Color = Color(0xFF000000)
+val OnSecondaryLight: Color = Color(0xFF888888)
+val OnBackgroundLight: Color = Color(0xFFFFFFFF)
+val OnSurfaceLight: Color = Color(0xFFFFFFFF)
+val OnErrorLight: Color = Color(0xFFFFFFFF)
 
 // endregion
-
-//val Secondary500 = Color(0xFF2196F3)
-//val SecondaryVariant700 = Color(0xFF1976D2)
-
-//val secondary = Color(0xFF008EDA)
-//val secondaryVariant = Color(0xFF0465B0)
-//val lightGray = Color(0xFF8C8C8C)
-//val editCommandBackground = Color(0xFF242424)
