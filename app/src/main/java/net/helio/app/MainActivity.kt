@@ -41,12 +41,16 @@ class MainActivity : ComponentActivity() {
       HelioTheme {
         AppScaffold()
 
+        // region Сообщение об обновлении активити.
+
         val activityUpdateMessage: String = stringResource(R.string.start_update_message)
 
         // remember для исправления рекомпозиции, при которой сообщение дублируется.
         remember {
           MessageUtility.addBotMessage(activityUpdateMessage)
         }
+
+        // endregion
       }
     }
   }

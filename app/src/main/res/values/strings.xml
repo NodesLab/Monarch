@@ -25,6 +25,7 @@
 
     <string name="start_update_message">Активити обновлено</string>
 
+    <!-- Не рекомендуется ставить строки длиннее 34 символов -->
     <string-array name="motd_strings">
         <item>Test</item>
         <item>undefined</item>

@@ -88,8 +88,8 @@ fun Title() {
   ) {
     val appName: String = stringResource(R.string.app_name)
 
-    val motdList: List<String> = stringArrayResource(id = R.array.motd_strings).toList()
-    val motdMessage: String = remember { getRandomListElement(motdList) ?: "null" } // remember для исправления рекомпозиции.
+    val motdList: List<String> = stringArrayResource(R.array.motd_strings).toList()
+    val motdMessage: String = remember { getRandomListElement(motdList) ?: "null" }
 
     Text(text = appName, color = MaterialTheme.colors.onPrimary, fontSize = 18.sp)
     Text(text = motdMessage, color = MaterialTheme.colors.onSecondary, fontSize = 14.sp)

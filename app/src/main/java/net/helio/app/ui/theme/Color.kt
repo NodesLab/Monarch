@@ -18,7 +18,7 @@ package net.helio.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// region Пояснение к использованию цветов.
+// region Пояснения к использованию цветов.
 
 // Accent - Цвет акцента.
 
@@ -37,7 +37,8 @@ import androidx.compose.ui.graphics.Color
 
 // endregion
 
-// region Цвета вне тем.
+// region Цвета не зависящие от темы.
+
 val Accent: Color = Color(0xFF42A5F5)
 
 // endregion

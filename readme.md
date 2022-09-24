@@ -4,7 +4,8 @@
 
 ## Описание
 
-__Helio__ — Мобильный инструментарий для различных задач
+__Helio__ — Мобильный инструментарий для различных задач, построенный на основе
+[Kotlin](https://kotlinlang.org/) и [Jetpack Compose](https://developer.android.com/jetpack/compose)
 
 ## Зависимости
 
