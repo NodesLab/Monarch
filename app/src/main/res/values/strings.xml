@@ -23,5 +23,11 @@
     <string name="input_placeholder">Введите команду</string>
     <string name="empty_input_toast">Вы не указали команду</string>
 
-<!--    <string name="start_activity_message">Активити запущено</string>-->
+    <string name="start_update_message">Активити обновлено</string>
+
+    <string-array name="motd_strings">
+        <item>Test</item>
+        <item>undefined</item>
+        <item>Кто скомпилил - того и вирус</item>
+    </string-array>
 </resources>

@@ -25,16 +25,19 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import net.helio.app.R
+import net.helio.app.utility.RandomUtility.Companion.getRandomListElement
 
 /**
  * Иконка навигации.
@@ -84,9 +87,11 @@ fun Title() {
   ) {
     val appName: String = stringResource(R.string.app_name)
 
-    Text(text = appName, color = Color.White, fontSize = 18.sp)
+    val motdList: List<String> = stringArrayResource(id = R.array.motd_strings).toList()
+    val motdMessage: String = remember { getRandomListElement(motdList) ?: "null" } // remember для исправления рекомпозиции.
 
-    Text(text = "v0.0.1", color = Color.Gray, fontSize = 14.sp)
+    Text(text = appName, color = Color.White, fontSize = 18.sp)
+    Text(text = motdMessage, color = Color.Gray, fontSize = 14.sp)
   }
 }
 

@@ -19,6 +19,8 @@ package net.helio.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import net.helio.app.ui.scaffold.AppScaffold
 import net.helio.app.ui.theme.HelioTheme
 import net.helio.app.utility.MessageUtility
@@ -33,11 +35,15 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
 
     setContent {
-
       HelioTheme {
-        MessageUtility.addBotMessage("Активити запущено")
-
         AppScaffold()
+
+        val activityUpdateMessage: String = stringResource(R.string.start_update_message)
+
+        // remember для исправления рекомпозиции, при которой сообщение дублируется.
+        remember {
+          MessageUtility.addBotMessage(activityUpdateMessage)
+        }
       }
     }
   }

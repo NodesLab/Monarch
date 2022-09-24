@@ -60,10 +60,13 @@ fun MessageCard(message: Message) {
     Surface(
       shape = RoundedCornerShape(16.dp),
       color = color,
-      modifier = Modifier.align(alignment)
+      modifier = Modifier
+        .align(alignment)
+        .defaultMinSize(minWidth = 100.dp) // Устанавливает минимальную ширину сообщения.
+        .widthIn(min = 0.dp, max = 250.dp) // Устанавливает максимальную ширину сообщения.
     ) {
       Column(
-        modifier = Modifier.defaultMinSize(minWidth = 100.dp),
+        modifier = Modifier,
       ) {
         Text(
           text = author,
