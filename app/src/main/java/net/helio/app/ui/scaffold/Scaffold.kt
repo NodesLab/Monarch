@@ -16,8 +16,7 @@
 
 package net.helio.app.ui.scaffold
 
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import android.annotation.SuppressLint
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -30,10 +29,10 @@ import net.helio.app.ui.scaffold.inner.TopBar
 /**
  * Отрисовывает интерфейс приложения по шаблону структуры "Scaffold".
  */
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AppScaffold() {
   val scaffoldState: ScaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
-  val messageListState: LazyListState = rememberLazyListState()
   val scope: CoroutineScope = rememberCoroutineScope()
 
   Scaffold(
@@ -41,6 +40,6 @@ fun AppScaffold() {
     topBar = { TopBar(scope = scope, scaffoldState = scaffoldState) },
     drawerContent = { DrawerContent() },
     content = { Content() },
-    bottomBar = { BottomBar(scope = scope, listState = messageListState) }
+    bottomBar = { BottomBar() }
   )
 }

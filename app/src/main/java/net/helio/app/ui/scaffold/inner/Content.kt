@@ -28,6 +28,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,9 +51,9 @@ import java.util.*
  */
 @Composable
 fun MessageCard(message: Message) {
-  val color: Color = if (message.isFromBot) BotMessageBackgroundDark else UserMessageBackgroundDark
-  val alignment: Alignment = if (message.isFromBot) Alignment.TopStart else Alignment.TopEnd
-  val author: String = if (message.isFromBot) stringResource(R.string.message_bot_name) else stringResource(R.string.message_user_name)
+  val color: Color = if (message.isFromBot()) BotMessageBackgroundDark else UserMessageBackgroundDark
+  val alignment: Alignment = if (message.isFromBot()) Alignment.TopStart else Alignment.TopEnd
+  val author: String = if (message.isFromBot()) stringResource(R.string.message_bot_name) else stringResource(R.string.message_user_name)
 
   Box(
     modifier = Modifier.fillMaxWidth()
@@ -101,7 +102,17 @@ fun MessageCard(message: Message) {
 }
 
 /**
- * Отрисовывает список сообщений.
+ * Добавляет автопрокрутку списка до нижнего элемента.
+ */
+@Composable
+fun AutoScroll(listState: LazyListState) {
+  LaunchedEffect(listState) {
+    if (!listState.isScrollInProgress) listState.animateScrollToItem(index = listState.layoutInfo.totalItemsCount)
+  }
+}
+
+/**
+ * Отрисовывает список сообщений и устанавливает автопрокрутку.
  *
  * @param messages Сообщения.
  */
@@ -112,9 +123,13 @@ fun MessageList(messages: List<Message>) {
   LazyColumn(
     state = listState,
     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 10.dp),
-    verticalArrangement = Arrangement.spacedBy(10.dp),
+    verticalArrangement = Arrangement.spacedBy(10.dp)
   ) {
-    items(messages) { message -> MessageCard(message) }
+    items(items = messages) { message ->
+      MessageCard(message)
+
+      AutoScroll(listState)
+    }
   }
 }
 

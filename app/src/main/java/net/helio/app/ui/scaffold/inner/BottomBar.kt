@@ -18,7 +18,6 @@ package net.helio.app.ui.scaffold.inner
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -33,21 +32,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import net.helio.app.R
-import net.helio.app.data.MessagesData
+import net.helio.app.core.testHandle
 import net.helio.app.utility.MessageUtility
 import net.helio.app.utility.ToastUtility
 
 /**
  * Отрисовывает нижнюю панель.
- *
- * @param scope Область видимости.
- * @param listState Состояние листа сообщений.
  */
 @Composable
-fun BottomBar(scope: CoroutineScope, listState: LazyListState) {
+fun BottomBar() {
   var input: String by rememberSaveable { mutableStateOf("") }
   val isValid: Boolean = input.isNotEmpty()
 
@@ -69,7 +63,7 @@ fun BottomBar(scope: CoroutineScope, listState: LazyListState) {
       TextField(
         value = input,
         onValueChange = { newText ->
-          input = newText.trimStart { it == '0' }
+          input = newText.trimStart { it == ' ' }
         },
         placeholder = {
           Text(text = stringResource(R.string.input_placeholder))
@@ -93,7 +87,7 @@ fun BottomBar(scope: CoroutineScope, listState: LazyListState) {
 
       Button(
         onClick = {
-          if (input.isEmpty()) {
+          if (input.trim().isEmpty()) {
             ToastUtility.makeShortToast(context, emptyInputString)
 
             return@Button
@@ -101,13 +95,9 @@ fun BottomBar(scope: CoroutineScope, listState: LazyListState) {
 
           MessageUtility.addUserMessage(input)
 
-          // todo: Обработка команд.
+          testHandle(input)
 
           input = ""
-
-          scope.launch {
-            listState.animateScrollToItem(index = MessagesData.messageList.size - 1)
-          }
         },
         shape = RoundedCornerShape(10.dp),
         elevation = ButtonDefaults.elevation(

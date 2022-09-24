@@ -16,6 +16,7 @@
 
 package net.helio.app
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +32,8 @@ import net.helio.app.utility.MessageUtility
  * @author hepller
  */
 class MainActivity : ComponentActivity() {
+
+  @SuppressLint("RememberReturnType") // Костыль.
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
