@@ -21,16 +21,15 @@ package net.helio.app.utility
  *
  * @author hepller
  */
-class RandomUtility {
-  companion object {
+object RandomUtility {
 
-    /**
-     * Получает случайный элемент из списка.
-     *
-     * @param list Список элементов.
-     */
-    fun <T> getRandomListElement(list: List<T>): T? {
-      return list.asSequence().shuffled().find { true }
-    }
+  /**
+   * Получает случайный элемент из списка.
+   *
+   * @param list Список элементов.
+   */
+  @JvmStatic
+  fun <T> getRandomListElement(list: List<T>): T? {
+    return list.asSequence().shuffled().find { true }
   }
 }

@@ -82,7 +82,7 @@ fun HelioTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
     LightColorPalette
   }
 
-  SystemUiColor(colors)
+  SetSystemUiColor(colors = colors, darkTheme = darkTheme)
 
   MaterialTheme(
     colors = colors,
@@ -98,18 +98,18 @@ fun HelioTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
  * @author hepller
  */
 @Composable
-fun SystemUiColor(colors: Colors) {
+fun SetSystemUiColor(colors: Colors, darkTheme: Boolean) {
   val systemUiController: SystemUiController = rememberSystemUiController()
 
   SideEffect {
     systemUiController.setStatusBarColor(
       color = colors.primary,
-      darkIcons = false
+      darkIcons = !darkTheme
     )
 
     systemUiController.setNavigationBarColor(
       color = colors.primary,
-      darkIcons = false
+      darkIcons = !darkTheme
     )
   }
 }

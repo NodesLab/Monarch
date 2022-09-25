@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package net.helio.app.core
+package net.helio.app.ui.scaffold.structure
 
-import net.helio.app.ui.manager.message.MessageManagerImpl
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 
-fun testHandle(command: String) {
-  MessageManagerImpl.userMessage(command)
+/**
+ * Содержимое меню.
+ *
+ * todo: Сделать меню.
+ */
+@Composable
+fun DrawerContent() {
+  Text(text = "No functional")
 
-  if (command == "/test") {
-    MessageManagerImpl.botMessage("Test response 1 ...")
-    MessageManagerImpl.botMessage("Test response 2 ...")
-    MessageManagerImpl.botMessage("Test response 3 ...")
-    MessageManagerImpl.botMessage("Test response final")
-  }
+  Divider()
 }

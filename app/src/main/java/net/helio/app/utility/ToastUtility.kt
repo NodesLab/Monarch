@@ -24,38 +24,39 @@ import android.widget.Toast
  *
  * @author hepller
  */
-class ToastUtility {
-  companion object {
+object ToastUtility {
 
-    /**
-     * Отображает тост.
-     *
-     * @param context Контекст.
-     * @param text Текст тоста.
-     * @param duration Продолжительность (Toast.LENGTH_LONG | Toast.LENGTH_SHORT).
-     */
-    private fun makeToast(context: Context, text: String, duration: Int) {
-      Toast.makeText(context, text, duration).show()
-    }
+  /**
+   * Отображает тост.
+   *
+   * @param context Контекст.
+   * @param text Текст тоста.
+   * @param duration Продолжительность (Toast.LENGTH_LONG | Toast.LENGTH_SHORT).
+   */
+  @JvmStatic
+  private fun makeToast(context: Context, text: String, duration: Int) {
+    Toast.makeText(context, text, duration).show()
+  }
 
-    /**
-     * Отображает долгосрочный тост.
-     *
-     * @param context Контекст.
-     * @param text Текст тоста.
-     */
-    fun makeLongToast(context: Context, text: String) {
-      makeToast(context, text, Toast.LENGTH_LONG)
-    }
+  /**
+   * Отображает долгосрочный тост.
+   *
+   * @param context Контекст.
+   * @param text Текст тоста.
+   */
+  @JvmStatic
+  fun makeLongToast(context: Context, text: String) {
+    makeToast(context, text, Toast.LENGTH_LONG)
+  }
 
-    /**
-     * Отображает короткосрочный тост.
-     *
-     * @param context Контекст.
-     * @param text Текст тоста.
-     */
-    fun makeShortToast(context: Context, text: String) {
-      makeToast(context, text, Toast.LENGTH_SHORT)
-    }
+  /**
+   * Отображает короткосрочный тост.
+   *
+   * @param context Контекст.
+   * @param text Текст тоста.
+   */
+  @JvmStatic
+  fun makeShortToast(context: Context, text: String) {
+    makeToast(context, text, Toast.LENGTH_SHORT)
   }
 }

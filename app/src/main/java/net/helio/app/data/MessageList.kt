@@ -22,4 +22,4 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 /**
  * Список всех сообщений.
  */
-var messageList: SnapshotStateList<Message> = mutableStateListOf()
+var messageMutableList: SnapshotStateList<Message> = mutableStateListOf()

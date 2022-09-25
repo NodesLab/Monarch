@@ -16,35 +16,49 @@
 
 package net.helio.app.ui.scaffold
 
-import android.annotation.SuppressLint
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
-import net.helio.app.ui.scaffold.inner.BottomBar
-import net.helio.app.ui.scaffold.inner.Content
-import net.helio.app.ui.scaffold.inner.DrawerContent
-import net.helio.app.ui.scaffold.inner.TopBar
+import kotlinx.coroutines.launch
+import net.helio.app.ui.scaffold.structure.BottomBar
+import net.helio.app.ui.scaffold.structure.Content
+import net.helio.app.ui.scaffold.structure.DrawerContent
+import net.helio.app.ui.scaffold.structure.TopBar
 
 /**
  * Отрисовывает интерфейс приложения по шаблону структуры "Scaffold".
  */
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AppScaffold() {
   val scaffoldState: ScaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
   val scope: CoroutineScope = rememberCoroutineScope()
 
+  val onNavigationIconClick = {
+    scope.launch {
+      scaffoldState.drawerState.apply {
+        if (isClosed) open() else close()
+      }
+    }
+  }
+
   Scaffold(
     scaffoldState = scaffoldState,
 
-    topBar = { TopBar(scope = scope, scaffoldState = scaffoldState) },
+    topBar = { TopBar { onNavigationIconClick() } },
     drawerContent = { DrawerContent() },
-    content = { Content() },
     bottomBar = { BottomBar() },
+
+    backgroundColor = MaterialTheme.colors.background,
+
+    contentColor = MaterialTheme.colors.background,
 
     drawerBackgroundColor = MaterialTheme.colors.background,
     drawerScrimColor = MaterialTheme.colors.surface,
-    drawerShape = MaterialTheme.shapes.small
-  )
+    drawerShape = MaterialTheme.shapes.small,
+    drawerElevation = 16.dp
+  ) {
+    Content(it)
+  }
 }

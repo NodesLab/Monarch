@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.inner
+package net.helio.app.ui.scaffold.structure
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -35,37 +33,21 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import net.helio.app.R
-import net.helio.app.utility.RandomUtility.Companion.getRandomListElement
+import net.helio.app.utility.RandomUtility.getRandomListElement
 
 /**
- * Иконка навигации.
+ * Иконка навигации (кнопка).
  *
- * @param scope Область видимости.
- * @param scaffoldState Состояние скаффолда.
+ * @param onClick Функция, выполняемая при нажатии на кнопку.
  */
 @Composable
-fun NavigationIcon(scope: CoroutineScope, scaffoldState: ScaffoldState) {
-  Surface(
-    color = MaterialTheme.colors.primary,
-    shape = RoundedCornerShape(16.dp),
-    modifier = Modifier
-      .size(40.dp)
-      .padding(start = 6.dp)
-  ) {
+private fun NavigationIcon(onClick: () -> Unit) {
+  IconButton(onClick = { onClick() }) {
     Icon(
       imageVector = Icons.Default.Menu,
       contentDescription = null,
       tint = MaterialTheme.colors.onPrimary,
-      modifier = Modifier.clickable {
-        scope.launch {
-          scaffoldState.drawerState.apply {
-            if (isClosed) open() else close()
-          }
-        }
-      }
     )
   }
 }
@@ -74,7 +56,7 @@ fun NavigationIcon(scope: CoroutineScope, scaffoldState: ScaffoldState) {
  * Заголовок приложения.
  */
 @Composable
-fun Title() {
+private fun Title() {
   Image(
     painter = painterResource(R.mipmap.ic_launcher_round),
     contentDescription = null,
@@ -99,13 +81,12 @@ fun Title() {
 /**
  * Верхняя панель.
  *
- * @param scope Область видимости.
- * @param scaffoldState Состояние скаффолда.
+ * @param onNavigationIconClick Функция, выполняемая при нажатии на иконку навигации.
  */
 @Composable
-fun TopBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
+fun TopBar(onNavigationIconClick: () -> Unit) {
   TopAppBar(
-    navigationIcon = { NavigationIcon(scope, scaffoldState) },
+    navigationIcon = { NavigationIcon(onNavigationIconClick) },
     title = { Title() },
     backgroundColor = MaterialTheme.colors.primary,
     elevation = 4.dp

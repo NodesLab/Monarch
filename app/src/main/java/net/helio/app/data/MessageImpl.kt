@@ -14,20 +14,30 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.inner
+package net.helio.app.data
 
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import java.util.*
 
 /**
- * Содержимое меню.
+ * Реализация сообщения.
  *
- * todo: Сделать меню.
+ * @param author Автор сообщения (bot | user).
+ * @param text Текст сообщения.
+ * @param date Время создания сообщения.
+ *
+ * @author hepller
  */
-@Composable
-fun DrawerContent() {
-  Text(text = "No functional")
+data class MessageImpl(
+  private val author: String,
+  override val text: String,
+  override val date: Date
+) : Message {
 
-  Divider()
+  override fun isFromBot(): Boolean {
+    return author == "bot"
+  }
+
+  override fun isFromUser(): Boolean {
+    return author == "user"
+  }
 }

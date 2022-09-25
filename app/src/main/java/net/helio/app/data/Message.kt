@@ -16,36 +16,34 @@
 
 package net.helio.app.data
 
-import androidx.compose.runtime.Immutable
 import java.util.*
 
 /**
- * Данные сообщения.
- *
- * @param author Автор сообщения (bot | user).
- * @param text Текст сообщения.
- * @param date Время создания сообщения.
- *
- * @author hepller
+ * Интерфейс сообщения.
  */
-@Immutable
-data class Message(private val author: String, val text: String, val date: Date) {
+interface Message {
+
+  /**
+   * Текст сообщения.
+   */
+  val text: String
+
+  /**
+   * Дата создания сообщения.
+   */
+  val date: Date
 
   /**
    * Проверяет, является ли сообщение созданным ботом.
    *
    * @return `true`, если автор сообщения - бот.
    */
-  fun isFromBot(): Boolean {
-    return author == "bot"
-  }
+  fun isFromBot(): Boolean
 
   /**
    * Проверяет, является ли сообщение созданным пользователем.
    *
    * @return `true`, если автор сообщения - пользователь.
    */
-  fun isFromUser(): Boolean {
-    return author == "user"
-  }
+  fun isFromUser(): Boolean
 }

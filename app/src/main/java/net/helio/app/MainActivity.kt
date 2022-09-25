@@ -20,11 +20,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
+import net.helio.app.ui.manager.message.MessageManagerImpl
 import net.helio.app.ui.scaffold.AppScaffold
+import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.theme.HelioTheme
-import net.helio.app.utility.MessageUtility
 
 /**
  * Главное активити.
@@ -39,7 +43,15 @@ class MainActivity : ComponentActivity() {
 
     setContent {
       HelioTheme {
-        AppScaffold()
+        val textSelectionColors = TextSelectionColors(
+          handleColor = Accent,
+          backgroundColor = Accent.copy(alpha = 0.4f)
+        )
+
+        // Обёртка для установки цветов выделения текста.
+        CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
+          AppScaffold()
+        }
 
         // region Сообщение об обновлении активити.
 
@@ -47,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
         // remember для исправления рекомпозиции, при которой сообщение дублируется.
         remember {
-          MessageUtility.addBotMessage(activityUpdateMessage)
+          MessageManagerImpl.botMessage(activityUpdateMessage)
         }
 
         // endregion

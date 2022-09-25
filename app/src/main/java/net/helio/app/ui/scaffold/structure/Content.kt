@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.inner
+package net.helio.app.ui.scaffold.structure
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -37,9 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import net.helio.app.R
 import net.helio.app.data.Message
-import net.helio.app.data.messageList
+import net.helio.app.data.messageMutableList
+import net.helio.app.ui.manager.message.MessageManagerImpl
 import net.helio.app.ui.theme.Accent
-import net.helio.app.utility.MessageUtility
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,7 +49,7 @@ import java.util.*
  * @param message Объект сообщения.
  */
 @Composable
-fun MessageCard(message: Message) {
+private fun MessageCard(message: Message) {
   val color: Color = if (message.isFromBot()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
   val alignment: Alignment = if (message.isFromBot()) Alignment.TopStart else Alignment.TopEnd
   val author: String = if (message.isFromBot()) stringResource(R.string.message_bot_name) else stringResource(R.string.message_user_name)
@@ -60,7 +60,7 @@ fun MessageCard(message: Message) {
     Surface(
       shape = RoundedCornerShape(16.dp),
       color = color,
-      elevation = 4.dp,
+      elevation = 1.dp,
       modifier = Modifier
         .align(alignment)
         .defaultMinSize(minWidth = 100.dp) // Устанавливает минимальную ширину сообщения.
@@ -94,7 +94,7 @@ fun MessageCard(message: Message) {
             .align(Alignment.End)
             .padding(end = 8.dp, bottom = 4.dp, top = 4.dp)
             .clickable {
-              MessageUtility.removeMessage(message)
+              MessageManagerImpl.removeMessage(message)
             }
         )
       }
@@ -106,7 +106,7 @@ fun MessageCard(message: Message) {
  * Добавляет автопрокрутку списка до последнего элемента.
  */
 @Composable
-fun AutoScroll(listState: LazyListState) {
+private fun AutoScroll(listState: LazyListState) {
   LaunchedEffect(listState) {
     if (!listState.isScrollInProgress) listState.animateScrollToItem(index = listState.layoutInfo.totalItemsCount)
   }
@@ -118,7 +118,7 @@ fun AutoScroll(listState: LazyListState) {
  * @param messages Сообщения.
  */
 @Composable
-fun MessageList(messages: List<Message>) {
+private fun MessageList(messages: List<Message>) {
   val listState: LazyListState = rememberLazyListState()
 
   LazyColumn(
@@ -136,15 +136,16 @@ fun MessageList(messages: List<Message>) {
 
 /**
  * Отрисовывает содержимое основного поля.
+ *
+ * @param contentPadding Отспупы для содержимого.
  */
 @Composable
-fun Content() {
+fun Content(contentPadding: PaddingValues) {
   Surface(
     modifier = Modifier
       .fillMaxSize()
-      .padding(bottom = 60.dp),
-    color = MaterialTheme.colors.background
+      .padding(contentPadding)
   ) {
-    MessageList(messages = messageList)
+    MessageList(messages = messageMutableList)
   }
 }
