@@ -48,6 +48,7 @@ private fun NavigationIcon(onClick: () -> Unit) {
       imageVector = Icons.Default.Menu,
       contentDescription = null,
       tint = MaterialTheme.colors.onPrimary,
+      modifier = Modifier.size(30.dp)
     )
   }
 }

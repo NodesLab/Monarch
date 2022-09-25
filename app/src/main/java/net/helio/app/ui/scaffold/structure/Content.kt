@@ -16,7 +16,6 @@
 
 package net.helio.app.ui.scaffold.structure
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -24,9 +23,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -63,27 +62,43 @@ private fun MessageCard(message: Message) {
       elevation = 1.dp,
       modifier = Modifier
         .align(alignment)
-        .defaultMinSize(minWidth = 100.dp) // Устанавливает минимальную ширину сообщения.
-        .widthIn(min = 0.dp, max = 250.dp) // Устанавливает максимальную ширину сообщения.
+        .widthIn(min = 100.dp, max = 250.dp) // Устанавливает лимиты ширины сообщения.
+        .heightIn(min = 80.dp) // Устанавливает лимиты высоты сообщения.
     ) {
-      Column(
-        modifier = Modifier,
+      Box(
+        contentAlignment = Alignment.TopStart
       ) {
-        Text(
-          text = author,
-          color = Accent,
-          style = MaterialTheme.typography.subtitle2,
-          fontWeight = FontWeight.SemiBold,
-          modifier = Modifier.padding(start = 10.dp, top = 4.dp)
-        )
-
-        SelectionContainer {
-          Text(
-            text = message.text,
-            color = MaterialTheme.colors.onPrimary,
-            style = MaterialTheme.typography.body2,
-            modifier = Modifier.padding(start = 10.dp, top = 4.dp, end = 10.dp),
+        IconButton(
+          onClick = { MessageManagerImpl.removeMessage(message) },
+          modifier = Modifier
+            .size(25.dp)
+            .padding(end = 5.dp, top = 5.dp)
+            .align(Alignment.TopEnd)
+        ) {
+          Icon(
+            imageVector = Icons.Default.Clear,
+            contentDescription = null,
+            tint = MaterialTheme.colors.onSecondary
           )
+        }
+
+        Column {
+          Text(
+            text = author,
+            color = Accent,
+            style = MaterialTheme.typography.subtitle2,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(start = 10.dp, top = 5.dp)
+          )
+
+          SelectionContainer {
+            Text(
+              text = message.text,
+              color = MaterialTheme.colors.onPrimary,
+              style = MaterialTheme.typography.body2,
+              modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 10.dp),
+            )
+          }
         }
 
         Text(
@@ -91,11 +106,8 @@ private fun MessageCard(message: Message) {
           style = MaterialTheme.typography.body2,
           color = MaterialTheme.colors.onSecondary,
           modifier = Modifier
-            .align(Alignment.End)
-            .padding(end = 8.dp, bottom = 4.dp, top = 4.dp)
-            .clickable {
-              MessageManagerImpl.removeMessage(message)
-            }
+            .align(Alignment.BottomEnd)
+            .padding(end = 8.dp, bottom = 4.dp)
         )
       }
     }
@@ -127,6 +139,7 @@ private fun MessageList(messages: List<Message>) {
     verticalArrangement = Arrangement.spacedBy(10.dp)
   ) {
     items(items = messages) { message ->
+//      MessageCard(message)
       MessageCard(message)
 
       AutoScroll(listState)

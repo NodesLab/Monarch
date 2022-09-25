@@ -45,7 +45,7 @@ import net.helio.app.utility.ToastUtility.makeShortToast
  */
 @Composable
 private fun SendButton(onClick: () -> Unit) {
-  IconButton(onClick = { onClick() }, modifier = Modifier) {
+  IconButton(onClick = { onClick() }) {
     Icon(
       imageVector = Icons.Default.Send,
       contentDescription = null,

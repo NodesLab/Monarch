@@ -37,7 +37,7 @@ import net.helio.app.ui.theme.HelioTheme
  */
 class MainActivity : ComponentActivity() {
 
-  @SuppressLint("RememberReturnType") // Костыль.
+  @SuppressLint("RememberReturnType")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 

@@ -72,6 +72,8 @@ private val LightColorPalette = lightColors(
 /**
  * Тема приложения.
  *
+ * @param darkTheme Включена ли тёмная тема.
+ *
  * @author hepller
  */
 @Composable
