@@ -16,7 +16,6 @@
 
 package net.helio.app.ui.scaffold.structure
 
-//import net.helio.app.ui.message.data.messageMutableList
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -32,19 +31,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import net.helio.app.ui.message.MessageManagerImpl
-import net.helio.app.ui.message.MessageManagerImpl.messageList
+import androidx.compose.ui.unit.sp
+import net.helio.app.ui.message.manager.MessageManagerImpl
+import net.helio.app.ui.message.manager.MessageManagerImpl.messageList
 import net.helio.app.ui.message.data.Message
 import net.helio.app.ui.theme.Accent
 import java.text.SimpleDateFormat
 import java.util.*
-
-/**
- * Список всех сообщений.
- */
-//var messageMutableList: SnapshotStateList<Message> = mutableStateListOf()
 
 /**
  * Отрисовывает карточку сообщения.
@@ -100,7 +96,8 @@ private fun MessageCard(message: Message) {
               text = message.text,
               color = MaterialTheme.colors.onPrimary,
               style = MaterialTheme.typography.body2,
-              modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 10.dp),
+              fontSize = 15.sp, // todo: перенести типографию в тему
+              modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 20.dp),
             )
           }
         }
@@ -108,6 +105,7 @@ private fun MessageCard(message: Message) {
         Text(
           text = SimpleDateFormat("HH:mm", Locale.US).format(message.date),
           style = MaterialTheme.typography.body2,
+          fontSize = 12.sp, // todo: перенести типографию в тему
           color = MaterialTheme.colors.onSecondary,
           modifier = Modifier
             .align(Alignment.BottomEnd)

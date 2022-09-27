@@ -18,7 +18,7 @@ package net.helio.app.core.command.list
 
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
-import net.helio.app.ui.message.MessageManagerImpl
+import net.helio.app.ui.message.manager.MessageManagerImpl
 
 object TestCommand : Command {
   override val aliases: List<String> = listOf("test")

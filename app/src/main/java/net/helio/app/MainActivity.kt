@@ -26,7 +26,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import net.helio.app.core.command.list.TestCommand
 import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.ui.message.MessageManagerImpl
+import net.helio.app.ui.message.manager.MessageManagerImpl
 import net.helio.app.ui.scaffold.AppScaffold
 import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.theme.HelioTheme
@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
 
         // remember для исправления рекомпозиции, при которой сообщение дублируется.
         remember {
-          MessageManagerImpl.botMessage("Активити обновлено")
+          MessageManagerImpl.botMessage("⚙️ Активити обновлено")
         }
 
         // endregion

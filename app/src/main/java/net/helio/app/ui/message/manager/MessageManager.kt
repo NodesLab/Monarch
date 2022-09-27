@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.message
+package net.helio.app.ui.message.manager
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import net.helio.app.ui.message.data.Message

@@ -19,7 +19,7 @@ package net.helio.app.core.command.manager
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
-import net.helio.app.ui.message.MessageManagerImpl
+import net.helio.app.ui.message.manager.MessageManagerImpl
 
 /**
  * Реализация менеджера команд.
