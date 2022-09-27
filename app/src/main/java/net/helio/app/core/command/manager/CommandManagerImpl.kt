@@ -20,8 +20,6 @@ import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
 import net.helio.app.ui.message.MessageManagerImpl
-import java.util.*
-import java.util.regex.Pattern
 
 /**
  * Реализация менеджера команд.

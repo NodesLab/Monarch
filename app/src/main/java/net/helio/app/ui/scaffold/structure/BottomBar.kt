@@ -16,39 +16,58 @@
 
 package net.helio.app.ui.scaffold.structure
 
-import android.content.Context
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Send
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.ui.message.MessageManagerImpl
-import net.helio.app.utility.ToastUtility.makeShortToast
 
 /**
  * Кнопка-иконка отправки.
  *
+ * @param enabled Доступна ли кнопка для нажатия.
+ * @param enabledColor Цвет доступной для нажатия кнопки.
+ * @param disabledColor Цвет недоступной для нажатия кнопки.
  * @param onClick Функция, которая будет выполнена при нажатии.
  */
 @Composable
-private fun SendButton(onClick: () -> Unit) {
-  IconButton(onClick = { onClick() }) {
+private fun SendButton(
+  enabled: Boolean,
+  enabledColor: Color = MaterialTheme.colors.onPrimary,
+  disabledColor: Color = MaterialTheme.colors.onSecondary,
+  onClick: () -> Unit
+) {
+  val iconColor = remember { Animatable(disabledColor) }
+
+  if (enabled) {
+    LaunchedEffect(Unit) {
+      iconColor.animateTo(enabledColor, animationSpec = tween(200))
+    }
+  } else {
+    LaunchedEffect(Unit) {
+      iconColor.animateTo(disabledColor, animationSpec = tween(200))
+    }
+  }
+
+  IconButton(
+    onClick = { onClick() },
+    enabled = enabled
+  ) {
     Icon(
       imageVector = Icons.Rounded.Send,
       contentDescription = null,
-      tint = MaterialTheme.colors.onPrimary,
+      tint = iconColor.value,
       modifier = Modifier.size(30.dp)
     )
   }
@@ -60,9 +79,6 @@ private fun SendButton(onClick: () -> Unit) {
 @Composable
 fun BottomBar() {
   var input: String by rememberSaveable { mutableStateOf("") }
-
-  // Контекст для отображения тостов.
-  val context: Context = LocalContext.current
 
   Surface(
     color = MaterialTheme.colors.primary,
@@ -110,13 +126,7 @@ fun BottomBar() {
 
       Spacer(Modifier.weight(1f))
 
-      SendButton {
-        if (input.trim().isEmpty()) {
-          makeShortToast(context = context, text = "Вы не указали команду")
-
-          return@SendButton
-        }
-
+      SendButton(enabled = input.trim().isNotEmpty()) {
         MessageManagerImpl.userMessage(input.trim())
 
         CommandManagerImpl.handleInput(input.trim())
