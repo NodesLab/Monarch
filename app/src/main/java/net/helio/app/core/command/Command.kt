@@ -14,36 +14,43 @@
  * limitations under the License.
  */
 
-package net.helio.app.data
+package net.helio.app.core.command
 
-import java.util.*
+import net.helio.app.core.command.session.CommandSession
 
 /**
- * Интерфейс сообщения.
+ * Интерфейс команды.
+ *
+ * @author hepller
  */
-interface Message {
+interface Command {
 
   /**
-   * Текст сообщения.
+   * Алиасы команды.
    */
-  val text: String
+  val aliases: List<String>
 
   /**
-   * Дата создания сообщения.
+   * Описание команды.
    */
-  val date: Date
+  val description: String
 
   /**
-   * Проверяет, является ли сообщение созданным ботом.
+   * Бета-статус команды.
+   */
+  val isInBeta: Boolean
+
+  /**
+   * Требует ли команда доступ в сеть.
+   */
+  val isRequireNetwork: Boolean
+
+  /**
+   * Выполняет команду.
    *
-   * @return `true`, если автор сообщения - бот.
-   */
-  fun isFromBot(): Boolean
-
-  /**
-   * Проверяет, является ли сообщение созданным пользователем.
+   * @param session Сессия команды.
    *
-   * @return `true`, если автор сообщения - пользователь.
+   * @see CommandSession
    */
-  fun isFromUser(): Boolean
+  fun execute(session: CommandSession)
 }

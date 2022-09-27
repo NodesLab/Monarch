@@ -16,6 +16,7 @@
 
 package net.helio.app.ui.scaffold.structure
 
+//import net.helio.app.ui.message.data.messageMutableList
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -25,22 +26,25 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import net.helio.app.R
-import net.helio.app.data.Message
-import net.helio.app.data.messageMutableList
-import net.helio.app.ui.manager.message.MessageManagerImpl
+import net.helio.app.ui.message.MessageManagerImpl
+import net.helio.app.ui.message.MessageManagerImpl.messageList
+import net.helio.app.ui.message.data.Message
 import net.helio.app.ui.theme.Accent
 import java.text.SimpleDateFormat
 import java.util.*
+
+/**
+ * Список всех сообщений.
+ */
+//var messageMutableList: SnapshotStateList<Message> = mutableStateListOf()
 
 /**
  * Отрисовывает карточку сообщения.
@@ -51,7 +55,7 @@ import java.util.*
 private fun MessageCard(message: Message) {
   val color: Color = if (message.isFromBot()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
   val alignment: Alignment = if (message.isFromBot()) Alignment.TopStart else Alignment.TopEnd
-  val author: String = if (message.isFromBot()) stringResource(R.string.message_bot_name) else stringResource(R.string.message_user_name)
+  val author: String = if (message.isFromBot()) "Helio" else "User"
 
   Box(
     modifier = Modifier.fillMaxWidth()
@@ -76,7 +80,7 @@ private fun MessageCard(message: Message) {
             .align(Alignment.TopEnd)
         ) {
           Icon(
-            imageVector = Icons.Default.Clear,
+            imageVector = Icons.Rounded.Clear,
             contentDescription = null,
             tint = MaterialTheme.colors.onSecondary
           )
@@ -139,7 +143,6 @@ private fun MessageList(messages: List<Message>) {
     verticalArrangement = Arrangement.spacedBy(10.dp)
   ) {
     items(items = messages) { message ->
-//      MessageCard(message)
       MessageCard(message)
 
       AutoScroll(listState)
@@ -159,6 +162,6 @@ fun Content(contentPadding: PaddingValues) {
       .fillMaxSize()
       .padding(contentPadding)
   ) {
-    MessageList(messages = messageMutableList)
+    MessageList(messages = messageList)
   }
 }

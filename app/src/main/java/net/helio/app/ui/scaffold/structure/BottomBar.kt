@@ -22,7 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.rounded.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,14 +32,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import net.helio.app.R
-import net.helio.app.core.testHandle
+import net.helio.app.core.command.manager.CommandManagerImpl
+import net.helio.app.ui.message.MessageManagerImpl
 import net.helio.app.utility.ToastUtility.makeShortToast
 
 /**
- * Отрисовывает кнопку-иконку.
+ * Кнопка-иконка отправки.
  *
  * @param onClick Функция, которая будет выполнена при нажатии.
  */
@@ -47,7 +46,7 @@ import net.helio.app.utility.ToastUtility.makeShortToast
 private fun SendButton(onClick: () -> Unit) {
   IconButton(onClick = { onClick() }) {
     Icon(
-      imageVector = Icons.Default.Send,
+      imageVector = Icons.Rounded.Send,
       contentDescription = null,
       tint = MaterialTheme.colors.onPrimary,
       modifier = Modifier.size(30.dp)
@@ -56,7 +55,7 @@ private fun SendButton(onClick: () -> Unit) {
 }
 
 /**
- * Отрисовывает нижнюю панель.
+ * Нижняя панель.
  */
 @Composable
 fun BottomBar() {
@@ -65,14 +64,12 @@ fun BottomBar() {
   // Контекст для отображения тостов.
   val context: Context = LocalContext.current
 
-  val emptyInputString: String = stringResource(R.string.empty_input_toast)
-
   Surface(
     color = MaterialTheme.colors.primary,
     elevation = 4.dp,
     modifier = Modifier
       .fillMaxWidth()
-      .height(75.dp)
+      .height(60.dp)
   ) {
     Row(
       verticalAlignment = Alignment.CenterVertically,
@@ -80,9 +77,9 @@ fun BottomBar() {
         .fillMaxSize()
         .padding(
           start = 0.dp,
-          end = 15.dp,
-          top = 10.dp,
-          bottom = 10.dp
+          end = 6.dp,
+          top = 0.dp,
+          bottom = 0.dp
         )
     ) {
       SelectionContainer {
@@ -92,7 +89,7 @@ fun BottomBar() {
             input = newText.trimStart { it == ' ' }
           },
           placeholder = {
-            Text(text = stringResource(R.string.input_placeholder))
+            Text(text = "Введите команду")
           },
           colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,
@@ -115,12 +112,14 @@ fun BottomBar() {
 
       SendButton {
         if (input.trim().isEmpty()) {
-          makeShortToast(context, emptyInputString)
+          makeShortToast(context = context, text = "Вы не указали команду")
 
           return@SendButton
         }
 
-        testHandle(input)
+        MessageManagerImpl.userMessage(input.trim())
+
+        CommandManagerImpl.handleInput(input.trim())
 
         input = ""
       }

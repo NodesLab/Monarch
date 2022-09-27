@@ -14,12 +14,30 @@
  * limitations under the License.
  */
 
-package net.helio.app.data
+package net.helio.app.ui.message.data
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import java.util.*
 
 /**
- * Список всех сообщений.
+ * Реализация сообщения.
+ *
+ * @param author Автор сообщения (bot | user).
+ * @param text Текст сообщения.
+ * @param date Время создания сообщения.
+ *
+ * @author hepller
  */
-var messageMutableList: SnapshotStateList<Message> = mutableStateListOf()
+data class MessageImpl(
+  private val author: String,
+  override val text: String,
+  override val date: Date
+) : Message {
+
+  override fun isFromBot(): Boolean {
+    return author == "bot"
+  }
+
+  override fun isFromUser(): Boolean {
+    return author == "user"
+  }
+}

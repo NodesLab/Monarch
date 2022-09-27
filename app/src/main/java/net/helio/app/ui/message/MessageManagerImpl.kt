@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.manager.message
+package net.helio.app.ui.message
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import net.helio.app.data.Message
-import net.helio.app.data.MessageImpl
-import net.helio.app.data.messageMutableList
+import net.helio.app.ui.message.data.Message
+import net.helio.app.ui.message.data.MessageImpl
 import java.util.*
 
 /**
@@ -29,8 +29,7 @@ import java.util.*
  */
 object MessageManagerImpl : MessageManager {
 
-  override val messageList: SnapshotStateList<Message>
-    get() = messageMutableList
+  override var messageList: SnapshotStateList<Message> = mutableStateListOf()
 
   /**
    * Добавляет сообщение в список сообщений.

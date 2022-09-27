@@ -16,19 +16,4 @@
 
 <resources>
     <string name="app_name">Helio</string>
-
-    <string name="message_bot_name">Helio</string>
-    <string name="message_user_name">User</string>
-
-    <string name="input_placeholder">Введите команду</string>
-    <string name="empty_input_toast">Вы не указали команду</string>
-
-    <string name="start_update_message">Активити обновлено</string>
-
-    <!-- Не рекомендуется ставить строки длиннее 34 символов -->
-    <string-array name="motd_strings">
-        <item>Test</item>
-        <item>undefined</item>
-        <item>Кто скомпилил - того и вирус</item>
-    </string-array>
 </resources>

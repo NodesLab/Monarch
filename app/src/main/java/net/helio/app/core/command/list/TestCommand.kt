@@ -14,17 +14,24 @@
  * limitations under the License.
  */
 
-package net.helio.app.core
+package net.helio.app.core.command.list
 
-import net.helio.app.ui.manager.message.MessageManagerImpl
+import net.helio.app.core.command.Command
+import net.helio.app.core.command.session.CommandSession
+import net.helio.app.ui.message.MessageManagerImpl
 
-fun testHandle(command: String) {
-  MessageManagerImpl.userMessage(command)
+object TestCommand : Command {
+  override val aliases: List<String> = listOf("test")
 
-  if (command == "/test") {
+  override val description: String = ""
+
+  override val isInBeta: Boolean = true
+
+  override val isRequireNetwork: Boolean = false
+
+  override fun execute(session: CommandSession) {
     MessageManagerImpl.botMessage("Test response 1 ...")
-    MessageManagerImpl.botMessage("Test response 2 ...")
-    MessageManagerImpl.botMessage("Test response 3 ...")
+    MessageManagerImpl.botMessage("Test: [${session.arguments.joinToString(", ")}]")
     MessageManagerImpl.botMessage("Test response final")
   }
 }

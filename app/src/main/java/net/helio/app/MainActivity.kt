@@ -24,8 +24,9 @@ import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
-import androidx.compose.ui.res.stringResource
-import net.helio.app.ui.manager.message.MessageManagerImpl
+import net.helio.app.core.command.list.TestCommand
+import net.helio.app.core.command.manager.CommandManagerImpl
+import net.helio.app.ui.message.MessageManagerImpl
 import net.helio.app.ui.scaffold.AppScaffold
 import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.theme.HelioTheme
@@ -41,6 +42,12 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    // region Регистрация команд.
+
+    CommandManagerImpl.registerCommand(TestCommand)
+
+    // endregion
+
     setContent {
       HelioTheme {
         val textSelectionColors = TextSelectionColors(
@@ -55,11 +62,9 @@ class MainActivity : ComponentActivity() {
 
         // region Сообщение об обновлении активити.
 
-        val activityUpdateMessage: String = stringResource(R.string.start_update_message)
-
         // remember для исправления рекомпозиции, при которой сообщение дублируется.
         remember {
-          MessageManagerImpl.botMessage(activityUpdateMessage)
+          MessageManagerImpl.botMessage("Активити обновлено")
         }
 
         // endregion
