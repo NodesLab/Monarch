@@ -29,6 +29,8 @@ import net.helio.app.ui.scaffold.structure.TopBar
 
 /**
  * Отрисовывает интерфейс приложения по шаблону структуры "Scaffold".
+ *
+ * @author hepller
  */
 @Composable
 fun AppScaffold() {

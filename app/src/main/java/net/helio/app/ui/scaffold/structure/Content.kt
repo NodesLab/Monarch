@@ -45,6 +45,8 @@ import java.util.*
  * Отрисовывает карточку сообщения.
  *
  * @param message Объект сообщения.
+ *
+ * @author hepller
  */
 @Composable
 private fun MessageCard(message: Message) {
@@ -117,6 +119,8 @@ private fun MessageCard(message: Message) {
 
 /**
  * Добавляет автопрокрутку списка до последнего элемента.
+ *
+ * @author hepller
  */
 @Composable
 private fun AutoScroll(listState: LazyListState) {
@@ -129,6 +133,8 @@ private fun AutoScroll(listState: LazyListState) {
  * Отрисовывает список сообщений и устанавливает автопрокрутку.
  *
  * @param messages Сообщения.
+ *
+ * @author hepller
  */
 @Composable
 private fun MessageList(messages: List<Message>) {

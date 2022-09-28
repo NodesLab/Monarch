@@ -24,6 +24,8 @@ import androidx.compose.runtime.Composable
  * Содержимое меню.
  *
  * todo: Сделать меню.
+ *
+ * @author hepller
  */
 @Composable
 fun DrawerContent() {

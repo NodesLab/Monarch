@@ -40,6 +40,8 @@ import net.helio.app.utility.RandomUtility.getRandomListElement
  * Иконка навигации (кнопка).
  *
  * @param onClick Функция, выполняемая при нажатии на кнопку.
+ *
+ * @author hepller
  */
 @Composable
 private fun NavigationIcon(onClick: () -> Unit) {
@@ -54,6 +56,8 @@ private fun NavigationIcon(onClick: () -> Unit) {
 
 /**
  * Заголовок приложения.
+ *
+ * @author hepller
  */
 @Composable
 private fun Title() {
@@ -80,6 +84,8 @@ private fun Title() {
  * Верхняя панель.
  *
  * @param onNavigationIconClick Функция, выполняемая при нажатии на иконку навигации.
+ *
+ * @author hepller
  */
 @Composable
 fun TopBar(onNavigationIconClick: () -> Unit) {

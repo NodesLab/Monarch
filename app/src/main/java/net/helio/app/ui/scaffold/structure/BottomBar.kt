@@ -36,6 +36,11 @@ import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.ui.message.manager.MessageManagerImpl
 
+/**
+ * Кнопка голосового ввода.
+ *
+ * @author hepller
+ */
 @Composable
 private fun VoiceButton(
   enabled: Boolean,
@@ -75,6 +80,8 @@ private fun VoiceButton(
  * @param enabledColor Цвет доступной для нажатия кнопки.
  * @param disabledColor Цвет недоступной для нажатия кнопки.
  * @param onClick Функция, которая будет выполнена при нажатии.
+ *
+ * @author hepller
  */
 @Composable
 private fun SendButton(
@@ -110,6 +117,8 @@ private fun SendButton(
 
 /**
  * Нижняя панель.
+ *
+ * @author hepller
  */
 @Composable
 fun BottomBar() {

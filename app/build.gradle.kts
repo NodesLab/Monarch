@@ -19,11 +19,15 @@ import java.io.ByteArrayOutputStream
 plugins {
   id("com.android.application")
   id("org.jetbrains.kotlin.android")
+
+  kotlin("kapt")
+
 }
 
 // region Версии.
 
-val composeVersion = "1.2.1" // "1.1.0-beta01"
+val composeVersion = "1.2.1"
+val moshiVersion = "1.14.0"
 
 // endregion
 
@@ -119,5 +123,10 @@ dependencies {
 
   implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.1")
 
-  // endregion
+  implementation("com.squareup.moshi:moshi:${moshiVersion}")
+  implementation("com.squareup.moshi:moshi-adapters:${moshiVersion}")
+  implementation("com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}")
+  kapt("com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}")
+
+  kapt("com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}")
 }
