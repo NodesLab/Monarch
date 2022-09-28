@@ -29,8 +29,8 @@ import androidx.compose.ui.graphics.Color
 // Background<Type> - Фон списка сообщений.
 // Surface<Type> - Эффект тени для выдвижных меню.
 // Error<Type> - Цвет для ошибок.
-// OnPrimary<Type> - Цвет для основных текстов.
-// OnSecondary<Type> - Цвет для дополнительных текстов.
+// OnPrimary<Type> - Цвет для основных текстов и иконок.
+// OnSecondary<Type> - Цвет для дополнительных текстов и недоступных иконок.
 // * OnBackground<Type> - Не используется.
 // * OnSurface<Type> - Не используется.
 // * OnError<Type> - Не используется.

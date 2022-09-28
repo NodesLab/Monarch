@@ -107,8 +107,9 @@ dependencies {
   implementation("androidx.activity:activity-compose:1.5.1") // 1.6.0 требует SDK >32.
   implementation("androidx.core:core-ktx:1.8.0") // 1.9.1 требует SDK >32.
   implementation("androidx.compose.ui:ui:${composeVersion}")
-  implementation("androidx.compose.material:material:${composeVersion}")
   implementation("androidx.compose.ui:ui-tooling-preview:${composeVersion}")
+  implementation("androidx.compose.material:material:${composeVersion}")
+  implementation("androidx.compose.material:material-icons-extended:${composeVersion}")
 
   // endregion
 
