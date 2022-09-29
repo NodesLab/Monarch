@@ -72,7 +72,7 @@ private fun Title() {
   ) {
     val appName: String = stringResource(R.string.app_name)
     val version: List<String> = BuildConfig.VERSION_NAME.split("-")
-    val motdMessage = "${version[0]} (${version[1]})"
+    val motdMessage = "v${version[0]} (${version[1]})"
 
     Text(text = appName, color = MaterialTheme.colors.onPrimary, fontSize = 18.sp)
     Text(text = motdMessage, color = MaterialTheme.colors.onSecondary, fontSize = 14.sp)
