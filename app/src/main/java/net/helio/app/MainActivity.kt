@@ -24,6 +24,7 @@ import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
+import net.helio.app.core.command.list.HelpCommand
 import net.helio.app.core.command.list.IpInfoCommand
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.ui.message.manager.MessageManagerImpl
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
 
     // region Регистрация команд.
 
+    CommandManagerImpl.registerCommand(HelpCommand)
     CommandManagerImpl.registerCommand(IpInfoCommand)
 
     // endregion

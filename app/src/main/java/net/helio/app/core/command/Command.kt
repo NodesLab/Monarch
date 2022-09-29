@@ -46,11 +46,17 @@ interface Command {
   val isRequireNetwork: Boolean
 
   /**
+   * Анонимна ли команда.
+   * Под анонимностью подразумевается отсутствие прямых соединений с целевым сервером.
+   */
+  val isAnonymous: Boolean
+
+  /**
    * Выполняет команду.
    *
    * @param session Сессия команды.
    *
    * @see CommandSession
    */
-  fun execute(session: CommandSession)
+  suspend fun execute(session: CommandSession)
 }

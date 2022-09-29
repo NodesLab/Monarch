@@ -24,13 +24,6 @@ plugins {
 
 }
 
-// region Версии.
-
-val composeVersion = "1.2.1"
-val moshiVersion = "1.14.0"
-
-// endregion
-
 /**
  * Получает короткую версию коммита.
  *
@@ -57,8 +50,8 @@ android {
     applicationId = "net.helio.app"
     minSdk = 31
     targetSdk = 32
-    versionCode = 1
-    versionName = "0.0.1-${getShortCommit()}"
+    versionCode = 2
+    versionName = "1.0.0-${getShortCommit()}"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -103,6 +96,14 @@ android {
   }
 }
 
+// region Версии.
+
+val composeVersion = "1.2.1"
+val moshiVersion = "1.14.0"
+val ktorVersion = "2.1.1"
+
+// endregion
+
 dependencies {
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
@@ -110,23 +111,26 @@ dependencies {
 
   implementation("androidx.activity:activity-compose:1.5.1") // 1.6.0 требует SDK >32.
   implementation("androidx.core:core-ktx:1.8.0") // 1.9.1 требует SDK >32.
-  implementation("androidx.compose.ui:ui:${composeVersion}")
-  implementation("androidx.compose.ui:ui-tooling-preview:${composeVersion}")
-  implementation("androidx.compose.material:material:${composeVersion}")
-  implementation("androidx.compose.material:material-icons-extended:${composeVersion}")
-
-  // endregion
+  implementation("androidx.compose.ui:ui:$composeVersion")
+  implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+  implementation("androidx.compose.material:material:$composeVersion")
+  implementation("androidx.compose.material:material-icons-extended:$composeVersion")
 
   // https://developer.android.com/jetpack/androidx/releases/compose
+
+  // endregion
 
   // region Сторонние зависимости.
 
   implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.1")
 
-  implementation("com.squareup.moshi:moshi:${moshiVersion}")
-  implementation("com.squareup.moshi:moshi-adapters:${moshiVersion}")
-  implementation("com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}")
-  kapt("com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}")
+  implementation("com.squareup.moshi:moshi:$moshiVersion")
+  implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
+  implementation("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
+  kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
 
-  kapt("com.squareup.moshi:moshi-kotlin-codegen:${moshiVersion}")
+  implementation("io.ktor:ktor-client-core:$ktorVersion")
+  implementation("io.ktor:ktor-client-cio:$ktorVersion")
+
+  // endregion
 }

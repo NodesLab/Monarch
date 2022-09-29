@@ -18,13 +18,19 @@ package net.helio.app.core.command.list
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.squareup.moshi.Moshi
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.ui.message.manager.MessageManagerImpl
+import net.helio.app.utility.NetworkUtility
+import net.helio.app.utility.TextUtility
+import net.helio.app.utility.ValidateUtility
+import java.net.IDN
+import java.net.InetAddress
 import java.util.*
 
 /**
+ * Команда для получения информации об IP.
+ *
  * @author hepller
  */
 object IpInfoCommand : Command {
@@ -33,36 +39,59 @@ object IpInfoCommand : Command {
 
   override val isInBeta: Boolean = true
   override val isRequireNetwork: Boolean = true
+  override val isAnonymous: Boolean = true
 
-  override fun execute(session: CommandSession) {
-    val cleanedIp = "null"
+  override suspend fun execute(session: CommandSession) {
+    if (session.arguments.size < 2) {
+      MessageManagerImpl.botMessage("⛔ Укажите IP-адрес, о котором необходимо найти информацию")
 
-    val testJson = "{\"status\":\"success\",\"country\":\"Австралия\",\"countryCode\":\"AU\",\"region\":\"QLD\",\"regionName\":\"Штат Квинсленд\",\"city\":\"South Brisbane\",\"zip\":\"4101\",\"lat\":-27.4766,\"lon\":153.0166,\"isp\":\"Cloudflare, Inc\",\"org\":\"APNIC and Cloudflare DNS Resolver project\",\"as\":\"AS13335 Cloudflare, Inc.\",\"asname\":\"CLOUDFLARENET\",\"reverse\":\"one.one.one.one\",\"query\":\"1.1.1.1\"}"
+      return
+    }
 
-    val moshi = Moshi.Builder().build()
-    val jsonAdapter = moshi.adapter<IpInfoApiAdapter>(IpInfoApiAdapter::class.java)
+    var cleanedIp = NetworkUtility.clearUrl(session.arguments[1])
 
-    val result = jsonAdapter.fromJson(testJson)
+    // Удаление порта у доменов и IPv4
+    if (!NetworkUtility.isValidIPv6(cleanedIp)) cleanedIp = cleanedIp.split(":")[0]
+
+    // Конвертация IP из десятеричного формата в IPv4 (+ удаление порта)
+    if (ValidateUtility.isNumber(cleanedIp)) cleanedIp = NetworkUtility.longToIPv4(cleanedIp.split(":")[0].toLong())
+
+    if (!NetworkUtility.isValidDomain(cleanedIp) && !NetworkUtility.isValidIPv4(cleanedIp) && !NetworkUtility.isValidIPv6(cleanedIp) && !NetworkUtility.isValidDomain(IDN.toUnicode(cleanedIp))) {
+      MessageManagerImpl.botMessage("⚠️️ Вы указали / переслали некорректный IP")
+
+      return
+    }
+
+    MessageManagerImpl.botMessage("⚙️ Получаю информацию о данном IP ...")
+
+    val response: IpApiAdapter? = NetworkUtility.readJsonHttp("http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
+
+    val ptr: String? =
+      if (response?.reverse.equals("")) InetAddress.getByName(response?.ip).canonicalHostName
+      else response?.reverse
 
     val messageScheme = StringJoiner("\n")
 
-    messageScheme.add("⚙️ Информация о ${result?.ip}:")
+    messageScheme.add("⚙️ Информация о $cleanedIp:")
     messageScheme.add("")
-    messageScheme.add("– Локация: null")
-    messageScheme.add("– Организация: null")
-    messageScheme.add("– Провайдер: null")
-    messageScheme.add("– AS: null")
-    messageScheme.add("– ASNAME: null")
-    messageScheme.add("– ZIP: null")
-    messageScheme.add("– IP: null")
-    messageScheme.add("– PTR: null")
+    messageScheme.add("– Локация: ${response?.country}, ${response?.regionName}, ${response?.city} ${response?.countryCode?.let { TextUtility.getCountryFlagEmoji(it) }}")
+    messageScheme.add("– Организация: ${response?.org}")
+    messageScheme.add("– Провайдер: ${response?.org}")
+
+    if (response?.asCode?.isNotEmpty() == true) messageScheme.add("– AS: ${response.asCode}")
+    if (response?.asName?.isNotEmpty() == true) messageScheme.add("– ASNAME: ${response.asName}")
+    if (response?.zip?.isNotEmpty() == true) messageScheme.add("– ZIP: ${response.zip}")
+
+    messageScheme.add("– IP: ${response?.ip}")
+
+    if (!response?.ip.equals(ptr)) messageScheme.add("– PTR: $ptr")
 
     MessageManagerImpl.botMessage(messageScheme.toString())
   }
 }
 
 @JsonClass(generateAdapter = true)
-data class IpInfoApiAdapter(
+data class IpApiAdapter(
   val status: String,
   val country: String,
   val countryCode: String,

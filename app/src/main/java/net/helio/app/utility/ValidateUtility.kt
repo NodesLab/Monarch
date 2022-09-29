@@ -14,15 +14,29 @@
  * limitations under the License.
  */
 
-package net.helio.app
+package net.helio.app.utility
 
 /**
- * Строки для MOTD.
+ * Утилита для валидации.
  *
  * @author hepller
  */
-val motdList: List<String> = listOf(
-  "Test",
-  "undefined",
-  "Кто скомпилил - того и вирус"
-)
+object ValidateUtility {
+
+  /**
+   * Проверяет, является ли строка числом.
+   *
+   * @param string Строка для проверки.
+   *
+   * @return `false` если строка не является числом, `true` если является.
+   */
+  fun isNumber(string: String): Boolean {
+    return try {
+      string.toInt()
+
+      true
+    } catch (exception: NumberFormatException) {
+      false
+    }
+  }
+}

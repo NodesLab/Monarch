@@ -16,10 +16,15 @@
 
 package net.helio.app.core.command.manager
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
 import net.helio.app.ui.message.manager.MessageManagerImpl
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Реализация менеджера команд.
@@ -28,6 +33,17 @@ import net.helio.app.ui.message.manager.MessageManagerImpl
  */
 object CommandManagerImpl : CommandManager {
   override var commandList: MutableList<Command> = mutableListOf()
+
+  /**
+   * Получает контекст для корутины из области.
+   *
+   * @param scope Область корутины.
+   *
+   * @return Контекст для корутины.
+   */
+  private fun getDispatcherFromCurrentThread(scope: CoroutineScope): CoroutineContext {
+    return scope.coroutineContext
+  }
 
   override fun registerCommand(command: Command) {
     commandList.add(command)
@@ -39,6 +55,7 @@ object CommandManagerImpl : CommandManager {
     }
   }
 
+  @OptIn(DelicateCoroutinesApi::class)
   override fun handleInput(command: String) {
     val commandObject: Command? = getCommand(command.substring(1).lowercase().split(" ")[0])
     val commandSession: CommandSession = CommandSessionImpl(command.substring(1).split(" "))
@@ -49,12 +66,18 @@ object CommandManagerImpl : CommandManager {
       return
     }
 
-    try {
-      commandObject.execute(commandSession)
-    } catch (exception: Exception) {
-      println(exception)
+    GlobalScope.launch {
+      val dispatcher: CoroutineContext = getDispatcherFromCurrentThread(this)
 
-      MessageManagerImpl.botMessage("⚠️ При выполнении команды произошла ошибка")
+      CoroutineScope(dispatcher).launch {
+        try {
+          commandObject.execute(commandSession)
+        } catch (exception: Exception) {
+          println(exception.message)
+
+          MessageManagerImpl.botMessage("⚠️ При выполнении команды произошла ошибка")
+        }
+      }
     }
   }
 }

@@ -25,16 +25,14 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import net.helio.app.BuildConfig
 import net.helio.app.R
-import net.helio.app.motdList
-import net.helio.app.utility.RandomUtility.getRandomListElement
 
 /**
  * Иконка навигации (кнопка).
@@ -73,7 +71,8 @@ private fun Title() {
     modifier = Modifier.padding(start = 10.dp)
   ) {
     val appName: String = stringResource(R.string.app_name)
-    val motdMessage: String = remember { getRandomListElement(motdList) ?: "null" }
+    val version: List<String> = BuildConfig.VERSION_NAME.split("-")
+    val motdMessage = "${version[0]} (${version[1]})"
 
     Text(text = appName, color = MaterialTheme.colors.onPrimary, fontSize = 18.sp)
     Text(text = motdMessage, color = MaterialTheme.colors.onSecondary, fontSize = 14.sp)
