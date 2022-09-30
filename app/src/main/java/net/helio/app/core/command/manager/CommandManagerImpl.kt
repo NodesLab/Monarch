@@ -16,6 +16,7 @@
 
 package net.helio.app.core.command.manager
 
+import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -23,7 +24,8 @@ import kotlinx.coroutines.launch
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
-import net.helio.app.ui.message.manager.MessageManagerImpl
+import net.helio.app.utility.NetworkUtility
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -49,19 +51,25 @@ object CommandManagerImpl : CommandManager {
     commandList.add(command)
   }
 
-  override fun getCommand(command: String): Command? {
+  override fun getCommand(alias: String): Command? {
     return commandList.find {
-      it.aliases.contains(command)
+      it.aliases.contains(alias)
     }
   }
 
   @OptIn(DelicateCoroutinesApi::class)
-  override fun handleInput(command: String) {
-    val commandObject: Command? = getCommand(command.substring(1).lowercase().split(" ")[0])
-    val commandSession: CommandSession = CommandSessionImpl(command.substring(1).split(" "))
+  override fun handleInput(input: String, context: Context) {
+    val command: Command? = getCommand(input.substring(1).lowercase().split(" ")[0])
+    val session: CommandSession = CommandSessionImpl(input.substring(1).split(" "))
 
-    if (commandObject == null) {
-      MessageManagerImpl.botMessage("⚠️ Неизвестная команда, для просмотра списка команд введите \"/help\"")
+    if (command == null) {
+      session.reply("⚠️ Неизвестная команда, для просмотра списка команд введите \"/help\"")
+
+      return
+    }
+
+    if (command.isRequireNetwork && !NetworkUtility.hasNetworkConnection(context)) {
+      session.reply("⚠️ Для использования этой команды необходим доступ к сети")
 
       return
     }
@@ -71,11 +79,15 @@ object CommandManagerImpl : CommandManager {
 
       CoroutineScope(dispatcher).launch {
         try {
-          commandObject.execute(commandSession)
+          command.execute(session)
         } catch (exception: Exception) {
-          println(exception.message)
+          val messageScheme = StringJoiner("\n")
 
-          MessageManagerImpl.botMessage("⚠️ При выполнении команды произошла ошибка")
+          messageScheme.add("⚠️ При выполнении команды произошла ошибка:")
+          messageScheme.add("")
+          messageScheme.add(exception.stackTrace.joinToString("\n"))
+
+          session.reply(messageScheme.toString())
         }
       }
     }

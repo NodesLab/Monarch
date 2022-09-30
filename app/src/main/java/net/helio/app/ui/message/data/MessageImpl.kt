@@ -27,11 +27,7 @@ import java.util.*
  *
  * @author hepller
  */
-data class MessageImpl(
-  private val author: String,
-  override val text: String,
-  override val date: Date
-) : Message {
+data class MessageImpl(private val author: String, override val text: String, override val date: Date) : Message {
 
   override fun isFromBot(): Boolean {
     return author == "bot"

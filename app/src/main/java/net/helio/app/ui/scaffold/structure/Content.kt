@@ -104,7 +104,7 @@ private fun MessageCard(message: Message) {
         }
 
         Text(
-          text = SimpleDateFormat("HH:mm", Locale.US).format(message.date),
+          text = SimpleDateFormat("HH:mm:ss", Locale.US).format(message.date),
           style = MaterialTheme.typography.body2,
           fontSize = 12.sp, // todo: перенести типографию в тему
           color = MaterialTheme.colors.onSecondary,
@@ -120,6 +120,8 @@ private fun MessageCard(message: Message) {
 /**
  * Добавляет автопрокрутку списка до последнего элемента.
  *
+ * @param listState Состояние списка.
+ *
  * @author hepller
  */
 @Composable
@@ -130,7 +132,7 @@ private fun AutoScroll(listState: LazyListState) {
 }
 
 /**
- * Отрисовывает список сообщений и устанавливает автопрокрутку.
+ * Список сообщений с автопрокруткой.
  *
  * @param messages Сообщения.
  *

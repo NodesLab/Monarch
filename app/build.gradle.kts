@@ -43,6 +43,8 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
+val majorProjectVersion = "1.0.1"
+
 android {
   compileSdk = 32
 
@@ -50,8 +52,8 @@ android {
     applicationId = "net.helio.app"
     minSdk = 31
     targetSdk = 32
-    versionCode = 2
-    versionName = "1.0.0-${getShortCommit()}"
+    versionCode = 3
+    versionName = "$majorProjectVersion-${getShortCommit()}"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

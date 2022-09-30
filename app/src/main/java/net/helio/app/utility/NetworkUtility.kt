@@ -16,6 +16,9 @@
 
 package net.helio.app.utility
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.ktor.client.*
@@ -76,6 +79,7 @@ object NetworkUtility {
    *
    * @return Сериализованный JSON-объект.
    */
+  // TODO: Переписать на неблокирующий метод.
   @Suppress("BlockingMethodInNonBlockingContext")
   suspend fun <T> readJsonHttp(url: String, adapter: Class<T>): T? {
     val response: String = requestHttp(url)
@@ -213,5 +217,27 @@ object NetworkUtility {
       varIp = varIp shr 8
     }
     return ipv4.toString()
+  }
+
+  /**
+   * Проверяет наличие доступа к сети.
+   *
+   * @param context Контекст.
+   */
+  fun hasNetworkConnection(context: Context): Boolean {
+    val connectivityManager: ConnectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val capabilities: NetworkCapabilities? = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+
+    if (capabilities != null) {
+      if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+        return true
+      } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+        return true
+      } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+        return true
+      }
+    }
+
+    return false
   }
 }

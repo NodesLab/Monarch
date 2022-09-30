@@ -16,6 +16,7 @@
 
 package net.helio.app.ui.scaffold.structure
 
+import android.content.Context
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +33,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.ui.message.manager.MessageManagerImpl
@@ -124,6 +126,8 @@ private fun SendButton(
 fun BottomBar() {
   var input: String by rememberSaveable { mutableStateOf("") }
 
+  val context: Context = LocalContext.current
+
   BottomAppBar(
     elevation = 4.dp,
     backgroundColor = MaterialTheme.colors.primary,
@@ -162,7 +166,7 @@ fun BottomBar() {
     SendButton(enabled = input.trim().isNotEmpty()) {
       MessageManagerImpl.userMessage(input.trim())
 
-      CommandManagerImpl.handleInput(input.trim())
+      CommandManagerImpl.handleInput(input = input.trim(), context = context)
 
       input = ""
     }

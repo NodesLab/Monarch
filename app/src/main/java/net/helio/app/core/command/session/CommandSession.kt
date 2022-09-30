@@ -16,6 +16,26 @@
 
 package net.helio.app.core.command.session
 
+import net.helio.app.ui.message.manager.MessageManager
+
+/**
+ * Интерфейс сессии команды.
+ *
+ * @author hepller
+ */
 interface CommandSession {
+
+  /**
+   * Список аргументов.
+   */
   val arguments: List<String>
+
+  /**
+   * Отвечает на сообщение.
+   *
+   * @param text Текст.
+   *
+   * @see MessageManager.botMessage
+   */
+  fun reply(text: String)
 }

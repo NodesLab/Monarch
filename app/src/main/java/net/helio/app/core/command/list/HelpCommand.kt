@@ -19,7 +19,6 @@ package net.helio.app.core.command.list
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.command.session.CommandSession
-import net.helio.app.ui.message.manager.MessageManagerImpl
 import java.util.*
 
 
@@ -43,9 +42,11 @@ object HelpCommand : Command {
     messageScheme.add("")
     messageScheme.add(getCommandList().joinToString("\n"))
     messageScheme.add("")
-    messageScheme.add("\uD83D\uDCDD Префиксы команд: /, !")
+    messageScheme.add("⚙️ Команды помеченные \"*\" не являются анонимными")
+    messageScheme.add("")
+    messageScheme.add("\uD83D\uDCDD Префиксы команд: [/, !]")
 
-    MessageManagerImpl.botMessage(messageScheme.toString())
+    session.reply(messageScheme.toString())
   }
 
   /**
@@ -58,8 +59,9 @@ object HelpCommand : Command {
 
     for (command in CommandManagerImpl.commandList) {
       val betaStatus = if (command.isInBeta) "ᵇᵉᵗᵃ" else ""
+      val nonAnonymous = if (!command.isAnonymous) "*" else ""
 
-      output.add("/${command.aliases[0]} — ${command.description} $betaStatus")
+      output.add("/${command.aliases[0]}$nonAnonymous — ${command.description} $betaStatus".trim())
     }
 
     return output

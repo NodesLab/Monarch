@@ -20,10 +20,8 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
-import net.helio.app.ui.message.manager.MessageManagerImpl
 import net.helio.app.utility.NetworkUtility
 import net.helio.app.utility.TextUtility
-import net.helio.app.utility.ValidateUtility
 import java.net.IDN
 import java.net.InetAddress
 import java.util.*
@@ -33,6 +31,7 @@ import java.util.*
  *
  * @author hepller
  */
+@Suppress("BlockingMethodInNonBlockingContext")
 object IpInfoCommand : Command {
   override val aliases: List<String> = listOf("ipinfo", "ip", "ипинфо", "ип")
   override val description: String = "Получение информации об IP"
@@ -43,7 +42,7 @@ object IpInfoCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      MessageManagerImpl.botMessage("⛔ Укажите IP-адрес, о котором необходимо найти информацию")
+      session.reply("⛔ Укажите IP-адрес, о котором необходимо найти информацию")
 
       return
     }
@@ -54,56 +53,123 @@ object IpInfoCommand : Command {
     if (!NetworkUtility.isValidIPv6(cleanedIp)) cleanedIp = cleanedIp.split(":")[0]
 
     // Конвертация IP из десятеричного формата в IPv4 (+ удаление порта)
-    if (ValidateUtility.isNumber(cleanedIp)) cleanedIp = NetworkUtility.longToIPv4(cleanedIp.split(":")[0].toLong())
+    if (TextUtility.isNumber(cleanedIp)) cleanedIp = NetworkUtility.longToIPv4(cleanedIp.split(":")[0].toLong())
 
     if (!NetworkUtility.isValidDomain(cleanedIp) && !NetworkUtility.isValidIPv4(cleanedIp) && !NetworkUtility.isValidIPv6(cleanedIp) && !NetworkUtility.isValidDomain(IDN.toUnicode(cleanedIp))) {
-      MessageManagerImpl.botMessage("⚠️️ Вы указали / переслали некорректный IP")
+      session.reply("⚠️️ Вы указали / переслали некорректный IP")
 
       return
     }
 
-    MessageManagerImpl.botMessage("⚙️ Получаю информацию о данном IP ...")
+    session.reply("⚙️ Получаю информацию о данном IP ...")
 
     val response: IpApiAdapter? = NetworkUtility.readJsonHttp("http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
 
+    if (response?.status != "success") {
+      session.reply("⚠️️ Не удалось получить информацию об этом IP (API)")
+
+      return
+    }
+
     val ptr: String? =
-      if (response?.reverse.equals("")) InetAddress.getByName(response?.ip).canonicalHostName
-      else response?.reverse
+      if (response.reverse == "") InetAddress.getByName(response.ip).canonicalHostName
+      else response.reverse
 
     val messageScheme = StringJoiner("\n")
 
     messageScheme.add("⚙️ Информация о $cleanedIp:")
     messageScheme.add("")
-    messageScheme.add("– Локация: ${response?.country}, ${response?.regionName}, ${response?.city} ${response?.countryCode?.let { TextUtility.getCountryFlagEmoji(it) }}")
-    messageScheme.add("– Организация: ${response?.org}")
-    messageScheme.add("– Провайдер: ${response?.org}")
+    messageScheme.add("– Локация: ${response.country}, ${response.regionName}, ${response.city} ${response.countryCode.let { TextUtility.getCountryFlagEmoji(it) }}")
+    messageScheme.add("– Организация: ${response.org}")
+    messageScheme.add("– Провайдер: ${response.org}")
 
-    if (response?.asCode?.isNotEmpty() == true) messageScheme.add("– AS: ${response.asCode}")
-    if (response?.asName?.isNotEmpty() == true) messageScheme.add("– ASNAME: ${response.asName}")
-    if (response?.zip?.isNotEmpty() == true) messageScheme.add("– ZIP: ${response.zip}")
+    if (response.asCode.isNotEmpty()) messageScheme.add("– AS: ${response.asCode}")
+    if (response.asName.isNotEmpty()) messageScheme.add("– ASNAME: ${response.asName}")
+    if (response.zip.isNotEmpty()) messageScheme.add("– ZIP: ${response.zip}")
 
-    messageScheme.add("– IP: ${response?.ip}")
+    messageScheme.add("– IP: ${response.ip}")
 
-    if (!response?.ip.equals(ptr)) messageScheme.add("– PTR: $ptr")
+    if (response.ip != ptr) messageScheme.add("– PTR: $ptr")
 
-    MessageManagerImpl.botMessage(messageScheme.toString())
+    session.reply(messageScheme.toString())
   }
 }
 
+/**
+ * Адаптер для ip-api.
+ *
+ * @author hepller
+ */
 @JsonClass(generateAdapter = true)
 data class IpApiAdapter(
+
+  /**
+   * Статус полученных данных (успех/ошибка).
+   */
   val status: String,
+
+  /**
+   * Страна.
+   */
   val country: String,
+
+  /**
+   * Код страны.
+   */
   val countryCode: String,
+
+  /**
+   * Имя региона.
+   */
   val regionName: String,
+
+  /**
+   * Город.
+   */
   val city: String,
+
+  /**
+   * ZIP-код.
+   */
   val zip: String,
+
+  /**
+   * Местоположение (latitude).
+   */
   val lat: Float,
+
+  /**
+   * Местоположение (longitude).
+   */
   val lon: Float,
+
+  /**
+   * Провайдер.
+   */
   val isp: String,
+
+  /**
+   * Организация.
+   */
   val org: String,
+
+  /**
+   * AS-код организации.
+   */
   @Json(name = "as") val asCode: String,
+
+  /**
+   * AS-имя организации.
+   */
   @Json(name = "asname") val asName: String,
+
+  /**
+   * PTR.
+   */
   val reverse: String,
+
+  /**
+   * IP который был запрошен.
+   */
   @Json(name = "query") val ip: String
 )

@@ -16,4 +16,16 @@
 
 package net.helio.app.core.command.session
 
-class CommandSessionImpl(override val arguments: List<String>) : CommandSession
+import net.helio.app.ui.message.manager.MessageManagerImpl
+
+/**
+ * Реализация сессии команды.
+ *
+ * @author hepller
+ */
+class CommandSessionImpl(override val arguments: List<String>) : CommandSession {
+
+  override fun reply(text: String) {
+    MessageManagerImpl.botMessage(text)
+  }
+}

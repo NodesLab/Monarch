@@ -42,4 +42,21 @@ object TextUtility {
 
     return String(Character.toChars(firstChar)) + String(Character.toChars(secondChar))
   }
+
+  /**
+   * Проверяет, является ли строка числом.
+   *
+   * @param string Строка для проверки.
+   *
+   * @return `false` если строка не является числом, `true` если является.
+   */
+  fun isNumber(string: String): Boolean {
+    return try {
+      string.toInt()
+
+      true
+    } catch (exception: NumberFormatException) {
+      false
+    }
+  }
 }

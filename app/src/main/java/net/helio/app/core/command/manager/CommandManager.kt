@@ -16,6 +16,7 @@
 
 package net.helio.app.core.command.manager
 
+import android.content.Context
 import net.helio.app.core.command.Command
 
 /**
@@ -32,16 +33,23 @@ interface CommandManager {
 
   /**
    * Регистрирует команду (добавляет в список команд).
+   *
+   * @param command Команда.
    */
   fun registerCommand(command: Command)
 
   /**
-   * Получает команду из списка.
+   * Получает команду по алиасу из списка.
+   *
+   * @param alias Алиас команды.
    */
-  fun getCommand(command: String): Command?
+  fun getCommand(alias: String): Command?
 
   /**
    * Обрабатывает ввод пользователя.
+   *
+   * @param input Введённый текст.
+   * @param context Контекст.
    */
-  fun handleInput(command: String)
+  fun handleInput(input: String, context: Context)
 }
