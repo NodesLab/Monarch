@@ -31,6 +31,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +41,7 @@ import net.helio.app.ui.message.data.Message
 import net.helio.app.ui.message.manager.MessageManagerImpl
 import net.helio.app.ui.message.manager.MessageManagerImpl.messageList
 import net.helio.app.ui.theme.Accent
+import net.helio.app.utility.NetworkUtility
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,6 +57,21 @@ private fun MessageCard(message: Message) {
   val color: Color = if (message.isFromBot()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
   val alignment: Alignment = if (message.isFromBot()) Alignment.TopStart else Alignment.TopEnd
   val author: String = if (message.isFromBot()) "Helio" else "User"
+
+  val annotatedString: AnnotatedString = buildAnnotatedString {
+    append(message.text)
+
+    for (url in NetworkUtility.getUrlsList(message.text)) {
+      val startIndex: Int = message.text.indexOf(url)
+      val endIndex: Int = startIndex + url.length
+
+      addStyle(
+        style = SpanStyle(
+          color = Accent,
+        ), start = startIndex, end = endIndex
+      )
+    }
+  }
 
   Box(
     modifier = Modifier.fillMaxWidth()
@@ -94,7 +113,7 @@ private fun MessageCard(message: Message) {
 
           SelectionContainer {
             Text(
-              text = message.text,
+              text = annotatedString,
               color = MaterialTheme.colors.onPrimary,
               style = MaterialTheme.typography.body2,
               fontSize = 15.sp, // todo: перенести типографию в тему

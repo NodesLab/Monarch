@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 // * PrimaryVariant<Type> - Не используется.
 // Secondary<Type> - Фон сообщения пользователя.
 // SecondaryVariant<Type> - Фон сообщения бота.
-// Background<Type> - Фон списка сообщений.
+// * Background<Type> - Не используется.
 // Surface<Type> - Эффект тени для выдвижных меню.
 // Error<Type> - Цвет для ошибок.
 // OnPrimary<Type> - Цвет для основных текстов и иконок.
@@ -45,11 +45,11 @@ val Accent: Color = Color(0xFF42A5F5)
 
 // region Тёмная тема.
 
-val PrimaryDark: Color = Color(0xFF212121)
+val PrimaryDark: Color = Color(0xFF212121) // Color(0xFF1B1B1B)
 val PrimaryVariantDark: Color = Color(0xFFFFFFFF)
 val SecondaryDark: Color = Color(0xFF3F3F3F)
 val SecondaryVariantDark: Color = Color(0xFF313131)
-val BackgroundDark: Color = Color(0xFF1B1B1B)
+val BackgroundDark: Color = Color(0xFFFFFFFF)
 val SurfaceDark: Color = Color(0xB31B1B1B)
 val ErrorDark: Color = Color(0xFFFFFFFF)
 val OnPrimaryDark: Color = Color(0xFFFFFFFF)
@@ -61,8 +61,6 @@ val OnErrorDark: Color = Color(0xFFFFFFFF)
 // endregion
 
 // region Светлая тема.
-
-// todo: Доделать.
 
 val PrimaryLight: Color = Color(0xFFFFFFFF)
 val PrimaryVariantLight: Color = Color(0xFFFFFFFF)

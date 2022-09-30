@@ -19,6 +19,9 @@ package net.helio.app.utility
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.linkedin.urls.Url
+import com.linkedin.urls.detection.UrlDetector
+import com.linkedin.urls.detection.UrlDetectorOptions
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.ktor.client.*
@@ -239,5 +242,30 @@ object NetworkUtility {
     }
 
     return false
+  }
+
+  /**
+   * Получает из текста URl-адреса.
+   *
+   * @param text Текст, из которого будут получаться URL-адреса.
+   *
+   * @return Список URl-адресов и их очищенных версий в виде строк.
+   *
+   * TODO: Переписать на собственный метод вместо библиотеки.
+   */
+  fun getUrlsList(text: String?): MutableList<String> {
+    val urlDetector = UrlDetector(text, UrlDetectorOptions.Default)
+    val urlList: List<Url> = urlDetector.detect()
+
+    val mutableUrlList: MutableList<String> = mutableListOf()
+
+    for (url: Url in urlList) {
+      val stringUrl = url.toString()
+
+      mutableUrlList.add(stringUrl)
+      mutableUrlList.add(clearUrl(stringUrl))
+    }
+
+    return mutableUrlList
   }
 }

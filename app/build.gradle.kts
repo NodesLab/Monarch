@@ -43,7 +43,7 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.0.1"
+val majorProjectVersion = "1.0.2"
 
 android {
   compileSdk = 32
@@ -52,7 +52,7 @@ android {
     applicationId = "net.helio.app"
     minSdk = 31
     targetSdk = 32
-    versionCode = 3
+    versionCode = 4
     versionName = "$majorProjectVersion-${getShortCommit()}"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -133,6 +133,8 @@ dependencies {
 
   implementation("io.ktor:ktor-client-core:$ktorVersion")
   implementation("io.ktor:ktor-client-cio:$ktorVersion")
+
+  implementation("com.linkedin.urls:url-detector:0.1.17")
 
   // endregion
 }

@@ -52,11 +52,11 @@ fun AppScaffold() {
     drawerContent = { DrawerContent() },
     bottomBar = { BottomBar() },
 
-    backgroundColor = MaterialTheme.colors.background,
+    backgroundColor = MaterialTheme.colors.primary,
 
-    contentColor = MaterialTheme.colors.background,
+    contentColor = MaterialTheme.colors.primary,
 
-    drawerBackgroundColor = MaterialTheme.colors.background,
+    drawerBackgroundColor = MaterialTheme.colors.primary,
     drawerScrimColor = MaterialTheme.colors.surface,
     drawerShape = MaterialTheme.shapes.small,
     drawerElevation = 16.dp

@@ -61,12 +61,12 @@ object IpInfoCommand : Command {
       return
     }
 
-    session.reply("⚙️ Получаю информацию о данном IP ...")
+    session.reply("⚙️ Получение информации об указанном IP ...")
 
     val response: IpApiAdapter? = NetworkUtility.readJsonHttp("http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
 
     if (response?.status != "success") {
-      session.reply("⚠️️ Не удалось получить информацию об этом IP (API)")
+      session.reply("⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
 
       return
     }
