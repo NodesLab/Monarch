@@ -19,22 +19,20 @@ package net.helio.app.ui.scaffold.structure
 import android.content.Context
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Mic
 import androidx.compose.material.icons.rounded.Send
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.ui.message.manager.MessageManagerImpl
+import net.helio.app.core.message.manager.MessageManagerImpl
 
 /**
  * Кнопка голосового ввода.
@@ -52,11 +50,17 @@ private fun VoiceButton(
 
   if (enabled) {
     LaunchedEffect(Unit) {
-      iconColor.animateTo(enabledColor, animationSpec = tween(200))
+      iconColor.animateTo(
+        targetValue = enabledColor,
+        animationSpec = tween(200)
+      )
     }
   } else {
     LaunchedEffect(Unit) {
-      iconColor.animateTo(disabledColor, animationSpec = tween(200))
+      iconColor.animateTo(
+        targetValue = disabledColor,
+        animationSpec = tween(200)
+      )
     }
   }
 
@@ -68,7 +72,7 @@ private fun VoiceButton(
       imageVector = Icons.Rounded.Mic,
       contentDescription = "Голосовой ввод команды",
       tint = iconColor.value,
-      modifier = Modifier.size(30.dp)
+      modifier = Modifier.size(size = 30.dp)
     )
   }
 }
@@ -90,15 +94,21 @@ private fun SendButton(
   disabledColor: Color = MaterialTheme.colors.onSecondary,
   onClick: () -> Unit
 ) {
-  val iconColor = remember { Animatable(disabledColor) }
+  val iconColor = remember { Animatable(initialValue = disabledColor) }
 
   if (enabled) {
-    LaunchedEffect(Unit) {
-      iconColor.animateTo(enabledColor, animationSpec = tween(300))
+    LaunchedEffect(key1 = Unit) {
+      iconColor.animateTo(
+        targetValue = enabledColor,
+        animationSpec = tween(durationMillis = 300)
+      )
     }
   } else {
     LaunchedEffect(Unit) {
-      iconColor.animateTo(disabledColor, animationSpec = tween(300))
+      iconColor.animateTo(
+        targetValue = disabledColor,
+        animationSpec = tween(durationMillis = 300)
+      )
     }
   }
 
@@ -110,7 +120,7 @@ private fun SendButton(
       imageVector = Icons.Rounded.Send,
       contentDescription = "Отправить команду",
       tint = iconColor.value,
-      modifier = Modifier.size(30.dp)
+      modifier = Modifier.size(size = 30.dp)
     )
   }
 }
@@ -122,7 +132,7 @@ private fun SendButton(
  */
 @Composable
 fun BottomBar() {
-  var input: String by rememberSaveable { mutableStateOf("") }
+  var input: String by rememberSaveable { mutableStateOf(value = "") }
 
   val context: Context = LocalContext.current
 
@@ -153,13 +163,13 @@ fun BottomBar() {
       ),
       modifier = Modifier
         .fillMaxHeight()
-        .width(260.dp)
+        .width(width = 260.dp)
     )
 
-    Spacer(Modifier.weight(weight = 1f))
+    Spacer(Modifier.weight(weight = 1f, fill = false))
 
     SendButton(enabled = input.trim().isNotEmpty()) {
-      MessageManagerImpl.userMessage(input.trim())
+      MessageManagerImpl.userMessage(text = input.trim())
 
       CommandManagerImpl.handleInput(input = input.trim(), context = context)
 

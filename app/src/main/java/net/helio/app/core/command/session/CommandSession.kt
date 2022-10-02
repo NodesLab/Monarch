@@ -16,7 +16,7 @@
 
 package net.helio.app.core.command.session
 
-import net.helio.app.ui.message.manager.MessageManager
+import net.helio.app.core.message.manager.MessageManager
 
 /**
  * Интерфейс сессии команды.

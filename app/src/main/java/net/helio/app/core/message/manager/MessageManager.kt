@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.message.manager
+package net.helio.app.core.message.manager
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import net.helio.app.ui.message.model.Message
+import net.helio.app.core.message.model.Message
 
 /**
  * Интерфейс менеджера сообщений.

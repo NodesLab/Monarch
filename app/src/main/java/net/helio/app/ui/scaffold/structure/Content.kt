@@ -38,9 +38,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import net.helio.app.ui.message.manager.MessageManagerImpl
-import net.helio.app.ui.message.manager.MessageManagerImpl.messageList
-import net.helio.app.ui.message.model.Message
+import net.helio.app.core.message.manager.MessageManagerImpl
+import net.helio.app.core.message.manager.MessageManagerImpl.messageList
+import net.helio.app.core.message.model.Message
 import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.utility.StringUtility
 import java.text.SimpleDateFormat
@@ -59,11 +59,11 @@ private fun MessageCard(message: Message) {
   val alignment: Alignment = if (message.isFromApp()) Alignment.TopStart else Alignment.TopEnd
   val author: String = if (message.isFromApp()) "Helio" else "User"
 
-  val annotatedString = StringUtility.parseLinks(message.text)
+  val annotatedString = StringUtility.parseLinks(text = message.text)
 
-  var scale by remember { mutableStateOf(1f) }
-  var rotation by remember { mutableStateOf(0f) }
-  var offset by remember { mutableStateOf(Offset.Zero) }
+  var scale by remember { mutableStateOf(value = 1f) }
+  var rotation by remember { mutableStateOf(value = 0f) }
+  var offset by remember { mutableStateOf(value = Offset.Zero) }
   val state = rememberTransformableState { zoomChange, offsetChange, rotationChange ->
     scale *= zoomChange
     rotation += rotationChange
@@ -74,7 +74,7 @@ private fun MessageCard(message: Message) {
     modifier = Modifier.fillMaxWidth()
   ) {
     Surface(
-      shape = RoundedCornerShape(16.dp),
+      shape = RoundedCornerShape(size = 16.dp),
       color = color,
       elevation = 1.dp,
       modifier = Modifier
@@ -96,7 +96,7 @@ private fun MessageCard(message: Message) {
         IconButton(
           onClick = { MessageManagerImpl.removeMessage(message = message) },
           modifier = Modifier
-            .size(25.dp)
+            .size(size = 25.dp)
             .padding(end = 5.dp, top = 5.dp)
             .align(Alignment.TopEnd)
         ) {
@@ -133,7 +133,7 @@ private fun MessageCard(message: Message) {
           fontSize = 12.sp, // todo: перенести типографию в тему
           color = MaterialTheme.colors.onSecondary,
           modifier = Modifier
-            .align(Alignment.BottomEnd)
+            .align(alignment = Alignment.BottomEnd)
             .padding(end = 8.dp, bottom = 4.dp)
         )
       }
@@ -150,7 +150,7 @@ private fun MessageCard(message: Message) {
  */
 @Composable
 private fun AutoScroll(listState: LazyListState) {
-  LaunchedEffect(Unit) {
+  LaunchedEffect(key1 = Unit) {
     if (!listState.isScrollInProgress) listState.animateScrollToItem(index = listState.layoutInfo.totalItemsCount)
   }
 }
@@ -169,7 +169,7 @@ private fun MessageColumn(messages: List<Message>) {
   LazyColumn(
     state = listState,
     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 10.dp),
-    verticalArrangement = Arrangement.spacedBy(10.dp),
+    verticalArrangement = Arrangement.spacedBy(space = 10.dp),
     modifier = Modifier.background(MaterialTheme.colors.primary)
   ) {
     items(items = messages) { message ->
@@ -190,7 +190,7 @@ fun Content(contentPadding: PaddingValues) {
   Surface(
     modifier = Modifier
       .fillMaxSize()
-      .padding(contentPadding)
+      .padding(paddingValues = contentPadding)
   ) {
     MessageColumn(messages = messageList)
   }

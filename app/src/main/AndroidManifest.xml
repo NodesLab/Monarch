@@ -22,8 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <application
-        android:name="net.helio.app.HelioApplication"
+    <application android:name="net.helio.app.HelioApplication"
         android:appCategory="productivity"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -34,8 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Helio"
         tools:targetApi="32">
-        <activity
-            android:name="net.helio.app.activities.MainActivity"
+        <activity android:name="net.helio.app.activities.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
             android:hardwareAccelerated="true"
