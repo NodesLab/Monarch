@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.ui.message.manager.MessageManagerImpl
+import net.helio.app.ui.utility.manager.MessageManagerImpl
 
 /**
  * Кнопка голосового ввода.

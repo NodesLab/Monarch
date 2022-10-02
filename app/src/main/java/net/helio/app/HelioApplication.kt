@@ -14,22 +14,26 @@
  * limitations under the License.
  */
 
-package net.helio.app.utility
+package net.helio.app
+
+import android.app.Application
+import net.helio.app.core.command.list.HelpCommand
+import net.helio.app.core.command.list.IpInfoCommand
+import net.helio.app.core.command.manager.CommandManagerImpl
+import net.helio.app.ui.utility.manager.MessageManagerImpl
 
 /**
- * Утилита для работы со случайными значениями.
+ * Входная точка приложения.
  *
  * @author hepller
  */
-object RandomUtility {
+class HelioApplication : Application() {
+  override fun onCreate() {
+    super.onCreate()
 
-  /**
-   * Получает случайный элемент из списка.
-   *
-   * @param list Список элементов.
-   */
-  @JvmStatic
-  fun <T> getRandomListElement(list: List<T>): T? {
-    return list.asSequence().shuffled().find { true }
+    CommandManagerImpl.registerCommand(HelpCommand)
+    CommandManagerImpl.registerCommand(IpInfoCommand)
+
+    MessageManagerImpl.appMessage("⚙️ Helio запущен, введите команду")
   }
 }

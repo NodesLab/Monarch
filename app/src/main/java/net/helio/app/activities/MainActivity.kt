@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-package net.helio.app
+package net.helio.app.activities
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.remember
-import net.helio.app.core.command.list.HelpCommand
-import net.helio.app.core.command.list.IpInfoCommand
-import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.ui.message.manager.MessageManagerImpl
 import net.helio.app.ui.scaffold.AppScaffold
 import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.theme.HelioTheme
@@ -39,16 +33,8 @@ import net.helio.app.ui.theme.HelioTheme
  */
 class MainActivity : ComponentActivity() {
 
-  @SuppressLint("RememberReturnType")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    // region Регистрация команд.
-
-    CommandManagerImpl.registerCommand(HelpCommand)
-    CommandManagerImpl.registerCommand(IpInfoCommand)
-
-    // endregion
 
     setContent {
       HelioTheme {
@@ -61,15 +47,6 @@ class MainActivity : ComponentActivity() {
         CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
           AppScaffold()
         }
-
-        // region Сообщение об обновлении активити.
-
-        // remember для исправления рекомпозиции, при которой сообщение дублируется.
-        remember {
-          MessageManagerImpl.botMessage("⚙️ Активити обновлено")
-        }
-
-        // endregion
       }
     }
   }

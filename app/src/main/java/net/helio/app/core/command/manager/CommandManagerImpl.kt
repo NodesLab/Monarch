@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
-import net.helio.app.utility.NetworkUtility
+import net.helio.app.core.utility.NetworkUtility
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
@@ -48,6 +48,8 @@ object CommandManagerImpl : CommandManager {
   }
 
   override fun registerCommand(command: Command) {
+    if (commandList.contains(command)) return
+
     commandList.add(command)
   }
 

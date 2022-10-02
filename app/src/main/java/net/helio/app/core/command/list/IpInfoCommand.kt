@@ -20,8 +20,8 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
-import net.helio.app.utility.NetworkUtility
-import net.helio.app.utility.TextUtility
+import net.helio.app.core.utility.NetworkUtility
+import net.helio.app.core.utility.TextUtility
 import java.net.IDN
 import java.net.InetAddress
 import java.util.*

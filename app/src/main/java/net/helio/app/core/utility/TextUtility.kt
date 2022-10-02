@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.utility
+package net.helio.app.core.utility
 
 /**
  * Утилита для работы с текстом.

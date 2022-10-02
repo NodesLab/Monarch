@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.message.data
+package net.helio.app.ui.model
 
 import java.util.*
 
 /**
  * Реализация сообщения.
  *
- * @param author Автор сообщения (bot | user).
+ * @param author Автор сообщения (app | user).
  * @param text Текст сообщения.
  * @param date Время создания сообщения.
  *
@@ -29,8 +29,8 @@ import java.util.*
  */
 data class MessageImpl(private val author: String, override val text: String, override val date: Date) : Message {
 
-  override fun isFromBot(): Boolean {
-    return author == "bot"
+  override fun isFromApp(): Boolean {
+    return author == "app"
   }
 
   override fun isFromUser(): Boolean {

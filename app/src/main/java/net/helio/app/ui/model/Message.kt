@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.message.data
+package net.helio.app.ui.model
 
 import java.util.*
 
@@ -36,11 +36,11 @@ interface Message {
   val date: Date
 
   /**
-   * Проверяет, является ли сообщение созданным ботом.
+   * Проверяет, является ли сообщение созданным приложением.
    *
    * @return `true`, если автор сообщения - бот.
    */
-  fun isFromBot(): Boolean
+  fun isFromApp(): Boolean
 
   /**
    * Проверяет, является ли сообщение созданным пользователем.

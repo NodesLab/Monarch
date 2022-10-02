@@ -16,7 +16,7 @@
 
 package net.helio.app.core.command.session
 
-import net.helio.app.ui.message.manager.MessageManagerImpl
+import net.helio.app.ui.utility.manager.MessageManagerImpl
 
 /**
  * Реализация сессии команды.
@@ -26,6 +26,6 @@ import net.helio.app.ui.message.manager.MessageManagerImpl
 class CommandSessionImpl(override val arguments: List<String>) : CommandSession {
 
   override fun reply(text: String) {
-    MessageManagerImpl.botMessage(text)
+    MessageManagerImpl.appMessage(text)
   }
 }

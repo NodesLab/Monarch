@@ -43,19 +43,19 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.0.2"
+val majorProjectVersion = "1.1.0"
 
 android {
   compileSdk = 32
 
   defaultConfig {
     applicationId = "net.helio.app"
-    minSdk = 31
+    minSdk = 29
     targetSdk = 32
-    versionCode = 4
+    versionCode = 5
     versionName = "$majorProjectVersion-${getShortCommit()}"
 
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     vectorDrawables {
       useSupportLibrary = true
@@ -64,7 +64,8 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      isShrinkResources = true
 
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -98,7 +99,7 @@ android {
   }
 }
 
-// region Версии.
+// region Версии библиотек.
 
 val composeVersion = "1.2.1"
 val moshiVersion = "1.14.0"

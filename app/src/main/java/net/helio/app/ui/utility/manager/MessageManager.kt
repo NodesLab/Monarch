@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.message.manager
+package net.helio.app.ui.utility.manager
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import net.helio.app.ui.message.data.Message
+import net.helio.app.ui.model.Message
 
 /**
  * Интерфейс менеджера сообщений.
@@ -36,7 +36,7 @@ interface MessageManager {
    *
    * @param text Текст сообщения.
    */
-  fun botMessage(text: String)
+  fun appMessage(text: String)
 
   /**
    * Добавляет сообщение пользователя в список.

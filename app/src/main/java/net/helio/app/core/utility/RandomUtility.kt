@@ -14,28 +14,22 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.command.session
-
-import net.helio.app.ui.utility.manager.MessageManager
+package net.helio.app.core.utility
 
 /**
- * Интерфейс сессии команды.
+ * Утилита для работы со случайными значениями.
  *
  * @author hepller
  */
-interface CommandSession {
+object RandomUtility {
 
   /**
-   * Список аргументов.
-   */
-  val arguments: List<String>
-
-  /**
-   * Отвечает на сообщение.
+   * Получает случайный элемент из списка.
    *
-   * @param text Текст.
-   *
-   * @see MessageManager.appMessage
+   * @param list Список элементов.
    */
-  fun reply(text: String)
+  @JvmStatic
+  fun <T> getRandomListElement(list: List<T>): T? {
+    return list.asSequence().shuffled().find { true }
+  }
 }

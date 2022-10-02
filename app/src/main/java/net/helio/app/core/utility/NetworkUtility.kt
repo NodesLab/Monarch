@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.utility
+package net.helio.app.core.utility
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -35,6 +35,7 @@ import java.net.URISyntaxException
 import java.net.URL
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.math.pow
 
 
 /**
@@ -184,7 +185,7 @@ object NetworkUtility {
    *
    * @return IP в десятеричном формате.
    */
-  fun IPv4ToLong(ipv4: String): Long {
+  fun ipV4toLong(ipv4: String): Long {
     val ipAddressInArray: Array<String> = ipv4.split("\\.").toTypedArray()
     var decimalIp: Long = 0
 
@@ -192,7 +193,7 @@ object NetworkUtility {
       val power: Int = 3 - i
       val intIp: Int = ipAddressInArray[i].toInt()
 
-      decimalIp += (intIp * Math.pow(256.0, power.toDouble())).toLong()
+      decimalIp += (intIp * 256.0.pow(power.toDouble())).toLong()
     }
 
     return decimalIp
@@ -258,7 +259,6 @@ object NetworkUtility {
     val urlList: List<Url> = urlDetector.detect()
 
     val mutableUrlList: MutableList<String> = mutableListOf()
-
     for (url: Url in urlList) {
       val stringUrl = url.toString()
 

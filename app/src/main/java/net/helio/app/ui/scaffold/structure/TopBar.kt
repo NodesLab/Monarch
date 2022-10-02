@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.helio.app.BuildConfig
@@ -70,7 +69,7 @@ private fun Title() {
   Column(
     modifier = Modifier.padding(start = 10.dp)
   ) {
-    val appName: String = stringResource(R.string.app_name)
+    val appName = "Helio"
     val version: List<String> = BuildConfig.VERSION_NAME.split("-")
     val motdMessage = "v${version[0]} (${version[1]})"
 

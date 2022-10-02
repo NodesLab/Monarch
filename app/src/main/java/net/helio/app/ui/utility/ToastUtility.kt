@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.utility
+package net.helio.app.ui.utility
 
 import android.content.Context
 import android.widget.Toast
@@ -33,7 +33,6 @@ object ToastUtility {
    * @param text Текст тоста.
    * @param duration Продолжительность (Toast.LENGTH_LONG | Toast.LENGTH_SHORT).
    */
-  @JvmStatic
   private fun makeToast(context: Context, text: String, duration: Int) {
     Toast.makeText(context, text, duration).show()
   }
@@ -44,7 +43,6 @@ object ToastUtility {
    * @param context Контекст.
    * @param text Текст тоста.
    */
-  @JvmStatic
   fun makeLongToast(context: Context, text: String) {
     makeToast(context, text, Toast.LENGTH_LONG)
   }
@@ -55,7 +53,6 @@ object ToastUtility {
    * @param context Контекст.
    * @param text Текст тоста.
    */
-  @JvmStatic
   fun makeShortToast(context: Context, text: String) {
     makeToast(context, text, Toast.LENGTH_SHORT)
   }

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.message.manager
+package net.helio.app.ui.utility.manager
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import net.helio.app.ui.message.data.Message
-import net.helio.app.ui.message.data.MessageImpl
+import net.helio.app.ui.model.Message
+import net.helio.app.ui.model.MessageImpl
 import java.util.*
 
 /**
@@ -34,15 +34,15 @@ object MessageManagerImpl : MessageManager {
   /**
    * Добавляет сообщение в список сообщений.
    *
-   * @param author Автор сообщения (bot | user).
+   * @param author Автор сообщения (app | user).
    * @param text Текст сообщения.
    */
   private fun addMessage(author: String, text: String) {
     messageList.add(MessageImpl(author, text, Date()))
   }
 
-  override fun botMessage(text: String) {
-    addMessage("bot", text)
+  override fun appMessage(text: String) {
+    addMessage("app", text)
   }
 
   override fun userMessage(text: String) {

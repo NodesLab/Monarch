@@ -37,11 +37,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import net.helio.app.ui.message.data.Message
-import net.helio.app.ui.message.manager.MessageManagerImpl
-import net.helio.app.ui.message.manager.MessageManagerImpl.messageList
+import net.helio.app.core.utility.NetworkUtility
+import net.helio.app.ui.model.Message
 import net.helio.app.ui.theme.Accent
-import net.helio.app.utility.NetworkUtility
+import net.helio.app.ui.utility.manager.MessageManagerImpl
+import net.helio.app.ui.utility.manager.MessageManagerImpl.messageList
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -54,9 +54,9 @@ import java.util.*
  */
 @Composable
 private fun MessageCard(message: Message) {
-  val color: Color = if (message.isFromBot()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
-  val alignment: Alignment = if (message.isFromBot()) Alignment.TopStart else Alignment.TopEnd
-  val author: String = if (message.isFromBot()) "Helio" else "User"
+  val color: Color = if (message.isFromApp()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
+  val alignment: Alignment = if (message.isFromApp()) Alignment.TopStart else Alignment.TopEnd
+  val author: String = if (message.isFromApp()) "Helio" else "user"
 
   val annotatedString: AnnotatedString = buildAnnotatedString {
     append(message.text)
