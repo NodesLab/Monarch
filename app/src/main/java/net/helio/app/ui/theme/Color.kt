@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 
 // Accent - Цвет акцента.
 
-// Primary<Type> - Для меню и панелей.
+// Primary<Type> - Для меню, панелей и системного UI.
 // * PrimaryVariant<Type> - Не используется.
 // Secondary<Type> - Фон сообщения пользователя.
 // SecondaryVariant<Type> - Фон сообщения бота.
@@ -45,10 +45,10 @@ val Accent: Color = Color(0xFF42A5F5)
 
 // region Тёмная тема.
 
-val PrimaryDark: Color = Color(0xFF212121) // Color(0xFF1B1B1B)
+val PrimaryDark: Color = Color.Black // Color(0xFF212121) // Color(0xFF1B1B1B)
 val PrimaryVariantDark: Color = Color(0xFFFFFFFF)
-val SecondaryDark: Color = Color(0xFF3F3F3F)
-val SecondaryVariantDark: Color = Color(0xFF313131)
+val SecondaryDark: Color = Color(0xFF3F3F3F) // Color(0xFF3F3F3F)
+val SecondaryVariantDark: Color = Color(0xFF1A1A1A) //  Color(0xFF313131)
 val BackgroundDark: Color = Color(0xFFFFFFFF)
 val SurfaceDark: Color = Color(0xB31B1B1B)
 val ErrorDark: Color = Color(0xFFFFFFFF)

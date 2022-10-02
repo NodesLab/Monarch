@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.ui.utility.manager.MessageManagerImpl
+import net.helio.app.ui.message.manager.MessageManagerImpl
 
 /**
  * Кнопка голосового ввода.
@@ -96,11 +96,11 @@ private fun SendButton(
 
   if (enabled) {
     LaunchedEffect(Unit) {
-      iconColor.animateTo(enabledColor, animationSpec = tween(200))
+      iconColor.animateTo(enabledColor, animationSpec = tween(300))
     }
   } else {
     LaunchedEffect(Unit) {
-      iconColor.animateTo(disabledColor, animationSpec = tween(200))
+      iconColor.animateTo(disabledColor, animationSpec = tween(300))
     }
   }
 

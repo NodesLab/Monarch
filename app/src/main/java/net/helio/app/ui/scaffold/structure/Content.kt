@@ -16,6 +16,8 @@
 
 package net.helio.app.ui.scaffold.structure
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -31,17 +33,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import net.helio.app.core.utility.NetworkUtility
-import net.helio.app.ui.model.Message
+import net.helio.app.ui.message.manager.MessageManagerImpl
+import net.helio.app.ui.message.manager.MessageManagerImpl.messageList
+import net.helio.app.ui.message.model.Message
 import net.helio.app.ui.theme.Accent
-import net.helio.app.ui.utility.manager.MessageManagerImpl
-import net.helio.app.ui.utility.manager.MessageManagerImpl.messageList
+import net.helio.app.ui.utility.StringUtility
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -56,22 +55,9 @@ import java.util.*
 private fun MessageCard(message: Message) {
   val color: Color = if (message.isFromApp()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
   val alignment: Alignment = if (message.isFromApp()) Alignment.TopStart else Alignment.TopEnd
-  val author: String = if (message.isFromApp()) "Helio" else "user"
+  val author: String = if (message.isFromApp()) "Helio" else "User"
 
-  val annotatedString: AnnotatedString = buildAnnotatedString {
-    append(message.text)
-
-    for (url in NetworkUtility.getUrlsList(message.text)) {
-      val startIndex: Int = message.text.indexOf(url)
-      val endIndex: Int = startIndex + url.length
-
-      addStyle(
-        style = SpanStyle(
-          color = Accent,
-        ), start = startIndex, end = endIndex
-      )
-    }
-  }
+  val annotatedString = StringUtility.parseLinks(message.text)
 
   Box(
     modifier = Modifier.fillMaxWidth()
@@ -82,7 +68,7 @@ private fun MessageCard(message: Message) {
       elevation = 1.dp,
       modifier = Modifier
         .align(alignment)
-        .widthIn(min = 100.dp, max = 250.dp) // Устанавливает лимиты ширины сообщения.
+        .widthIn(min = 80.dp, max = 280.dp) // Устанавливает лимиты ширины сообщения.
         .heightIn(min = 80.dp) // Устанавливает лимиты высоты сообщения.
     ) {
       Box(
@@ -157,6 +143,7 @@ private fun AutoScroll(listState: LazyListState) {
  *
  * @author hepller
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun MessageList(messages: List<Message>) {
   val listState: LazyListState = rememberLazyListState()
@@ -164,10 +151,11 @@ private fun MessageList(messages: List<Message>) {
   LazyColumn(
     state = listState,
     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 10.dp),
-    verticalArrangement = Arrangement.spacedBy(10.dp)
+    verticalArrangement = Arrangement.spacedBy(10.dp),
+    modifier = Modifier.background(MaterialTheme.colors.primary)
   ) {
     items(items = messages) { message ->
-      MessageCard(message)
+      MessageCard(message = message)
 
       AutoScroll(listState)
     }

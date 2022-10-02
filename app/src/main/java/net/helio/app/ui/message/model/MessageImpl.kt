@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.model
+package net.helio.app.ui.message.model
 
 import java.util.*
 

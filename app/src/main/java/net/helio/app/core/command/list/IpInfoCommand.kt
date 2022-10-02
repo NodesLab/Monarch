@@ -61,7 +61,7 @@ object IpInfoCommand : Command {
       return
     }
 
-    session.reply("⚙️ Получение информации об указанном IP ...")
+    session.reply("⚙️ Получение информации об IP ...")
 
     val response: IpApiAdapter? = NetworkUtility.readJsonHttp("http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
 

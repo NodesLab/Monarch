@@ -19,6 +19,7 @@ package net.helio.app.ui.scaffold
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -54,7 +55,7 @@ fun AppScaffold() {
 
     backgroundColor = MaterialTheme.colors.primary,
 
-    contentColor = MaterialTheme.colors.primary,
+    contentColor = Color.White, // MaterialTheme.colors.primary,
 
     drawerBackgroundColor = MaterialTheme.colors.primary,
     drawerScrimColor = MaterialTheme.colors.surface,
