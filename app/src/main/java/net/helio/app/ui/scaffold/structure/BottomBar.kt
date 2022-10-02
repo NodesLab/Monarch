@@ -23,8 +23,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Mic
@@ -136,30 +134,27 @@ fun BottomBar() {
       /* TODO */
     }
 
-    SelectionContainer {
-      TextField(
-        value = input,
-        onValueChange = { newText ->
-          input = newText.trimStart { it == ' ' }
-        },
-        placeholder = {
-          Text(text = "Введите команду")
-        },
-        colors = TextFieldDefaults.textFieldColors(
-          textColor = MaterialTheme.colors.onPrimary,
-          backgroundColor = Color.Transparent,
-          placeholderColor = MaterialTheme.colors.onSecondary,
-          cursorColor = MaterialTheme.colors.onPrimary,
-          focusedIndicatorColor = Color.Transparent,
-          unfocusedIndicatorColor = Color.Transparent,
-          disabledIndicatorColor = Color.Transparent
-        ),
-        shape = RoundedCornerShape(5.dp),
-        modifier = Modifier
-          .fillMaxHeight()
-          .width(260.dp)
-      )
-    }
+    TextField(
+      value = input,
+      onValueChange = { newText ->
+        input = newText.trimStart { it == '\n' }
+      },
+      placeholder = {
+        Text(text = "Введите команду")
+      },
+      colors = TextFieldDefaults.textFieldColors(
+        textColor = MaterialTheme.colors.onPrimary,
+        backgroundColor = Color.Transparent,
+        placeholderColor = MaterialTheme.colors.onSecondary,
+        cursorColor = MaterialTheme.colors.onPrimary,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledIndicatorColor = Color.Transparent
+      ),
+      modifier = Modifier
+        .fillMaxHeight()
+        .width(260.dp)
+    )
 
     Spacer(Modifier.weight(weight = 1f))
 

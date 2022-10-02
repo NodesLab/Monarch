@@ -17,7 +17,8 @@
 package net.helio.app.ui.scaffold.structure
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.*
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -34,10 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.consumeAllChanges
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.helio.app.ui.message.manager.MessageManagerImpl
@@ -47,7 +45,6 @@ import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.utility.StringUtility
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
 
 /**
  * Карточка сообщения.
@@ -89,9 +86,7 @@ private fun MessageCard(message: Message) {
           scaleY = scale,
           rotationZ = rotation,
           translationX = offset.x,
-          translationY = offset.y,
-          spotShadowColor = Color.White,
-          ambientShadowColor = Color.White
+          translationY = offset.y
         )
         .transformable(state = state)
     ) {
@@ -99,7 +94,7 @@ private fun MessageCard(message: Message) {
         contentAlignment = Alignment.TopStart
       ) {
         IconButton(
-          onClick = { MessageManagerImpl.removeMessage(message) },
+          onClick = { MessageManagerImpl.removeMessage(message = message) },
           modifier = Modifier
             .size(25.dp)
             .padding(end = 5.dp, top = 5.dp)
@@ -107,7 +102,7 @@ private fun MessageCard(message: Message) {
         ) {
           Icon(
             imageVector = Icons.Rounded.Clear,
-            contentDescription = null,
+            contentDescription = "Удалить сообщение",
             tint = MaterialTheme.colors.onSecondary
           )
         }

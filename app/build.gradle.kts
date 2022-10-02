@@ -21,7 +21,6 @@ plugins {
   id("org.jetbrains.kotlin.android")
 
   kotlin("kapt")
-
 }
 
 /**
@@ -43,7 +42,7 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.1.2"
+val majorProjectVersion = "1.1.3"
 
 android {
   compileSdk = 32
@@ -52,7 +51,7 @@ android {
     applicationId = "net.helio.app"
     minSdk = 29
     targetSdk = 32
-    versionCode = 6
+    versionCode = 7
     versionName = "$majorProjectVersion-${getShortCommit()}"
 
     vectorDrawables {
