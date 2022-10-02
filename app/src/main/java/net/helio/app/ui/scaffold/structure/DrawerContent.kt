@@ -17,6 +17,7 @@
 package net.helio.app.ui.scaffold.structure
 
 import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
@@ -31,5 +32,7 @@ import androidx.compose.runtime.Composable
 fun DrawerContent() {
   Text(text = "No functional")
 
-  Divider()
+  Divider(
+    color = MaterialTheme.colors.onSecondary
+  )
 }

@@ -45,10 +45,10 @@ val Accent: Color = Color(0xFF42A5F5)
 
 // region Тёмная тема.
 
-val PrimaryDark: Color = Color.Black // Color(0xFF212121) // Color(0xFF1B1B1B)
+val PrimaryDark: Color = Color.Black
 val PrimaryVariantDark: Color = Color(0xFFFFFFFF)
-val SecondaryDark: Color = Color(0xFF3F3F3F) // Color(0xFF3F3F3F)
-val SecondaryVariantDark: Color = Color(0xFF1A1A1A) //  Color(0xFF313131)
+val SecondaryDark: Color = Color(0xFF3F3F3F)
+val SecondaryVariantDark: Color = Color(0xFF1A1A1A)
 val BackgroundDark: Color = Color(0xFFFFFFFF)
 val SurfaceDark: Color = Color(0xB31B1B1B)
 val ErrorDark: Color = Color(0xFFFFFFFF)
@@ -64,8 +64,8 @@ val OnErrorDark: Color = Color(0xFFFFFFFF)
 
 val PrimaryLight: Color = Color(0xFFFFFFFF)
 val PrimaryVariantLight: Color = Color(0xFFFFFFFF)
-val SecondaryLight: Color = Color(0xFFFFFFFF)
-val SecondaryVariantLight: Color = Color(0xFFFFFFFF)
+val SecondaryLight: Color = Color(0xFFFCFCFC)
+val SecondaryVariantLight: Color = Color(0xFFF8F8F8)
 val BackgroundLight: Color = Color(0xFFFFFFFF)
 val SurfaceLight: Color = Color(0xB3FFFFFF)
 val ErrorLight: Color = Color(0xFF000000)

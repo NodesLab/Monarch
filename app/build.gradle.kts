@@ -43,7 +43,7 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.1.1"
+val majorProjectVersion = "1.1.2"
 
 android {
   compileSdk = 32
@@ -52,10 +52,8 @@ android {
     applicationId = "net.helio.app"
     minSdk = 29
     targetSdk = 32
-    versionCode = 5
+    versionCode = 6
     versionName = "$majorProjectVersion-${getShortCommit()}"
-
-//    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     vectorDrawables {
       useSupportLibrary = true

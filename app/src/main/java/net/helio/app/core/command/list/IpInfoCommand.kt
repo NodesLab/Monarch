@@ -36,7 +36,7 @@ object IpInfoCommand : Command {
   override val aliases: List<String> = listOf("ipinfo", "ip", "ипинфо", "ип")
   override val description: String = "Получение информации об IP"
 
-  override val isInBeta: Boolean = true
+  override val isInBeta: Boolean = false
   override val isRequireNetwork: Boolean = true
   override val isAnonymous: Boolean = true
 
