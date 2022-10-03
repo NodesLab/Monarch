@@ -48,48 +48,48 @@ object CommandManagerImpl : CommandManager {
   }
 
   override fun registerCommand(command: Command) {
-    if (commandList.contains(command)) return
+    if (commandList.contains(element = command)) return
 
     commandList.add(command)
   }
 
   override fun getCommand(alias: String): Command? {
     return commandList.find {
-      it.aliases.contains(alias)
+      it.aliases.contains(element = alias)
     }
   }
 
   @OptIn(DelicateCoroutinesApi::class)
   override fun handleInput(input: String, context: Context) {
-    val command: Command? = getCommand(input.substring(1).lowercase().split(" ")[0])
-    val session: CommandSession = CommandSessionImpl(input.substring(1).split(" "))
+    val command: Command? = getCommand(alias = input.substring(startIndex = 1).lowercase().split(" ")[0])
+    val session: CommandSession = CommandSessionImpl(arguments = input.substring(startIndex = 1).split(" "))
 
     if (command == null) {
-      session.reply("⚠️ Неизвестная команда, для просмотра списка команд введите \"/help\"")
+      session.reply(text = "⚠️ Неизвестная команда, для просмотра списка команд введите \"/commands\"")
 
       return
     }
 
-    if (command.isRequireNetwork && !NetworkUtility.hasNetworkConnection(context)) {
-      session.reply("⚠️ Для использования этой команды необходим доступ к сети")
+    if (command.isRequireNetwork && !NetworkUtility.hasNetworkConnection(context = context)) {
+      session.reply(text = "⚠️ Для использования этой команды необходим доступ к сети")
 
       return
     }
 
     GlobalScope.launch {
-      val dispatcher: CoroutineContext = getDispatcherFromCurrentThread(this)
+      val dispatcher: CoroutineContext = getDispatcherFromCurrentThread(scope = this)
 
-      CoroutineScope(dispatcher).launch {
+      CoroutineScope(context = dispatcher).launch {
         try {
-          command.execute(session)
+          command.execute(session = session)
         } catch (exception: Exception) {
           val messageScheme = StringJoiner("\n")
 
           messageScheme.add("⚠️ При выполнении команды произошла ошибка:")
           messageScheme.add("")
-          messageScheme.add(exception.stackTrace.joinToString("\n"))
+          messageScheme.add(exception.stackTrace.joinToString(separator = "\n"))
 
-          session.reply(messageScheme.toString())
+          session.reply(text = messageScheme.toString())
         }
       }
     }

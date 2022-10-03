@@ -25,6 +25,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -69,12 +70,13 @@ private fun Title() {
   Column(
     modifier = Modifier.padding(start = 10.dp)
   ) {
-    val appName = "Helio"
-    val version: List<String> = BuildConfig.VERSION_NAME.split("-")
-    val motdMessage = "v${version[0]} ${version[1]}"
+    val appName = remember { "Helio" }
+
+    val version: List<String> = remember { BuildConfig.VERSION_NAME.split("-") }
+    val versionField = remember { "v${version[0]} ${version[1]}" }
 
     Text(text = appName, color = MaterialTheme.colors.onPrimary, fontSize = 18.sp)
-    Text(text = motdMessage, color = MaterialTheme.colors.onSecondary, fontSize = 14.sp)
+    Text(text = versionField, color = MaterialTheme.colors.onSecondary, fontSize = 14.sp)
   }
 }
 
