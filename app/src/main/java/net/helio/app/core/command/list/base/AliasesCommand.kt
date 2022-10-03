@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.command.list
+package net.helio.app.core.command.list.base
 
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.command.session.CommandSession
 import java.util.*
 
-
 /**
- * Команда для просмотра доступных команд.
+ * Команда для просмотра алиасов команд.
  *
  * @author hepller
  */
-object HelpCommand : Command {
-  override val aliases: List<String> = listOf("help", "помощь", "commands", "cmds", "команды")
-  override val description: String = "Информация о доступных командах"
+object AliasesCommand : Command {
+  override val aliases: List<String> = listOf("aliases", "алиасы")
+  override val description: String = "Информация об алиасах команд"
 
   override val isInBeta: Boolean = false
   override val isRequireNetwork: Boolean = false
@@ -38,32 +37,25 @@ object HelpCommand : Command {
   override suspend fun execute(session: CommandSession) {
     val messageScheme = StringJoiner("\n")
 
-    messageScheme.add("\uD83C\uDF35 Доступные команды:")
+    messageScheme.add("\uD83D\uDCAC Алиасы команд:")
     messageScheme.add("")
-    messageScheme.add(getCommandList().joinToString("\n"))
-    messageScheme.add("")
-    messageScheme.add("⚠️️ Команды помеченные \"*\" не являются анонимными")
-    messageScheme.add("")
-    messageScheme.add("\uD83D\uDCDD Префиксы команд: [/, !]")
-
-    // TODO: Сообщение с кнопкой для просмотра алиасов.
+    messageScheme.add(getAliasesList().joinToString(separator = "\n"))
 
     session.reply(text = messageScheme.toString())
   }
 
   /**
-   * Получает список команд с описанием в виде списка строк.
+   * Получает список алиасов команд в виде массива строк.
    *
-   * @return Список команд с описанием.
+   * @return Список алиасов команд.
    */
-  private fun getCommandList(): MutableList<String> {
+  private fun getAliasesList(): MutableList<String> {
     val output: MutableList<String> = mutableListOf()
 
     for (command in CommandManagerImpl.commandList) {
-      val betaStatus = if (command.isInBeta) "ᵇᵉᵗᵃ" else ""
-      val nonAnonymous = if (!command.isAnonymous) "*" else ""
+      val aliasesString = command.aliases.joinToString(separator = ", ")
 
-      output.add(element = "$nonAnonymous/${command.aliases[0]} — ${command.description} $betaStatus".trim())
+      output.add(element = "/${command.aliases[0]}: [$aliasesString]")
     }
 
     return output

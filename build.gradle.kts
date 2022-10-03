@@ -22,6 +22,10 @@ plugins {
 
 // todo: Сделать задачу удаления "build" директорий.
 
+//task("clean") {
+//  delete(rootProject.buildDir)
+//}
+
 //task clean(type: Delete) {
 //  delete rootProject.buildDir
 //}

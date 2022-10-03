@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.command.list
+package net.helio.app.core.command.list.network
 
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession

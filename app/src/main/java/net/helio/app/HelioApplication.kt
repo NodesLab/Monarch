@@ -17,10 +17,10 @@
 package net.helio.app
 
 import android.app.Application
-import net.helio.app.core.command.list.AliasesCommand
-import net.helio.app.core.command.list.HelpCommand
-import net.helio.app.core.command.list.IpInfoCommand
-import net.helio.app.core.command.list.PortCommand
+import net.helio.app.core.command.list.base.AliasesCommand
+import net.helio.app.core.command.list.base.CommandsCommand
+import net.helio.app.core.command.list.network.IpInfoCommand
+import net.helio.app.core.command.list.network.PortCommand
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.message.manager.MessageManagerImpl
 
@@ -34,7 +34,7 @@ class HelioApplication : Application() {
     super.onCreate()
 
     CommandManagerImpl.registerCommand(AliasesCommand)
-    CommandManagerImpl.registerCommand(HelpCommand)
+    CommandManagerImpl.registerCommand(CommandsCommand)
     CommandManagerImpl.registerCommand(IpInfoCommand)
     CommandManagerImpl.registerCommand(PortCommand)
 
