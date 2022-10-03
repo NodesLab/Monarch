@@ -1,15 +1,15 @@
 # Helio <sup>beta</sup> ![Release](https://img.shields.io/github/v/release/hepller/HelioApp)
 
-> Набор функций для различных задач
+> Многофункциональный ассистент
 
 ## Описание
 
-__Helio__ — Мобильный инструментарий для различных задач, построенный на основе
+__Helio__ — Мобильный ассистент для выполнения различных задач, построенный на основе
 [Kotlin](https://kotlinlang.org/) и [Jetpack Compose](https://developer.android.com/jetpack/compose)
 
 ## Зависимости
 
-- Android 12
+- Android 10
 - JDK 11 *(только для сборки)*
 - Gradle 7.5 *(только для сборки)*
 - Git 2.37 *(только для сборки)*

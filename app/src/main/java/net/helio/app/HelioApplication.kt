@@ -17,8 +17,10 @@
 package net.helio.app
 
 import android.app.Application
+import net.helio.app.core.command.list.AliasesCommand
 import net.helio.app.core.command.list.HelpCommand
 import net.helio.app.core.command.list.IpInfoCommand
+import net.helio.app.core.command.list.PortCommand
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.message.manager.MessageManagerImpl
 
@@ -31,8 +33,10 @@ class HelioApplication : Application() {
   override fun onCreate() {
     super.onCreate()
 
+    CommandManagerImpl.registerCommand(AliasesCommand)
     CommandManagerImpl.registerCommand(HelpCommand)
     CommandManagerImpl.registerCommand(IpInfoCommand)
+    CommandManagerImpl.registerCommand(PortCommand)
 
     MessageManagerImpl.appMessage("⚙️ Helio запущен, введите команду")
   }

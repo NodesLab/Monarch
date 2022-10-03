@@ -19,9 +19,6 @@ package net.helio.app.core.utility
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.linkedin.urls.Url
-import com.linkedin.urls.detection.UrlDetector
-import com.linkedin.urls.detection.UrlDetectorOptions
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.ktor.client.*
@@ -30,9 +27,8 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import java.net.MalformedURLException
-import java.net.URISyntaxException
-import java.net.URL
+import java.io.IOException
+import java.net.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.pow
@@ -246,26 +242,26 @@ object NetworkUtility {
   }
 
   /**
-   * Получает из текста URl-адреса.
+   * Проверяет порт на доступность.
    *
-   * @param text Текст, из которого будут получаться URL-адреса.
+   * @param host Хост.
+   * @param port Порт.
+   * @param timeout Таймаут (по умолчанию: 2000).
    *
-   * @return Список URl-адресов и их очищенных версий в виде строк.
-   *
-   * TODO: Переписать на собственный метод вместо библиотеки.
+   * @return `true` если порт открыт, `false` если не открыт.
    */
-  fun getUrlsList(text: String?): MutableList<String> {
-    val urlDetector = UrlDetector(text, UrlDetectorOptions.Default)
-    val urlList: List<Url> = urlDetector.detect()
+  fun isPortAvailable(host: String?, port: Int, timeout: Int = 2000): Boolean {
+    val socketAddress: SocketAddress = InetSocketAddress(host, port)
 
-    val mutableUrlList: MutableList<String> = mutableListOf()
-    for (url: Url in urlList) {
-      val stringUrl = url.toString()
+    try {
+      Socket().use { socket ->
+        socket.connect(socketAddress, timeout)
+        socket.close()
 
-      mutableUrlList.add(stringUrl)
-      mutableUrlList.add(clearUrl(stringUrl))
+        return true
+      }
+    } catch (exception: IOException) {
+      return false
     }
-
-    return mutableUrlList
   }
 }

@@ -19,7 +19,7 @@ package net.helio.app.ui.utility
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import net.helio.app.core.utility.NetworkUtility
+import net.helio.app.core.utility.TextUtility
 import net.helio.app.ui.theme.Accent
 
 /**
@@ -40,7 +40,7 @@ object StringUtility {
     val annotatedString: AnnotatedString = buildAnnotatedString {
       append(text)
 
-      for (url in NetworkUtility.getUrlsList(text)) {
+      for (url in TextUtility.getUrlsList(text)) {
         val startIndex: Int = text.indexOf(url)
         val endIndex: Int = startIndex + url.length
 

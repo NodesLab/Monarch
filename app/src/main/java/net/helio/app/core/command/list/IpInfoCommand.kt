@@ -42,31 +42,31 @@ object IpInfoCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      session.reply("⛔ Укажите IP-адрес, о котором необходимо найти информацию")
+      session.reply(text = "⛔ Укажите IP-адрес, о котором необходимо найти информацию")
 
       return
     }
 
-    var cleanedIp = NetworkUtility.clearUrl(session.arguments[1])
+    var cleanedIp = NetworkUtility.clearUrl(url = session.arguments[1])
 
     // Удаление порта у доменов и IPv4
-    if (!NetworkUtility.isValidIPv6(cleanedIp)) cleanedIp = cleanedIp.split(":")[0]
+    if (!NetworkUtility.isValidIPv6(ip = cleanedIp)) cleanedIp = cleanedIp.split(":")[0]
 
     // Конвертация IP из десятеричного формата в IPv4 (+ удаление порта)
-    if (TextUtility.isNumber(cleanedIp)) cleanedIp = NetworkUtility.longToIPv4(cleanedIp.split(":")[0].toLong())
+    if (TextUtility.isNumber(string = cleanedIp)) cleanedIp = NetworkUtility.longToIPv4(ip = cleanedIp.split(":")[0].toLong())
 
-    if (!NetworkUtility.isValidDomain(cleanedIp) && !NetworkUtility.isValidIPv4(cleanedIp) && !NetworkUtility.isValidIPv6(cleanedIp) && !NetworkUtility.isValidDomain(IDN.toUnicode(cleanedIp))) {
-      session.reply("⚠️️ Вы указали / переслали некорректный IP")
+    if (!NetworkUtility.isValidDomain(domain = cleanedIp) && !NetworkUtility.isValidIPv4(ip = cleanedIp) && !NetworkUtility.isValidIPv6(ip = cleanedIp) && !NetworkUtility.isValidDomain(IDN.toUnicode(cleanedIp))) {
+      session.reply(text = "⚠️️ Вы указали / переслали некорректный IP")
 
       return
     }
 
-    session.reply("⚙️ Получение информации об IP ...")
+    session.reply(text = "⚙️ Получение информации об IP ...")
 
-    val response: IpApiAdapter? = NetworkUtility.readJsonHttp("http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
+    val response: IpApiAdapter? = NetworkUtility.readJsonHttp(url = "http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
 
     if (response?.status != "success") {
-      session.reply("⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
+      session.reply(text = "⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
 
       return
     }
@@ -91,7 +91,7 @@ object IpInfoCommand : Command {
 
     if (response.ip != ptr) messageScheme.add("– PTR: $ptr")
 
-    session.reply(messageScheme.toString())
+    session.reply(text = messageScheme.toString())
   }
 }
 

@@ -71,7 +71,7 @@ private fun Title() {
   ) {
     val appName = "Helio"
     val version: List<String> = BuildConfig.VERSION_NAME.split("-")
-    val motdMessage = "v${version[0]} (${version[1]})"
+    val motdMessage = "v${version[0]} ${version[1]}"
 
     Text(text = appName, color = MaterialTheme.colors.onPrimary, fontSize = 18.sp)
     Text(text = motdMessage, color = MaterialTheme.colors.onSecondary, fontSize = 14.sp)

@@ -170,12 +170,12 @@ private fun MessageColumn(messages: List<Message>) {
     state = listState,
     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 10.dp),
     verticalArrangement = Arrangement.spacedBy(space = 10.dp),
-    modifier = Modifier.background(MaterialTheme.colors.primary)
+    modifier = Modifier.background(color = MaterialTheme.colors.primary)
   ) {
     items(items = messages) { message ->
       MessageCard(message = message)
 
-      AutoScroll(listState)
+      AutoScroll(listState = listState)
     }
   }
 }
