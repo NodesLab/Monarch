@@ -85,16 +85,18 @@ object CommandManagerImpl : CommandManager {
 
   @OptIn(DelicateCoroutinesApi::class)
   override fun handleInput(input: String, context: Context) {
+    val inputArgs = input.substring(startIndex = 1).split(" ")
+
     val command: Command? = getCommand(alias = input.substring(startIndex = 1).lowercase().split(" ")[0])
-    val session: CommandSession = CommandSessionImpl(arguments = input.substring(startIndex = 1).split(" "))
+    val session: CommandSession = CommandSessionImpl(arguments = inputArgs)
 
     if (command == null) {
       val messageScheme = StringJoiner("\n")
 
-      messageScheme.add("⚠️ Неизвестная команда")
+      messageScheme.add("⚠️ Команды \"${input.split(" ")[0]}\" не существует")
       messageScheme.add("")
 
-      val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = input.substring(startIndex = 1), distance = 0.4)
+      val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = inputArgs[0], distance = 0.4)
 
       if (similarAliases.isNotEmpty()) {
         val mutableSimilarList: MutableList<String> = mutableListOf()
@@ -107,13 +109,13 @@ object CommandManagerImpl : CommandManager {
         messageScheme.add("")
 
         for (aliasItem in mutableSimilarList) {
-          messageScheme.add("– $aliasItem")
+          messageScheme.add("– /$aliasItem")
         }
 
         messageScheme.add("")
       }
 
-      messageScheme.add("Для просмотра полного списка команд введите \"/commands\"")
+      messageScheme.add("Для просмотра полного списка команд введите команду \"/commands\"")
 
       session.reply(messageScheme.toString())
 
