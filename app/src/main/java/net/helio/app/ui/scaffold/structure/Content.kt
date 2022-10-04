@@ -17,8 +17,6 @@
 package net.helio.app.ui.scaffold.structure
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.rememberTransformableState
-import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -29,12 +27,11 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,15 +58,6 @@ private fun MessageCard(message: Message) {
 
   val annotatedString = StringUtility.parseLinks(text = message.text)
 
-  var scale by remember { mutableStateOf(value = 1f) }
-  var rotation by remember { mutableStateOf(value = 0f) }
-  var offset by remember { mutableStateOf(value = Offset.Zero) }
-  val state = rememberTransformableState { zoomChange, offsetChange, rotationChange ->
-    scale *= zoomChange
-    rotation += rotationChange
-    offset += offsetChange
-  }
-
   Box(
     modifier = Modifier.fillMaxWidth()
   ) {
@@ -81,14 +69,6 @@ private fun MessageCard(message: Message) {
         .align(alignment)
         .widthIn(min = 80.dp, max = 280.dp) // Устанавливает лимиты ширины сообщения.
         .heightIn(min = 80.dp) // Устанавливает лимиты высоты сообщения.
-        .graphicsLayer(
-          scaleX = scale,
-          scaleY = scale,
-          rotationZ = rotation,
-          translationX = offset.x,
-          translationY = offset.y
-        )
-        .transformable(state = state)
     ) {
       Box(
         contentAlignment = Alignment.TopStart

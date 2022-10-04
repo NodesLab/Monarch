@@ -19,6 +19,8 @@ package net.helio.app.core.utility
 import com.linkedin.urls.Url
 import com.linkedin.urls.detection.UrlDetector
 import com.linkedin.urls.detection.UrlDetectorOptions
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Утилита для работы с текстом.
@@ -26,6 +28,44 @@ import com.linkedin.urls.detection.UrlDetectorOptions
  * @author hepller
  */
 object TextUtility {
+
+
+  /**
+   * Получает расстояние Левенштейна.
+   *
+   * @param firstString Первая строка.
+   * @param secondString Вторая строка.
+   *
+   * @return Расстояние Левенштейна.
+   */
+  private fun getLevenshteinDistance(firstString: String, secondString: String): Int {
+    val firstStringLength: Int = firstString.length
+    val secondStringLength: Int = secondString.length
+
+    val intArraysArray: Array<IntArray> = Array(size = firstStringLength + 1) {
+      IntArray(size = secondStringLength + 1)
+    }
+
+    for (item in 1..firstStringLength) {
+      intArraysArray[item][0] = item
+    }
+
+    for (item in 1..secondStringLength) {
+      intArraysArray[0][item] = item
+    }
+
+    var cost: Int
+
+    for (item in 1..firstStringLength) {
+      for (j in 1..secondStringLength) {
+        cost = if (firstString[item - 1] == secondString[j - 1]) 0 else 1
+
+        intArraysArray[item][j] = min(min(a = intArraysArray[item - 1][j] + 1, intArraysArray[item][j - 1] + 1), b = intArraysArray[item - 1][j - 1] + cost)
+      }
+    }
+
+    return intArraysArray[firstStringLength][secondStringLength]
+  }
 
   /**
    * Получает emoji флаг страны.
@@ -87,5 +127,19 @@ object TextUtility {
     }
 
     return mutableUrlList
+  }
+
+  /**
+   * Получает сходство между двумя строками (расстояние Левенштейна).
+   *
+   * @param firstString Первая строка.
+   * @param secondString Вторая строка.
+   *
+   * @return Расстояние Левенштейна.
+   */
+  fun getStringSimilarity(firstString: String, secondString: String): Double {
+    val maxLength = max(firstString.length, secondString.length)
+
+    return if (maxLength > 0) { (maxLength * 1.0 - getLevenshteinDistance(firstString, secondString)) / maxLength * 1.0 } else 1.0
   }
 }

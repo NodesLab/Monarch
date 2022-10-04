@@ -42,16 +42,16 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.1.5"
+val majorProjectVersion = "1.1.6"
 
 android {
-  compileSdk = 32
+  compileSdk = 33
 
   defaultConfig {
     applicationId = "net.helio.app"
     minSdk = 29
-    targetSdk = 32
-    versionCode = 9
+    targetSdk = 33
+    versionCode = 10
     versionName = "$majorProjectVersion-${getShortCommit()}"
 
     vectorDrawables {
@@ -94,6 +94,8 @@ android {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
   }
+
+  namespace = "net.helio.app"
 }
 
 // region Версии библиотек.
@@ -109,8 +111,8 @@ dependencies {
 
   // region Compose-зависимости
 
-  implementation("androidx.activity:activity-compose:1.5.1") // 1.6.0 требует SDK >32.
-  implementation("androidx.core:core-ktx:1.8.0") // 1.9.1 требует SDK >32.
+  implementation("androidx.activity:activity-compose:1.6.0")
+  implementation("androidx.core:core-ktx:1.9.0")
   implementation("androidx.compose.ui:ui:$composeVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
   implementation("androidx.compose.material:material:$composeVersion")

@@ -25,6 +25,7 @@ import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
 import net.helio.app.core.utility.NetworkUtility
+import net.helio.app.core.utility.TextUtility
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
@@ -47,6 +48,29 @@ object CommandManagerImpl : CommandManager {
     return scope.coroutineContext
   }
 
+  /**
+   * Получает похожие алиасы команд.
+   *
+   * @param commandList Список команд.
+   * @param input Входной текст.
+   * @param distance Точность (расстояние Левенштейна).
+   *
+   * @return Список из списков похожих команд.
+   */
+  private fun getSimilarCommandAliases(commandList: List<Command>, input: String, distance: Double = 0.5): List<List<String>> {
+    val aliasesList: MutableList<List<String>> = mutableListOf()
+
+    for (commandItem: Command in commandList) {
+      for (aliasItem: String in commandItem.aliases) {
+        if (TextUtility.getStringSimilarity(aliasItem, input) > distance) {
+          aliasesList.add(listOf(aliasItem, commandItem.aliases[0]))
+        }
+      }
+    }
+
+    return aliasesList
+  }
+
   override fun registerCommand(command: Command) {
     if (commandList.contains(element = command)) return
 
@@ -65,7 +89,33 @@ object CommandManagerImpl : CommandManager {
     val session: CommandSession = CommandSessionImpl(arguments = input.substring(startIndex = 1).split(" "))
 
     if (command == null) {
-      session.reply(text = "⚠️ Неизвестная команда, для просмотра списка команд введите \"/commands\"")
+      val messageScheme = StringJoiner("\n")
+
+      messageScheme.add("⚠️ Неизвестная команда")
+      messageScheme.add("")
+
+      val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = input.substring(startIndex = 1), distance = 0.4)
+
+      if (similarAliases.isNotEmpty()) {
+        val mutableSimilarList: MutableList<String> = mutableListOf()
+
+        for (similarItem: List<String> in similarAliases) {
+          mutableSimilarList.add("${similarItem[0]} (${similarItem[1]})")
+        }
+
+        messageScheme.add("Возможно вы хотели ввести одну из следующих команд:")
+        messageScheme.add("")
+
+        for (aliasItem in mutableSimilarList) {
+          messageScheme.add("– $aliasItem")
+        }
+
+        messageScheme.add("")
+      }
+
+      messageScheme.add("Для просмотра полного списка команд введите \"/commands\"")
+
+      session.reply(messageScheme.toString())
 
       return
     }
