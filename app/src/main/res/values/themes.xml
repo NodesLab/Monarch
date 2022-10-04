@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <style name="Theme.Helio" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowBackground">#FF000000</item>
-    </style>
+  <style name="Theme.Helio" parent="android:Theme.Material.Light.NoActionBar">
+    <item name="android:windowBackground">#FF000000</item>
+  </style>
 </resources>
