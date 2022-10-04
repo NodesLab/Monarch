@@ -37,40 +37,6 @@ import kotlin.coroutines.CoroutineContext
 object CommandManagerImpl : CommandManager {
   override var commandList: MutableList<Command> = mutableListOf()
 
-  /**
-   * Получает контекст для корутины из области.
-   *
-   * @param scope Область корутины.
-   *
-   * @return Контекст для корутины.
-   */
-  private fun getDispatcherFromCurrentThread(scope: CoroutineScope): CoroutineContext {
-    return scope.coroutineContext
-  }
-
-  /**
-   * Получает похожие алиасы команд.
-   *
-   * @param commandList Список команд.
-   * @param input Входной текст.
-   * @param distance Точность (расстояние Левенштейна).
-   *
-   * @return Список из списков похожих команд.
-   */
-  private fun getSimilarCommandAliases(commandList: List<Command>, input: String, distance: Double = 0.5): List<List<String>> {
-    val aliasesList: MutableList<List<String>> = mutableListOf()
-
-    for (commandItem: Command in commandList) {
-      for (aliasItem: String in commandItem.aliases) {
-        if (TextUtility.getStringSimilarity(aliasItem, input) > distance) {
-          aliasesList.add(listOf(aliasItem, commandItem.aliases[0]))
-        }
-      }
-    }
-
-    return aliasesList
-  }
-
   override fun registerCommand(command: Command) {
     if (commandList.contains(element = command)) return
 
@@ -85,39 +51,13 @@ object CommandManagerImpl : CommandManager {
 
   @OptIn(DelicateCoroutinesApi::class)
   override fun handleInput(input: String, context: Context) {
-    val inputArgs = input.substring(startIndex = 1).split(" ")
+    val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
 
     val command: Command? = getCommand(alias = input.substring(startIndex = 1).lowercase().split(" ")[0])
     val session: CommandSession = CommandSessionImpl(arguments = inputArgs)
 
     if (command == null) {
-      val messageScheme = StringJoiner("\n")
-
-      messageScheme.add("⚠️ Команды \"${input.split(" ")[0]}\" не существует")
-      messageScheme.add("")
-
-      val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = inputArgs[0], distance = 0.4)
-
-      if (similarAliases.isNotEmpty()) {
-        val mutableSimilarList: MutableList<String> = mutableListOf()
-
-        for (similarItem: List<String> in similarAliases) {
-          mutableSimilarList.add("${similarItem[0]} (${similarItem[1]})")
-        }
-
-        messageScheme.add("Возможно вы хотели ввести одну из следующих команд:")
-        messageScheme.add("")
-
-        for (aliasItem in mutableSimilarList) {
-          messageScheme.add("– /$aliasItem")
-        }
-
-        messageScheme.add("")
-      }
-
-      messageScheme.add("Для просмотра полного списка команд введите команду \"/commands\"")
-
-      session.reply(messageScheme.toString())
+      unknownCommandMessage(session = session, input = input)
 
       return
     }
@@ -129,20 +69,103 @@ object CommandManagerImpl : CommandManager {
     }
 
     GlobalScope.launch {
-      val dispatcher: CoroutineContext = getDispatcherFromCurrentThread(scope = this)
+      val coroutineContext: CoroutineContext = getDispatcherFromCurrentThread(scope = this)
 
-      CoroutineScope(context = dispatcher).launch {
-        try {
-          command.execute(session = session)
-        } catch (exception: Exception) {
-          val messageScheme = StringJoiner("\n")
+      executeCommand(command = command, session = session, context = coroutineContext)
+    }
+  }
 
-          messageScheme.add("⚠️ При выполнении команды произошла ошибка:")
-          messageScheme.add("")
-          messageScheme.add(exception.stackTrace.joinToString(separator = "\n"))
+  /**
+   * Получает контекст для корутины из области.
+   *
+   * @param scope Область корутины.
+   *
+   * @return Контекст для корутины.
+   */
+  private fun getDispatcherFromCurrentThread(scope: CoroutineScope): CoroutineContext {
+    return scope.coroutineContext
+  }
 
-          session.reply(text = messageScheme.toString())
+  /**
+   * Получает похожие алиасы команд с заданной точностью.
+   *
+   * @param commandList Список команд.
+   * @param input Входной текст.
+   * @param distance Точность (расстояние Левенштейна).
+   *
+   * @return Список из списков похожих команд.
+   */
+  private fun getSimilarCommandAliases(commandList: List<Command>, input: String, distance: Double): List<List<String>> {
+    val aliasesList: MutableList<List<String>> = mutableListOf()
+
+    for (commandItem: Command in commandList) {
+      for (aliasItem: String in commandItem.aliases) {
+        if (TextUtility.getStringSimilarity(aliasItem, input) > distance) {
+          aliasesList.add(listOf(aliasItem, commandItem.aliases[0]))
         }
+      }
+    }
+
+    return aliasesList
+  }
+
+  /**
+   * Производит сообщение о неизвестной команде.
+   *
+   * @param session Сессия команды.
+   * @param input Ввод пользователя.
+   */
+  private fun unknownCommandMessage(session: CommandSession, input: String) {
+    val messageScheme = StringJoiner("\n")
+
+    messageScheme.add("⚠️ Команды «${input.split(" ")[0]}» не существует")
+    messageScheme.add("")
+
+    val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
+
+    val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = inputArgs[0], distance = 0.4)
+
+    if (similarAliases.isNotEmpty()) {
+      val mutableSimilarList: MutableList<String> = mutableListOf()
+
+      for (similarItem: List<String> in similarAliases) {
+        mutableSimilarList.add("${similarItem[0]} (${similarItem[1]})")
+      }
+
+      messageScheme.add("Возможно вы хотели ввести один из следующих алиасов:")
+      messageScheme.add("")
+
+      for (aliasItem: String in mutableSimilarList) {
+        messageScheme.add("– /$aliasItem")
+      }
+
+      messageScheme.add("")
+    }
+
+    messageScheme.add("Для просмотра полного списка команд введите «/commands»")
+
+    session.reply(messageScheme.toString())
+  }
+
+  /**
+   * Выполняет команду в корутине.
+   *
+   * @param command Объект команды.
+   * @param session Сессия команды.
+   * @param context Контекст корутины.
+   */
+  private fun executeCommand(command: Command, session: CommandSession, context: CoroutineContext) {
+    CoroutineScope(context = context).launch {
+      try {
+        command.execute(session = session)
+      } catch (exception: Exception) {
+        val messageScheme = StringJoiner("\n")
+
+        messageScheme.add("⚠️ При выполнении команды произошла ошибка:")
+        messageScheme.add("")
+        messageScheme.add(exception.stackTrace.joinToString(separator = "\n"))
+
+        session.reply(text = messageScheme.toString())
       }
     }
   }

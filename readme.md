@@ -1,4 +1,4 @@
-# Helio <sup>beta</sup> ![Release](https://img.shields.io/github/v/release/hepller/HelioApp)
+# Helio <sup>alpha</sup> ![Release](https://img.shields.io/github/v/release/hepller/HelioApp)
 
 > Многофункциональный ассистент
 
