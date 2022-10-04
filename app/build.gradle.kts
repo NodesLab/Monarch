@@ -49,6 +49,7 @@ android {
 
   defaultConfig {
     applicationId = "net.helio.app"
+
     minSdk = 29
     targetSdk = 33
     versionCode = 10
@@ -57,10 +58,21 @@ android {
     vectorDrawables {
       useSupportLibrary = true
     }
+    signingConfig = signingConfigs.getByName("debug")
   }
 
   buildTypes {
     release {
+      isMinifyEnabled = true
+      isShrinkResources = true
+
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro"
+      )
+    }
+
+    debug {
       isMinifyEnabled = true
       isShrinkResources = true
 
@@ -102,7 +114,7 @@ android {
 
 val composeVersion = "1.2.1"
 val moshiVersion = "1.14.0"
-val ktorVersion = "2.1.1"
+val ktorVersion = "2.1.2"
 
 // endregion
 
