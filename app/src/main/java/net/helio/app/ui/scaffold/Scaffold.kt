@@ -19,9 +19,9 @@ package net.helio.app.ui.scaffold
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import net.helio.app.ui.scaffold.structure.BottomBar
 import net.helio.app.ui.scaffold.structure.Content
@@ -38,7 +38,7 @@ fun AppScaffold() {
   val scaffoldState: ScaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
   val scope: CoroutineScope = rememberCoroutineScope()
 
-  val onNavigationIconClick = {
+  val onNavigationIconClick: () -> Job = {
     scope.launch {
       scaffoldState.drawerState.apply {
         if (isClosed) open() else close()
@@ -54,8 +54,6 @@ fun AppScaffold() {
     bottomBar = { BottomBar() },
 
     backgroundColor = MaterialTheme.colors.primary,
-
-    contentColor = Color.White, // MaterialTheme.colors.primary,
 
     drawerBackgroundColor = MaterialTheme.colors.primary,
     drawerScrimColor = MaterialTheme.colors.surface,

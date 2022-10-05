@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import net.helio.app.core.message.model.Message
 import net.helio.app.core.message.model.MessageImpl
+import net.helio.app.core.message.model.payload.MessagePayload
 import java.util.*
 
 /**
@@ -36,20 +37,21 @@ object MessageManagerImpl : MessageManager {
    *
    * @param author Автор сообщения (app | user).
    * @param text Текст сообщения.
+   * @param payload Полезная нагрузка.
    */
-  private fun addMessage(author: String, text: String) {
-    messageList.add(MessageImpl(author, text, Date()))
+  private fun addMessage(author: String, text: String, payload: MessagePayload?) {
+    messageList.add(MessageImpl(author, text, Date(), payload))
   }
 
-  override fun appMessage(text: String) {
-    addMessage("app", text)
+  override fun appMessage(text: String, payload: MessagePayload?) {
+    addMessage(author = "app", text = text, payload = payload)
   }
 
   override fun userMessage(text: String) {
-    addMessage("user", text)
+    addMessage(author = "user", text = text, payload = null)
   }
 
   override fun removeMessage(message: Message) {
-    messageList.remove(message)
+    messageList.remove(element = message)
   }
 }

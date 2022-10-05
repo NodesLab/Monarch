@@ -38,4 +38,15 @@ interface CommandSession {
    * @see MessageManager.appMessage
    */
   fun reply(text: String)
+
+  /**
+   * Отвечает на сообщение с раскрывающимся текстом.
+   *
+   * @param text Текст сообщения.
+   * @param dropdownLabel Текст на кнопке.
+   * @param dropdownText Текст при раскрытии.
+   *
+   * @see MessageManager.appMessage
+   */
+  fun dropdownMessage(text: String, dropdownLabel: String, dropdownText: String)
 }

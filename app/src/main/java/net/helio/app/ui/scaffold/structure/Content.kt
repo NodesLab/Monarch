@@ -27,17 +27,18 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.manager.MessageManagerImpl.messageList
 import net.helio.app.core.message.model.Message
+import net.helio.app.core.message.model.payload.DropdownMessagePayload
 import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.utility.StringUtility
 import java.text.SimpleDateFormat
@@ -87,23 +88,60 @@ private fun MessageCard(message: Message) {
           )
         }
 
-        Column {
+        Column(
+          modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
+        ) {
           Text(
             text = author,
             color = Accent,
             style = MaterialTheme.typography.subtitle2,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(start = 10.dp, top = 5.dp)
+            fontWeight = FontWeight.SemiBold
           )
 
           SelectionContainer {
+            val bottomPadding: Dp = if (message.payload == null) 20.dp else 5.dp
+
             Text(
               text = annotatedString,
               color = MaterialTheme.colors.onPrimary,
               style = MaterialTheme.typography.body2,
               fontSize = 15.sp, // todo: перенести типографию в тему
-              modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 20.dp),
+              modifier = Modifier.padding(top = 5.dp, bottom = bottomPadding)
             )
+          }
+
+          // TODO: Перенести отображения логику нагрузки в отдельную функцию (PayloadProcessor).
+
+          if (message.payload is DropdownMessagePayload) {
+            val payload: DropdownMessagePayload = message.payload as DropdownMessagePayload
+
+            Row(
+              horizontalArrangement = Arrangement.Center,
+              verticalAlignment = Alignment.CenterVertically,
+              modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 5.dp, bottom = 30.dp)
+            ) {
+              var isExpanded: Boolean by remember { mutableStateOf(false) }
+              var expandText: String by remember { mutableStateOf(payload.dropdownLabel) }
+
+              TextButton(
+                onClick = {
+                  isExpanded = !isExpanded
+                  expandText = if (expandText == payload.dropdownLabel) payload.dropdownText else payload.dropdownLabel
+                },
+                colors = ButtonDefaults.buttonColors(
+                  backgroundColor = MaterialTheme.colors.secondary
+                )
+              ) {
+                SelectionContainer {
+                  Text(
+                    text = expandText,
+                    color = MaterialTheme.colors.onPrimary
+                  )
+                }
+              }
+            }
           }
         }
 
@@ -114,7 +152,7 @@ private fun MessageCard(message: Message) {
           color = MaterialTheme.colors.onSecondary,
           modifier = Modifier
             .align(alignment = Alignment.BottomEnd)
-            .padding(end = 8.dp, bottom = 4.dp)
+            .padding(end = 10.dp, bottom = 5.dp)
         )
       }
     }

@@ -18,6 +18,7 @@ package net.helio.app.core.message.manager
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import net.helio.app.core.message.model.Message
+import net.helio.app.core.message.model.payload.MessagePayload
 
 /**
  * Интерфейс менеджера сообщений.
@@ -32,11 +33,12 @@ interface MessageManager {
   val messageList: SnapshotStateList<Message>
 
   /**
-   * Добавляет сообщение бота в список.
+   * Добавляет сообщение ассистента в список.
    *
    * @param text Текст сообщения.
+   * @param payload Полезная нагрузка.
    */
-  fun appMessage(text: String)
+  fun appMessage(text: String, payload: MessagePayload? = null)
 
   /**
    * Добавляет сообщение пользователя в список.

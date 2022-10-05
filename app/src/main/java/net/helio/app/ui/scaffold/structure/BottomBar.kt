@@ -34,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.core.message.manager.MessageManagerImpl
 
 /**
  * Кнопка голосового ввода.
@@ -139,7 +138,6 @@ fun BottomBar() {
   val context: Context = LocalContext.current
 
   BottomAppBar(
-    elevation = 4.dp,
     backgroundColor = MaterialTheme.colors.primary,
   ) {
     VoiceButton(enabled = false) {
@@ -171,8 +169,6 @@ fun BottomBar() {
     Spacer(Modifier.weight(weight = 1f, fill = false))
 
     SendButton(enabled = input.trim().isNotEmpty()) {
-      MessageManagerImpl.userMessage(text = input.trim())
-
       CommandManagerImpl.handleInput(input = input.trim(), context = context)
 
       input = ""

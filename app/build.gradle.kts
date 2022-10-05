@@ -42,7 +42,7 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.1.6"
+val majorProjectVersion = "1.2.0"
 
 android {
   compileSdk = 33
@@ -52,13 +52,12 @@ android {
 
     minSdk = 29
     targetSdk = 33
-    versionCode = 10
+    versionCode = 11
     versionName = "$majorProjectVersion-${getShortCommit()}"
 
     vectorDrawables {
       useSupportLibrary = true
     }
-    signingConfig = signingConfigs.getByName("debug")
   }
 
   buildTypes {
@@ -70,6 +69,8 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
       )
+
+      signingConfig = signingConfigs.getByName("debug")
     }
 
     debug {
@@ -80,6 +81,8 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
       )
+
+      signingConfig = signingConfigs.getByName("debug")
     }
   }
 

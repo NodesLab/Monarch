@@ -16,6 +16,7 @@
 
 package net.helio.app.core.message.model
 
+import net.helio.app.core.message.model.payload.MessagePayload
 import java.util.*
 
 /**
@@ -34,6 +35,11 @@ interface Message {
    * Дата создания сообщения.
    */
   val date: Date
+
+  /**
+   * Полезная нагрузка сообщения.
+   */
+  val payload: MessagePayload?
 
   /**
    * Проверяет, является ли сообщение созданным приложением.

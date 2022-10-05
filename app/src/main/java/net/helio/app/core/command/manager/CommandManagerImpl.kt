@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
+import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.utility.NetworkUtility
 import net.helio.app.core.utility.TextUtility
 import java.util.*
@@ -50,7 +51,9 @@ object CommandManagerImpl : CommandManager {
   }
 
   @OptIn(DelicateCoroutinesApi::class)
-  override fun handleInput(input: String, context: Context) {
+  override fun handleInput(input: String, context: Context?) {
+    MessageManagerImpl.userMessage(text = input.trim())
+
     val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
 
     val command: Command? = getCommand(alias = input.substring(startIndex = 1).lowercase().split(" ")[0])
@@ -62,7 +65,7 @@ object CommandManagerImpl : CommandManager {
       return
     }
 
-    if (command.isRequireNetwork && !NetworkUtility.hasNetworkConnection(context = context)) {
+    if (context != null && command.isRequireNetwork && !NetworkUtility.hasNetworkConnection(context = context)) {
       session.reply(text = "⚠️ Для использования этой команды необходим доступ к сети")
 
       return
@@ -159,13 +162,13 @@ object CommandManagerImpl : CommandManager {
       try {
         command.execute(session = session)
       } catch (exception: Exception) {
-        val messageScheme = StringJoiner("\n")
+        val errorStackTrace: String = exception.stackTrace.joinToString(separator = "\n")
 
-        messageScheme.add("⚠️ При выполнении команды произошла ошибка:")
-        messageScheme.add("")
-        messageScheme.add(exception.stackTrace.joinToString(separator = "\n"))
-
-        session.reply(text = messageScheme.toString())
+        session.dropdownMessage(
+          text = "⚠️ При выполнении команды произошла ошибка",
+          dropdownLabel = "Подробная информация",
+          dropdownText = errorStackTrace
+        )
       }
     }
   }

@@ -16,6 +16,7 @@
 
 package net.helio.app.core.message.model
 
+import net.helio.app.core.message.model.payload.MessagePayload
 import java.util.*
 
 /**
@@ -27,7 +28,12 @@ import java.util.*
  *
  * @author hepller
  */
-data class MessageImpl(private val author: String, override val text: String, override val date: Date) : Message {
+data class MessageImpl(
+  private val author: String,
+  override val text: String,
+  override val date: Date,
+  override val payload: MessagePayload?
+) : Message {
 
   override fun isFromApp(): Boolean {
     return author == "app"
