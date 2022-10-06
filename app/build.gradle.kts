@@ -58,6 +58,9 @@ android {
     vectorDrawables {
       useSupportLibrary = true
     }
+
+    // TODO: Настроить билд без указания конфига.
+    signingConfig = signingConfigs.getByName("debug")
   }
 
   buildTypes {
@@ -69,8 +72,6 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
       )
-
-      signingConfig = signingConfigs.getByName("debug")
     }
 
     debug {
@@ -81,8 +82,6 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
       )
-
-      signingConfig = signingConfigs.getByName("debug")
     }
   }
 
