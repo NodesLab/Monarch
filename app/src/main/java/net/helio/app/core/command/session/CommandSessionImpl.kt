@@ -18,6 +18,7 @@ package net.helio.app.core.command.session
 
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.model.payload.DropdownMessagePayload
+import net.helio.app.core.message.model.payload.LinkMessagePayload
 
 /**
  * Реализация сессии команды.
@@ -32,5 +33,9 @@ class CommandSessionImpl(override val arguments: List<String>) : CommandSession 
 
   override fun dropdownMessage(text: String, dropdownLabel: String, dropdownText: String) {
     MessageManagerImpl.appMessage(text = text, payload = DropdownMessagePayload(dropdownLabel = dropdownLabel, dropdownText = dropdownText))
+  }
+
+  override fun replyWithLink(text: String, linkLabel: String, linkSource: String) {
+    MessageManagerImpl.appMessage(text = text, payload = LinkMessagePayload(linkLabel = linkLabel, linkSource = linkSource))
   }
 }

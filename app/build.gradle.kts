@@ -42,7 +42,7 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.2.0"
+val majorProjectVersion = "1.3.0"
 
 android {
   compileSdk = 33
@@ -61,18 +61,6 @@ android {
   }
 
   buildTypes {
-    release {
-      isMinifyEnabled = true
-      isShrinkResources = true
-
-      proguardFiles(
-        getDefaultProguardFile("proguard-android-optimize.txt"),
-        "proguard-rules.pro"
-      )
-
-      signingConfig = signingConfigs.getByName("debug")
-    }
-
     debug {
       isMinifyEnabled = true
       isShrinkResources = true
@@ -81,8 +69,6 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
       )
-
-      signingConfig = signingConfigs.getByName("debug")
     }
   }
 
@@ -149,7 +135,8 @@ dependencies {
   implementation("io.ktor:ktor-client-core:$ktorVersion")
   implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
-  implementation("com.linkedin.urls:url-detector:0.1.17")
+  implementation("com.github.jeziellago:compose-markdown:0.3.1")
+  implementation("io.coil-kt:coil:2.2.2")
 
   // endregion
 }

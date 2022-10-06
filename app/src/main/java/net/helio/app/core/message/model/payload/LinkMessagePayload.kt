@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-pluginManagement {
-  repositories {
-    gradlePluginPortal()
-    google()
-    mavenCentral()
-  }
-}
+package net.helio.app.core.message.model.payload
 
-dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+/**
+ * Полезная нагрузка сообщения с кнопкой-ссылкой.
+ */
+data class LinkMessagePayload(
 
-  repositories {
-    google()
-    mavenCentral()
-    maven("https://jitpack.io")
-  }
-}
+  /**
+   * Текст на кнопке.
+   */
+  val linkLabel: String,
 
-rootProject.name = "Helio"
-
-include(":app")
+  /**
+   * Ссылка.
+   */
+  val linkSource: String
+) : MessagePayload

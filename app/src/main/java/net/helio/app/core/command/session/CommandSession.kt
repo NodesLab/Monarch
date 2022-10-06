@@ -49,4 +49,6 @@ interface CommandSession {
    * @see MessageManager.appMessage
    */
   fun dropdownMessage(text: String, dropdownLabel: String, dropdownText: String)
+
+  fun replyWithLink(text: String, linkLabel: String, linkSource: String)
 }

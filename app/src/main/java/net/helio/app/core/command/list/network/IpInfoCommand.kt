@@ -66,7 +66,7 @@ object IpInfoCommand : Command {
     val response: IpApiAdapter? = NetworkUtility.readJsonHttp(url = "http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
 
     if (response?.status != "success") {
-      session.reply(text = "⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
+      session.reply(text = "⚠️️ Не удалось получить информацию об этом IP *(отсутствие информации со стороны API)*")
 
       return
     }
@@ -79,19 +79,23 @@ object IpInfoCommand : Command {
 
     messageScheme.add("⚙️ Информация о $cleanedIp:")
     messageScheme.add("")
-    messageScheme.add("– Локация: ${response.country}, ${response.regionName}, ${response.city} ${response.countryCode.let { TextUtility.getCountryFlagEmoji(it) }}")
-    messageScheme.add("– Организация: ${response.org}")
-    messageScheme.add("– Провайдер: ${response.org}")
+    messageScheme.add("– **Локация**: ${response.country}, ${response.regionName}, ${response.city} ${response.countryCode.let { TextUtility.getCountryFlagEmoji(it) }}")
+    messageScheme.add("– **Организация**: ${response.org}")
+    messageScheme.add("– **Провайдер**: ${response.org}")
 
-    if (response.asCode.isNotEmpty()) messageScheme.add("– AS: ${response.asCode}")
-    if (response.asName.isNotEmpty()) messageScheme.add("– ASNAME: ${response.asName}")
-    if (response.zip.isNotEmpty()) messageScheme.add("– ZIP: ${response.zip}")
+    if (response.asCode.isNotEmpty()) messageScheme.add("– **AS**: ${response.asCode}")
+    if (response.asName.isNotEmpty()) messageScheme.add("– **ASNAME**: ${response.asName}")
+    if (response.zip.isNotEmpty()) messageScheme.add("– **ZIP**: ${response.zip}")
 
-    messageScheme.add("– IP: ${response.ip}")
+    messageScheme.add("– **IP**: ${response.ip}")
 
-    if (response.ip != ptr) messageScheme.add("– PTR: $ptr")
+    if (response.ip != ptr) messageScheme.add("– **PTR**: $ptr")
 
-    session.reply(text = messageScheme.toString())
+    session.replyWithLink(
+      text = messageScheme.toString(),
+      linkLabel = "Источник",
+      linkSource = "https://ip-api.com"
+    )
   }
 }
 
