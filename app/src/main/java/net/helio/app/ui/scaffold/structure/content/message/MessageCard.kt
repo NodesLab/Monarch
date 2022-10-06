@@ -84,6 +84,7 @@ fun MessageCard(message: Message) {
         ) {
           val bottomPadding: Dp = if (message.payload == null) 20.dp else 5.dp
 
+          // Автор сообщения.
           Text(
             text = author,
             color = Accent,
@@ -91,6 +92,7 @@ fun MessageCard(message: Message) {
             fontWeight = FontWeight.SemiBold
           )
 
+          // Основной текст сообщения.
           MarkdownText(
             markdown = message.text.replace("\n", "\n<br>"),
             color = MaterialTheme.colors.onPrimary,
@@ -103,6 +105,7 @@ fun MessageCard(message: Message) {
           PayloadProcessor(message = message, modifier = Modifier.align(Alignment.CenterHorizontally))
         }
 
+        // Время создания сообщения.
         Text(
           text = SimpleDateFormat("HH:mm:ss", Locale.US).format(message.date),
           style = MaterialTheme.typography.body2,
