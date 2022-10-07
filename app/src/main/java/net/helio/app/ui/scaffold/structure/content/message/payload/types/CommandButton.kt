@@ -16,24 +16,22 @@
 
 package net.helio.app.ui.scaffold.structure.content.message.payload.types
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.runtime.*
+import android.content.Context
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Code
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.message.model.Message
-import net.helio.app.core.message.model.payload.DropdownMessagePayload
+import net.helio.app.core.message.payload.CommandButtonPayload
 
 /**
- * Раскрывающийся текст в кнопке.
+ * Кнопка-ссылка.
  *
  * @param message Объект сообщения.
  * @param modifier Модификатор (для корректного отображения).
@@ -41,8 +39,10 @@ import net.helio.app.core.message.model.payload.DropdownMessagePayload
  * @author hepller
  */
 @Composable
-fun DropdownMessageButton(message: Message, modifier: Modifier) {
-  val payload: DropdownMessagePayload = message.payload as DropdownMessagePayload
+fun CommandButton(message: Message, modifier: Modifier) {
+  val payload: CommandButtonPayload = message.payload as CommandButtonPayload
+
+  val context: Context = LocalContext.current
 
   Row(
     horizontalArrangement = Arrangement.Center,
@@ -50,25 +50,28 @@ fun DropdownMessageButton(message: Message, modifier: Modifier) {
     modifier = modifier
       .padding(top = 5.dp, bottom = 30.dp)
   ) {
-    var isExpanded: Boolean by remember { mutableStateOf(false) }
-    var expandText: String by remember { mutableStateOf(payload.dropdownLabel) }
-
     TextButton(
-      onClick = {
-        isExpanded = !isExpanded
-        expandText = if (expandText == payload.dropdownLabel) payload.dropdownText else payload.dropdownLabel
-      },
+      onClick = { CommandManagerImpl.handleInput(input = payload.buttonCommand, context = context) },
       colors = ButtonDefaults.buttonColors(
         backgroundColor = MaterialTheme.colors.secondary
       ),
-      modifier = Modifier.fillMaxWidth()
+      modifier = Modifier.fillMaxWidth(),
+      shape = MaterialTheme.shapes.medium
     ) {
-      SelectionContainer {
-        Text(
-          text = expandText,
-          color = MaterialTheme.colors.onPrimary
-        )
-      }
+      Text(
+        text = payload.buttonLabel,
+        color = MaterialTheme.colors.onPrimary
+      )
+
+      Spacer(
+        modifier = Modifier.width(5.dp)
+      )
+
+      Icon(
+        imageVector = Icons.Rounded.Code,
+        contentDescription = "Отправить команду",
+        tint = MaterialTheme.colors.onPrimary
+      )
     }
   }
 }

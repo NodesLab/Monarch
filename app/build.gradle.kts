@@ -42,7 +42,7 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.3.0"
+val majorProjectVersion = "1.4.0"
 
 android {
   compileSdk = 33
@@ -52,15 +52,21 @@ android {
 
     minSdk = 29
     targetSdk = 33
-    versionCode = 11
+    versionCode = 12
     versionName = "$majorProjectVersion-${getShortCommit()}"
 
     vectorDrawables {
       useSupportLibrary = true
     }
+  }
 
-    // TODO: Настроить билд без указания конфига.
-    signingConfig = signingConfigs.getByName("debug")
+  signingConfigs {
+    create("release") {
+      storeFile = file("helio_key.jks")
+      storePassword = "public"
+      keyAlias = "public_key"
+      keyPassword = "public"
+    }
   }
 
   buildTypes {
@@ -72,16 +78,8 @@ android {
         getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"
       )
-    }
 
-    debug {
-      isMinifyEnabled = true
-      isShrinkResources = true
-
-      proguardFiles(
-        getDefaultProguardFile("proguard-android-optimize.txt"),
-        "proguard-rules.pro"
-      )
+      signingConfig = signingConfigs.getByName("release")
     }
   }
 
@@ -148,8 +146,7 @@ dependencies {
   implementation("io.ktor:ktor-client-core:$ktorVersion")
   implementation("io.ktor:ktor-client-cio:$ktorVersion")
 
-  implementation("com.github.jeziellago:compose-markdown:0.3.1")
-  implementation("io.coil-kt:coil:2.2.2")
+  implementation("com.linkedin.urls:url-detector:0.1.17")
 
   // endregion
 }

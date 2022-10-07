@@ -14,20 +14,9 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.message.model.payload
+package net.helio.app.core.message.payload
 
 /**
- * Полезная нагрузка сообщения с кнопкой-ссылкой.
+ * Интерфейс полезной нагрузки сообщения.
  */
-data class LinkMessagePayload(
-
-  /**
-   * Текст на кнопке.
-   */
-  val linkLabel: String,
-
-  /**
-   * Ссылка.
-   */
-  val linkSource: String
-) : MessagePayload
+interface MessagePayload

@@ -16,7 +16,7 @@
 
 package net.helio.app.core.message.model
 
-import net.helio.app.core.message.model.payload.MessagePayload
+import net.helio.app.core.message.payload.MessagePayload
 import java.util.*
 
 /**

@@ -42,13 +42,15 @@ object CommandsCommand : Command {
     messageScheme.add("")
     messageScheme.add(getCommandList().joinToString("\n"))
     messageScheme.add("")
-    messageScheme.add("⚠️️ Команды помеченные \"\\*\" не анонимны")
+    messageScheme.add("⚠️️ Команды помеченные \"*\" не анонимны")
     messageScheme.add("")
     messageScheme.add("\uD83D\uDCDD Префиксы команд: [/, !]")
 
-    // TODO: Сообщение с кнопкой для просмотра алиасов.
-
-    session.reply(text = messageScheme.toString())
+    session.replyWithCommandButton(
+      text = messageScheme.toString(),
+      buttonLabel = "Алиасы команд",
+      buttonCommand = "/aliases"
+    )
   }
 
   /**
@@ -61,7 +63,7 @@ object CommandsCommand : Command {
 
     for (command in CommandManagerImpl.commandList) {
       val betaStatus = if (command.isInBeta) "ᵇᵉᵗᵃ" else ""
-      val nonAnonymous = if (!command.isAnonymous) "\\*" else ""
+      val nonAnonymous = if (!command.isAnonymous) "*" else ""
 
       output.add(element = "$nonAnonymous/${command.aliases[0]} — ${command.description} $betaStatus".trim())
     }

@@ -50,5 +50,25 @@ interface CommandSession {
    */
   fun dropdownMessage(text: String, dropdownLabel: String, dropdownText: String)
 
-  fun replyWithLink(text: String, linkLabel: String, linkSource: String)
+  /**
+   * Отвечает на сообщение с прикрепленной кнопкой-ссылкой.
+   *
+   * @param text Текст сообщения.
+   * @param linkLabel Текст на кнопке.
+   * @param linkSource Ссылка.
+   *
+   * @see MessageManager.appMessage
+   */
+  fun replyWithLinkButton(text: String, linkLabel: String, linkSource: String)
+
+  /**
+   * Отвечает на сообщение с прикрепленной кнопкой содержащей команду.
+   *
+   * @param text Текст сообщения.
+   * @param buttonLabel Текст на кнопке.
+   * @param buttonCommand Команда в кнопке.
+   *
+   * @see MessageManager.appMessage
+   */
+  fun replyWithCommandButton(text: String, buttonLabel: String, buttonCommand: String)
 }

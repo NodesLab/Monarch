@@ -20,20 +20,20 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.OpenInBrowser
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.message.model.Message
-import net.helio.app.core.message.model.payload.LinkMessagePayload
+import net.helio.app.core.message.payload.DropdownMessagePayload
 
 /**
- * Кнопка-ссылка.
+ * Раскрывающийся текст в кнопке.
  *
  * @param message Объект сообщения.
  * @param modifier Модификатор (для корректного отображения).
@@ -41,8 +41,8 @@ import net.helio.app.core.message.model.payload.LinkMessagePayload
  * @author hepller
  */
 @Composable
-fun LinkMessageButton(message: Message, modifier: Modifier) {
-  val payload: LinkMessagePayload = message.payload as LinkMessagePayload
+fun DropdownButton(message: Message, modifier: Modifier) {
+  val payload: DropdownMessagePayload = message.payload as DropdownMessagePayload
 
   Row(
     horizontalArrangement = Arrangement.Center,
@@ -50,24 +50,26 @@ fun LinkMessageButton(message: Message, modifier: Modifier) {
     modifier = modifier
       .padding(top = 5.dp, bottom = 30.dp)
   ) {
-    val uriHandler: UriHandler = LocalUriHandler.current
+    var isExpanded: Boolean by remember { mutableStateOf(false) }
+    var expandText: String by remember { mutableStateOf(payload.dropdownLabel) }
 
     TextButton(
-      onClick = { uriHandler.openUri(payload.linkSource) },
+      onClick = {
+        isExpanded = !isExpanded
+        expandText = if (expandText == payload.dropdownLabel) payload.dropdownText else payload.dropdownLabel
+      },
       colors = ButtonDefaults.buttonColors(
         backgroundColor = MaterialTheme.colors.secondary
       ),
-      modifier = Modifier.fillMaxWidth()
+      modifier = Modifier.fillMaxWidth(),
+      shape = MaterialTheme.shapes.medium
     ) {
-      Icon(
-        imageVector = Icons.Rounded.OpenInBrowser,
-        contentDescription = "Открыть ссылку",
-        tint = MaterialTheme.colors.onPrimary
-      )
-      Text(
-        text = payload.linkLabel,
-        color = MaterialTheme.colors.onPrimary
-      )
+      SelectionContainer {
+        Text(
+          text = expandText,
+          color = MaterialTheme.colors.onPrimary
+        )
+      }
     }
   }
 }

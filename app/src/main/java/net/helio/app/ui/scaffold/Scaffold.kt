@@ -23,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import net.helio.app.ui.scaffold.structure.BottomBar
-import net.helio.app.ui.scaffold.structure.Content
 import net.helio.app.ui.scaffold.structure.DrawerContent
 import net.helio.app.ui.scaffold.structure.TopBar
+import net.helio.app.ui.scaffold.structure.bottom.BottomBar
+import net.helio.app.ui.scaffold.structure.content.Content
 
 /**
  * Отрисовывает интерфейс приложения по шаблону структуры "Scaffold".

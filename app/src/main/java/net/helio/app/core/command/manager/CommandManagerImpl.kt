@@ -121,7 +121,7 @@ object CommandManagerImpl : CommandManager {
   private fun unknownCommandMessage(session: CommandSession, input: String) {
     val messageScheme = StringJoiner("\n")
 
-    messageScheme.add("⚠️ **Такой команды не существует**")
+    messageScheme.add("⚠️ Такой команды не существует")
     messageScheme.add("")
 
     val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
@@ -132,7 +132,7 @@ object CommandManagerImpl : CommandManager {
       val mutableSimilarList: MutableList<String> = mutableListOf()
 
       for (similarItem: List<String> in similarAliases) {
-        mutableSimilarList.add("– /${similarItem[0]} *(${similarItem[1]})*")
+        mutableSimilarList.add("– /${similarItem[0]} (${similarItem[1]})")
       }
 
       messageScheme.add("Возможно вы хотели ввести один из следующих алиасов:")
@@ -141,9 +141,11 @@ object CommandManagerImpl : CommandManager {
       messageScheme.add("")
     }
 
-    messageScheme.add("*Для просмотра полного списка команд введите «/commands»*")
-
-    session.reply(messageScheme.toString())
+    session.replyWithCommandButton(
+      text = messageScheme.toString(),
+      buttonLabel = "Список команд",
+      buttonCommand = "/commands"
+    )
   }
 
   /**

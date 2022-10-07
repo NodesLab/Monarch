@@ -18,7 +18,7 @@ package net.helio.app.core.message.manager
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import net.helio.app.core.message.model.Message
-import net.helio.app.core.message.model.payload.MessagePayload
+import net.helio.app.core.message.payload.MessagePayload
 
 /**
  * Интерфейс менеджера сообщений.

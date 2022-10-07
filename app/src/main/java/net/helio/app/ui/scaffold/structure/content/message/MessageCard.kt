@@ -17,23 +17,24 @@
 package net.helio.app.ui.scaffold.structure.content.message
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Cancel
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.jeziellago.compose.markdowntext.MarkdownText
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.model.Message
 import net.helio.app.ui.scaffold.structure.content.message.payload.PayloadProcessor
 import net.helio.app.ui.theme.Accent
+import net.helio.app.ui.utility.StringUtility
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -50,11 +51,13 @@ fun MessageCard(message: Message) {
   val alignment: Alignment = if (message.isFromApp()) Alignment.TopStart else Alignment.TopEnd
   val author: String = if (message.isFromApp()) "Helio" else "User"
 
+  val annotatedString: AnnotatedString = StringUtility.parseLinks(text = message.text)
+
   Box(
     modifier = Modifier.fillMaxWidth()
   ) {
     Surface(
-      shape = RoundedCornerShape(size = 16.dp),
+      shape = MaterialTheme.shapes.large,
       color = color,
       elevation = 1.dp,
       modifier = Modifier
@@ -73,7 +76,7 @@ fun MessageCard(message: Message) {
             .align(Alignment.TopEnd)
         ) {
           Icon(
-            imageVector = Icons.Rounded.Clear,
+            imageVector = Icons.Rounded.Cancel,
             contentDescription = "Удалить сообщение",
             tint = MaterialTheme.colors.onSecondary
           )
@@ -93,13 +96,15 @@ fun MessageCard(message: Message) {
           )
 
           // Основной текст сообщения.
-          MarkdownText(
-            markdown = message.text.replace("\n", "\n<br>"),
-            color = MaterialTheme.colors.onPrimary,
-            style = MaterialTheme.typography.body2,
-            fontSize = 15.sp, // TODO: перенести типографию в тему
-            modifier = Modifier.padding(top = 5.dp, bottom = bottomPadding)
-          )
+          SelectionContainer {
+            Text(
+              text = annotatedString,
+              color = MaterialTheme.colors.onPrimary,
+              style = MaterialTheme.typography.body2,
+              fontSize = 15.sp, // TODO: перенести типографию в тему
+              modifier = Modifier.padding(top = 5.dp, bottom = bottomPadding)
+            )
+          }
 
           // Отображение полезной нагрузки (если имеется).
           PayloadProcessor(message = message, modifier = Modifier.align(Alignment.CenterHorizontally))

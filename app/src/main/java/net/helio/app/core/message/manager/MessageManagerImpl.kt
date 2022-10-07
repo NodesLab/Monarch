@@ -20,7 +20,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import net.helio.app.core.message.model.Message
 import net.helio.app.core.message.model.MessageImpl
-import net.helio.app.core.message.model.payload.MessagePayload
+import net.helio.app.core.message.payload.MessagePayload
 import java.util.*
 
 /**

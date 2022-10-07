@@ -61,8 +61,10 @@ object PortCommand : Command {
       if (NetworkUtility.isPortAvailable(host = host, port = port)) "✅ Порт $port ($host) открыт"
       else "❌ Порт $port ($host) закрыт, или недоступен"
 
-    // TODO: Добавить кнопку для проверки IP.
-
-    session.reply(text = replyMessage)
+    session.replyWithCommandButton(
+      text = replyMessage,
+      buttonLabel = "Информация об IP",
+      buttonCommand = "/ip $host"
+    )
   }
 }

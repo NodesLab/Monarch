@@ -51,5 +51,5 @@ interface CommandManager {
    * @param input Введённый текст.
    * @param context Контекст (если не указан, то проверка на наличие доступа к сети не будет происходить).
    */
-  fun handleInput(input: String, context: Context?)
+  fun handleInput(input: String, context: Context? = null)
 }

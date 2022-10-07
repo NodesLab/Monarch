@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.theme
-
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
-import androidx.compose.ui.unit.dp
+package net.helio.app.core.message.payload
 
 /**
- * Формы.
- *
- * @author hepller
+ * Полезная нагрузка сообщения с кнопкой-ссылкой.
  */
-val Shapes = Shapes(
-  small = RoundedCornerShape(size = 4.dp),
-  medium = RoundedCornerShape(size = 8.dp),
-  large = RoundedCornerShape(size = 16.dp)
-)
+data class LinkMessagePayload(
+
+  /**
+   * Текст на кнопке.
+   */
+  val linkLabel: String,
+
+  /**
+   * Ссылка.
+   */
+  val linkSource: String
+) : MessagePayload

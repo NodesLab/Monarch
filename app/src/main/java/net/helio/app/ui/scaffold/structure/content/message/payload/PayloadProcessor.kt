@@ -19,10 +19,12 @@ package net.helio.app.ui.scaffold.structure.content.message.payload
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import net.helio.app.core.message.model.Message
-import net.helio.app.core.message.model.payload.DropdownMessagePayload
-import net.helio.app.core.message.model.payload.LinkMessagePayload
-import net.helio.app.ui.scaffold.structure.content.message.payload.types.DropdownMessageButton
-import net.helio.app.ui.scaffold.structure.content.message.payload.types.LinkMessageButton
+import net.helio.app.core.message.payload.CommandButtonPayload
+import net.helio.app.core.message.payload.DropdownMessagePayload
+import net.helio.app.core.message.payload.LinkMessagePayload
+import net.helio.app.ui.scaffold.structure.content.message.payload.types.CommandButton
+import net.helio.app.ui.scaffold.structure.content.message.payload.types.DropdownButton
+import net.helio.app.ui.scaffold.structure.content.message.payload.types.LinkButton
 
 /**
  * Обработчик полезной нагрузки.
@@ -35,10 +37,14 @@ import net.helio.app.ui.scaffold.structure.content.message.payload.types.LinkMes
 @Composable
 fun PayloadProcessor(message: Message, modifier: Modifier) {
   if (message.payload is DropdownMessagePayload) {
-    DropdownMessageButton(message = message, modifier = modifier)
+    DropdownButton(message = message, modifier = modifier)
   }
 
   if (message.payload is LinkMessagePayload) {
-    LinkMessageButton(message = message, modifier = modifier)
+    LinkButton(message = message, modifier = modifier)
+  }
+
+  if (message.payload is CommandButtonPayload) {
+    CommandButton(message = message, modifier = modifier)
   }
 }
