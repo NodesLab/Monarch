@@ -20,6 +20,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
+import net.helio.app.core.message.payload.LinkMessagePayload
 import net.helio.app.core.utility.NetworkUtility
 import net.helio.app.core.utility.TextUtility
 import java.net.IDN
@@ -91,10 +92,12 @@ object IpInfoCommand : Command {
 
     if (response.ip != ptr) messageScheme.add("– PTR: $ptr")
 
-    session.replyWithLinkButton(
+    session.reply(
       text = messageScheme.toString(),
-      linkLabel = "Источник информации",
-      linkSource = "https://ip-api.com"
+      payload = LinkMessagePayload(
+        linkLabel = "Источник информации",
+        linkSource = "https://ip-api.com"
+      )
     )
   }
 }

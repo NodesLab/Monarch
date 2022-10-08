@@ -39,7 +39,7 @@ object MessageManagerImpl : MessageManager {
    * @param text Текст сообщения.
    * @param payload Полезная нагрузка.
    */
-  private fun addMessage(author: String, text: String, payload: MessagePayload?) {
+  private fun addMessage(author: String, text: String, payload: MessagePayload? = null) {
     messageList.add(MessageImpl(author, text, Date(), payload))
   }
 

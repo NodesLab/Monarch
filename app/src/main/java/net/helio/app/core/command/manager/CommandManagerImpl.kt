@@ -25,6 +25,8 @@ import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
 import net.helio.app.core.message.manager.MessageManagerImpl
+import net.helio.app.core.message.payload.CommandButtonPayload
+import net.helio.app.core.message.payload.DropdownMessagePayload
 import net.helio.app.core.utility.NetworkUtility
 import net.helio.app.core.utility.TextUtility
 import java.util.*
@@ -141,10 +143,12 @@ object CommandManagerImpl : CommandManager {
       messageScheme.add("")
     }
 
-    session.replyWithCommandButton(
+    session.reply(
       text = messageScheme.toString(),
-      buttonLabel = "Список команд",
-      buttonCommand = "/commands"
+      payload = CommandButtonPayload(
+        buttonLabel = "Список команд",
+        buttonCommand = "/commands"
+      )
     )
   }
 
@@ -162,10 +166,12 @@ object CommandManagerImpl : CommandManager {
       } catch (exception: Exception) {
         val errorStackTrace: String = exception.stackTrace.joinToString(separator = "\n")
 
-        session.dropdownMessage(
+        session.reply(
           text = "⚠️ При выполнении команды произошла ошибка",
-          dropdownLabel = "Подробная информация",
-          dropdownText = errorStackTrace
+          payload = DropdownMessagePayload(
+            dropdownLabel = "Подробная информация",
+            dropdownText = errorStackTrace
+          )
         )
       }
     }

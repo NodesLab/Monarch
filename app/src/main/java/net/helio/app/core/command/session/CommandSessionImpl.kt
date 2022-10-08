@@ -17,9 +17,7 @@
 package net.helio.app.core.command.session
 
 import net.helio.app.core.message.manager.MessageManagerImpl
-import net.helio.app.core.message.payload.CommandButtonPayload
-import net.helio.app.core.message.payload.DropdownMessagePayload
-import net.helio.app.core.message.payload.LinkMessagePayload
+import net.helio.app.core.message.payload.MessagePayload
 
 /**
  * Реализация сессии команды.
@@ -28,19 +26,7 @@ import net.helio.app.core.message.payload.LinkMessagePayload
  */
 class CommandSessionImpl(override val arguments: List<String>) : CommandSession {
 
-  override fun reply(text: String) {
-    MessageManagerImpl.appMessage(text = text)
-  }
-
-  override fun dropdownMessage(text: String, dropdownLabel: String, dropdownText: String) {
-    MessageManagerImpl.appMessage(text = text, payload = DropdownMessagePayload(dropdownLabel = dropdownLabel, dropdownText = dropdownText))
-  }
-
-  override fun replyWithLinkButton(text: String, linkLabel: String, linkSource: String) {
-    MessageManagerImpl.appMessage(text = text, payload = LinkMessagePayload(linkLabel = linkLabel, linkSource = linkSource))
-  }
-
-  override fun replyWithCommandButton(text: String, buttonLabel: String, buttonCommand: String) {
-    MessageManagerImpl.appMessage(text = text, payload = CommandButtonPayload(buttonLabel = buttonLabel, buttonCommand = buttonCommand))
+  override fun reply(text: String, payload: MessagePayload?) {
+    MessageManagerImpl.appMessage(text = text, payload = payload)
   }
 }

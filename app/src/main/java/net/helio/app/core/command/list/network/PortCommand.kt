@@ -18,6 +18,7 @@ package net.helio.app.core.command.list.network
 
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
+import net.helio.app.core.message.payload.CommandButtonPayload
 import net.helio.app.core.utility.NetworkUtility
 
 /**
@@ -61,10 +62,12 @@ object PortCommand : Command {
       if (NetworkUtility.isPortAvailable(host = host, port = port)) "✅ Порт $port ($host) открыт"
       else "❌ Порт $port ($host) закрыт, или недоступен"
 
-    session.replyWithCommandButton(
+    session.reply(
       text = replyMessage,
-      buttonLabel = "Информация об IP",
-      buttonCommand = "/ip $host"
+      payload = CommandButtonPayload(
+        buttonLabel = "Информация об IP",
+        buttonCommand = "/ip $host"
+      )
     )
   }
 }

@@ -17,6 +17,7 @@
 package net.helio.app.core.command.session
 
 import net.helio.app.core.message.manager.MessageManager
+import net.helio.app.core.message.payload.MessagePayload
 
 /**
  * Интерфейс сессии команды.
@@ -31,44 +32,13 @@ interface CommandSession {
   val arguments: List<String>
 
   /**
-   * Отвечает на сообщение.
-   *
-   * @param text Текст.
-   *
-   * @see MessageManager.appMessage
-   */
-  fun reply(text: String)
-
-  /**
-   * Отвечает на сообщение с раскрывающимся текстом.
+   * Создает сообщение (с возможностью прикрепить полезную нагрузку).
    *
    * @param text Текст сообщения.
-   * @param dropdownLabel Текст на кнопке.
-   * @param dropdownText Текст при раскрытии.
+   * @param payload Полезная нагрузка.
    *
    * @see MessageManager.appMessage
+   * @see MessagePayload
    */
-  fun dropdownMessage(text: String, dropdownLabel: String, dropdownText: String)
-
-  /**
-   * Отвечает на сообщение с прикрепленной кнопкой-ссылкой.
-   *
-   * @param text Текст сообщения.
-   * @param linkLabel Текст на кнопке.
-   * @param linkSource Ссылка.
-   *
-   * @see MessageManager.appMessage
-   */
-  fun replyWithLinkButton(text: String, linkLabel: String, linkSource: String)
-
-  /**
-   * Отвечает на сообщение с прикрепленной кнопкой содержащей команду.
-   *
-   * @param text Текст сообщения.
-   * @param buttonLabel Текст на кнопке.
-   * @param buttonCommand Команда в кнопке.
-   *
-   * @see MessageManager.appMessage
-   */
-  fun replyWithCommandButton(text: String, buttonLabel: String, buttonCommand: String)
+  fun reply(text: String, payload: MessagePayload? = null)
 }

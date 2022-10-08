@@ -19,6 +19,7 @@ package net.helio.app.core.command.list.base
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.command.session.CommandSession
+import net.helio.app.core.message.payload.CommandButtonPayload
 import java.util.*
 
 
@@ -46,10 +47,12 @@ object CommandsCommand : Command {
     messageScheme.add("")
     messageScheme.add("\uD83D\uDCDD Префиксы команд: [/, !]")
 
-    session.replyWithCommandButton(
+    session.reply(
       text = messageScheme.toString(),
-      buttonLabel = "Алиасы команд",
-      buttonCommand = "/aliases"
+      payload = CommandButtonPayload(
+        buttonLabel = "Алиасы команд",
+        buttonCommand = "/aliases"
+      )
     )
   }
 
