@@ -29,31 +29,31 @@ object ToastUtility {
   /**
    * Отображает тост.
    *
-   * @param context Контекст.
    * @param text Текст тоста.
+   * @param context Контекст.
    * @param duration Продолжительность (Toast.LENGTH_LONG | Toast.LENGTH_SHORT).
    */
-  private fun makeToast(context: Context, text: String, duration: Int) {
+  private fun makeToast(text: String, context: Context, duration: Int) {
     Toast.makeText(context, text, duration).show()
   }
 
   /**
    * Отображает долгосрочный тост.
    *
-   * @param context Контекст.
    * @param text Текст тоста.
+   * @param context Контекст.
    */
-  fun makeLongToast(context: Context, text: String) {
-    makeToast(context, text, Toast.LENGTH_LONG)
+  fun makeLongToast(text: String, context: Context) {
+    makeToast(text = text,context = context, duration = Toast.LENGTH_LONG)
   }
 
   /**
    * Отображает короткосрочный тост.
    *
-   * @param context Контекст.
    * @param text Текст тоста.
+   * @param context Контекст.
    */
-  fun makeShortToast(context: Context, text: String) {
-    makeToast(context, text, Toast.LENGTH_SHORT)
+  fun makeShortToast(text: String, context: Context) {
+    makeToast(text = text,context = context, duration = Toast.LENGTH_SHORT)
   }
 }

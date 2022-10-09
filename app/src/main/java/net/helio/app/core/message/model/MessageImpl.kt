@@ -20,16 +20,17 @@ import net.helio.app.core.message.payload.MessagePayload
 import java.util.*
 
 /**
- * Реализация сообщения.
- *
- * @param author Автор сообщения (app | user).
- * @param text Текст сообщения.
- * @param date Время создания сообщения.
+ * Реализация модели сообщения.
  *
  * @author hepller
  */
 data class MessageImpl(
+
+  /**
+   * Автор сообщения (app | user).
+   */
   private val author: String,
+
   override val text: String,
   override val date: Date,
   override val payload: MessagePayload?

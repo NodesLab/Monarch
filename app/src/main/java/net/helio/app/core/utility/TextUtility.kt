@@ -29,7 +29,6 @@ import kotlin.math.min
  */
 object TextUtility {
 
-
   /**
    * Получает расстояние Левенштейна.
    *

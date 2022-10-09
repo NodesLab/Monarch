@@ -21,6 +21,7 @@ import net.helio.app.core.command.list.base.AliasesCommand
 import net.helio.app.core.command.list.base.CommandsCommand
 import net.helio.app.core.command.list.network.IpInfoCommand
 import net.helio.app.core.command.list.network.PortCommand
+import net.helio.app.core.command.list.text.GenPwCommand
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.message.manager.MessageManagerImpl
 
@@ -33,11 +34,17 @@ class HelioApplication : Application() {
   override fun onCreate() {
     super.onCreate()
 
+    // base
     CommandManagerImpl.registerCommand(AliasesCommand)
     CommandManagerImpl.registerCommand(CommandsCommand)
+
+    // network
     CommandManagerImpl.registerCommand(IpInfoCommand)
     CommandManagerImpl.registerCommand(PortCommand)
 
-    MessageManagerImpl.appMessage("⚙️ Helio запущен, введите команду")
+    // text
+    CommandManagerImpl.registerCommand(GenPwCommand)
+
+    MessageManagerImpl.appMessage(text = "⚙️ Helio запущен, введите команду")
   }
 }

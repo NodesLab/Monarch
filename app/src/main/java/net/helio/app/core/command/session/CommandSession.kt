@@ -28,6 +28,7 @@ interface CommandSession {
 
   /**
    * Список аргументов.
+   * Первый аргумент - имя алиаса, через который была вызвана команда.
    */
   val arguments: List<String>
 

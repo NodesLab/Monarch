@@ -20,7 +20,7 @@ import net.helio.app.core.message.payload.MessagePayload
 import java.util.*
 
 /**
- * Интерфейс сообщения.
+ * Интерфейс модели сообщения.
  *
  * @author hepller
  */

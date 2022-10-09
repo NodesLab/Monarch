@@ -39,8 +39,8 @@ object MessageManagerImpl : MessageManager {
    * @param text Текст сообщения.
    * @param payload Полезная нагрузка.
    */
-  private fun addMessage(author: String, text: String, payload: MessagePayload?) {
-    messageList.add(MessageImpl(author, text, Date(), payload))
+  private fun addMessage(author: String, text: String, payload: MessagePayload? = null) {
+    messageList.add(MessageImpl(author = author, text = text, date = Date(), payload = payload))
   }
 
   override fun appMessage(text: String, payload: MessagePayload?) {
@@ -48,7 +48,7 @@ object MessageManagerImpl : MessageManager {
   }
 
   override fun userMessage(text: String) {
-    addMessage(author = "user", text = text, payload = null)
+    addMessage(author = "user", text = text)
   }
 
   override fun removeMessage(message: Message) {
