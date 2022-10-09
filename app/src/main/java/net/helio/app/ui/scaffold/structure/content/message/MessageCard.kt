@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.helio.app.core.message.manager.MessageManagerImpl
@@ -85,9 +84,6 @@ fun MessageCard(message: Message) {
         Column(
           modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
         ) {
-          val bottomPadding: Dp = if (message.payloadList == null) 20.dp else 5.dp
-
-          // Автор сообщения.
           Text(
             text = author,
             color = Accent,
@@ -95,22 +91,19 @@ fun MessageCard(message: Message) {
             fontWeight = FontWeight.SemiBold
           )
 
-          // Основной текст сообщения.
           SelectionContainer {
             Text(
               text = annotatedString,
               color = MaterialTheme.colors.onPrimary,
               style = MaterialTheme.typography.body2,
               fontSize = 15.sp, // TODO: перенести типографию в тему
-              modifier = Modifier.padding(top = 5.dp, bottom = bottomPadding)
+              modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
             )
           }
 
-          // Отображение полезной нагрузки (если имеется).
           PayloadProcessor(message = message, modifier = Modifier.align(Alignment.CenterHorizontally))
         }
 
-        // Время создания сообщения.
         Text(
           text = SimpleDateFormat("HH:mm:ss", Locale.US).format(message.date),
           style = MaterialTheme.typography.body2,

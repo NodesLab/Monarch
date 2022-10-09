@@ -152,7 +152,7 @@ object CommandManagerImpl : CommandManager {
       buttonsList.add(
         CommandButtonPayload(
           buttonLabel = "Выполнить команду №1",
-          buttonCommand = "/${similarAliases[0][0]} ${inputArgs.drop(1).joinToString(separator = " ")}"
+          buttonCommand = "/${similarAliases[0][0]} ${inputArgs.drop(n = 1).joinToString(separator = " ")}"
         )
       )
     }
