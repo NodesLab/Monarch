@@ -36,19 +36,19 @@ import net.helio.app.core.message.payload.DropdownMessagePayload
  * Раскрывающийся текст в кнопке.
  *
  * @param message Объект сообщения.
+ * @param payload Объект полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения).
+ *
+ * @see DropdownMessagePayload
  *
  * @author hepller
  */
 @Composable
-fun DropdownButton(message: Message, modifier: Modifier) {
-  val payload: DropdownMessagePayload = message.payload as DropdownMessagePayload
-
+fun DropdownButton(message: Message, payload: DropdownMessagePayload, modifier: Modifier) {
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,
-    modifier = modifier
-      .padding(top = 5.dp, bottom = 30.dp)
+    modifier = modifier.padding(top = 5.dp)
   ) {
     var isExpanded: Boolean by remember { mutableStateOf(false) }
     var expandText: String by remember { mutableStateOf(payload.dropdownLabel) }

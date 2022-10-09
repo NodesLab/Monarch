@@ -34,21 +34,21 @@ import net.helio.app.core.message.payload.CommandButtonPayload
  * Кнопка-ссылка.
  *
  * @param message Объект сообщения.
+ * @param payload Объект полезной нагруки.
  * @param modifier Модификатор (для корректного отображения).
+ *
+ * @see CommandButtonPayload
  *
  * @author hepller
  */
 @Composable
-fun CommandButton(message: Message, modifier: Modifier) {
-  val payload: CommandButtonPayload = message.payload as CommandButtonPayload
-
+fun CommandButton(message: Message, payload: CommandButtonPayload, modifier: Modifier) {
   val context: Context = LocalContext.current
 
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,
-    modifier = modifier
-      .padding(top = 5.dp, bottom = 30.dp)
+    modifier = modifier.padding(top = 5.dp)
   ) {
     TextButton(
       onClick = { CommandManagerImpl.handleInput(input = payload.buttonCommand, context = context) },

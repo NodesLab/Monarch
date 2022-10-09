@@ -65,9 +65,11 @@ object PortCommand : Command {
 
     MessageManagerImpl.appMessage(
       text = replyMessage,
-      payload = CommandButtonPayload(
-        buttonLabel = "Информация об IP",
-        buttonCommand = "/ip $host"
+      payload = listOf(
+        CommandButtonPayload(
+          buttonLabel = "Информация об IP",
+          buttonCommand = "/ip $host"
+        )
       )
     )
   }

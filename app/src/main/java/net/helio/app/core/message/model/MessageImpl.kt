@@ -33,7 +33,7 @@ data class MessageImpl(
 
   override val text: String,
   override val date: Date,
-  override val payload: MessagePayload?
+  override val payload: List<MessagePayload>
 ) : Message {
 
   override fun isFromApp(): Boolean {

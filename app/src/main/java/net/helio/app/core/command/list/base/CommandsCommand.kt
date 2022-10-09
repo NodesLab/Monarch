@@ -50,9 +50,11 @@ object CommandsCommand : Command {
 
     MessageManagerImpl.appMessage(
       text = messageScheme.toString(),
-      payload = CommandButtonPayload(
-        buttonLabel = "Алиасы команд",
-        buttonCommand = "/aliases"
+      payload = listOf(
+        CommandButtonPayload(
+          buttonLabel = "Алиасы команд",
+          buttonCommand = "/aliases"
+        )
       )
     )
   }

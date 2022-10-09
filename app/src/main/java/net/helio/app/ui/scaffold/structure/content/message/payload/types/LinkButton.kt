@@ -33,19 +33,19 @@ import net.helio.app.core.message.payload.LinkMessagePayload
  * Кнопка-ссылка.
  *
  * @param message Объект сообщения.
+ * @param payload Объект полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения).
+ *
+ * @see LinkMessagePayload
  *
  * @author hepller
  */
 @Composable
-fun LinkButton(message: Message, modifier: Modifier) {
-  val payload: LinkMessagePayload = message.payload as LinkMessagePayload
-
+fun LinkButton(message: Message, payload: LinkMessagePayload, modifier: Modifier) {
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,
-    modifier = modifier
-      .padding(top = 5.dp, bottom = 30.dp)
+    modifier = modifier.padding(top = 5.dp)
   ) {
     val uriHandler: UriHandler = LocalUriHandler.current
 

@@ -39,11 +39,11 @@ object MessageManagerImpl : MessageManager {
    * @param text Текст сообщения.
    * @param payload Полезная нагрузка.
    */
-  private fun addMessage(author: String, text: String, payload: MessagePayload? = null) {
+  private fun addMessage(author: String, text: String, payload: List<MessagePayload> = listOf()) {
     messageList.add(MessageImpl(author = author, text = text, date = Date(), payload = payload))
   }
 
-  override fun appMessage(text: String, payload: MessagePayload?) {
+  override fun appMessage(text: String, payload: List<MessagePayload>) {
     addMessage(author = "app", text = text, payload = payload)
   }
 

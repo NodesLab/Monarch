@@ -39,7 +39,7 @@ interface Message {
   /**
    * Полезная нагрузка сообщения.
    */
-  val payload: MessagePayload?
+  val payload: List<MessagePayload>
 
   /**
    * Проверяет, является ли сообщение созданным приложением.

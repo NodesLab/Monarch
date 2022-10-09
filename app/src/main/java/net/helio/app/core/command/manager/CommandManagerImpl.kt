@@ -27,6 +27,7 @@ import net.helio.app.core.command.session.CommandSessionImpl
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.payload.CommandButtonPayload
 import net.helio.app.core.message.payload.DropdownMessagePayload
+import net.helio.app.core.message.payload.MessagePayload
 import net.helio.app.core.utility.NetworkUtility
 import net.helio.app.core.utility.TextUtility
 import java.util.*
@@ -127,6 +128,13 @@ object CommandManagerImpl : CommandManager {
 
     val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
 
+    var buttonsList: MutableList<MessagePayload> = mutableListOf(
+      CommandButtonPayload(
+        buttonLabel = "Список команд",
+        buttonCommand = "/commands"
+      )
+    )
+
     val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = inputArgs[0], distance = 0.4)
 
     if (similarAliases.isNotEmpty()) {
@@ -140,14 +148,18 @@ object CommandManagerImpl : CommandManager {
       messageScheme.add("")
       messageScheme.add(mutableSimilarList.joinToString("\n"))
       messageScheme.add("")
+
+      buttonsList.add(
+        CommandButtonPayload(
+          buttonLabel = "Использовать команду (№1)",
+          buttonCommand = "/${similarAliases[0][0]} ${inputArgs.drop(1).joinToString(separator = " ")}"
+        )
+      )
     }
 
     MessageManagerImpl.appMessage(
       text = messageScheme.toString(),
-      payload = CommandButtonPayload(
-        buttonLabel = "Список команд",
-        buttonCommand = "/commands"
-      )
+      payload = buttonsList
     )
   }
 
@@ -167,9 +179,11 @@ object CommandManagerImpl : CommandManager {
 
         MessageManagerImpl.appMessage(
           text = "⚠️ При выполнении команды произошла ошибка",
-          payload = DropdownMessagePayload(
-            dropdownLabel = "Подробная информация",
-            dropdownText = errorStackTrace
+          payload = listOf(
+            DropdownMessagePayload(
+              dropdownLabel = "Подробная информация",
+              dropdownText = errorStackTrace
+            )
           )
         )
       }

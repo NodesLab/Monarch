@@ -95,9 +95,11 @@ object IpInfoCommand : Command {
 
     MessageManagerImpl.appMessage(
       text = messageScheme.toString(),
-      payload = LinkMessagePayload(
-        linkLabel = "Источник информации",
-        linkSource = "https://ip-api.com"
+      payload = listOf(
+        LinkMessagePayload(
+          linkLabel = "Источник информации",
+          linkSource = "https://ip-api.com"
+        )
       )
     )
   }

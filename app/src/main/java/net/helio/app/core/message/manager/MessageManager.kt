@@ -38,7 +38,7 @@ interface MessageManager {
    * @param text Текст сообщения.
    * @param payload Полезная нагрузка.
    */
-  fun appMessage(text: String, payload: MessagePayload? = null)
+  fun appMessage(text: String, payload: List<MessagePayload> = listOf())
 
   /**
    * Добавляет сообщение пользователя в список.
