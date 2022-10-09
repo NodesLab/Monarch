@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.message.model.Message
 import net.helio.app.core.message.payload.CommandButtonPayload
@@ -29,7 +28,6 @@ import net.helio.app.core.message.payload.LinkMessagePayload
 import net.helio.app.ui.scaffold.structure.content.message.payload.types.CommandButton
 import net.helio.app.ui.scaffold.structure.content.message.payload.types.DropdownButton
 import net.helio.app.ui.scaffold.structure.content.message.payload.types.LinkButton
-import net.helio.app.ui.utility.ToastUtility
 
 /**
  * Обработчик полезной нагрузки.
@@ -41,21 +39,21 @@ import net.helio.app.ui.utility.ToastUtility
  */
 @Composable
 fun PayloadProcessor(message: Message, modifier: Modifier) {
-  if (message.payload.isNotEmpty()) {
+  if (message.payloadList.isNotEmpty()) {
     Column(
       modifier = modifier.padding(bottom = 25.dp)
     ) {
-      for (payloadItem in message.payload) {
+      for (payloadItem in message.payloadList) {
         if (payloadItem is DropdownMessagePayload) {
-          DropdownButton(message = message, payload = payloadItem, modifier = modifier)
+          DropdownButton(payload = payloadItem, modifier = modifier)
         }
 
         if (payloadItem is LinkMessagePayload) {
-          LinkButton(message = message, payload = payloadItem, modifier = modifier)
+          LinkButton(payload = payloadItem, modifier = modifier)
         }
 
         if (payloadItem is CommandButtonPayload) {
-          CommandButton(message = message, payload = payloadItem, modifier = modifier)
+          CommandButton(payload = payloadItem, modifier = modifier)
         }
       }
     }

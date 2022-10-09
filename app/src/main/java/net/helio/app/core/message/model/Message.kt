@@ -37,9 +37,9 @@ interface Message {
   val date: Date
 
   /**
-   * Полезная нагрузка сообщения.
+   * Список полезной нагрузки сообщения.
    */
-  val payload: List<MessagePayload>
+  val payloadList: List<MessagePayload>
 
   /**
    * Проверяет, является ли сообщение созданным приложением.

@@ -36,9 +36,9 @@ interface MessageManager {
    * Добавляет сообщение ассистента в список (с возможностью прикрепить полезную нагрузку).
    *
    * @param text Текст сообщения.
-   * @param payload Полезная нагрузка.
+   * @param payloadList Список полезной нагрузки (по умолчанию пустой).
    */
-  fun appMessage(text: String, payload: List<MessagePayload> = listOf())
+  fun appMessage(text: String, payloadList: List<MessagePayload> = listOf())
 
   /**
    * Добавляет сообщение пользователя в список.

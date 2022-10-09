@@ -26,13 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
-import net.helio.app.core.message.model.Message
 import net.helio.app.core.message.payload.LinkMessagePayload
 
 /**
  * Кнопка-ссылка.
  *
- * @param message Объект сообщения.
  * @param payload Объект полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения).
  *
@@ -41,7 +39,7 @@ import net.helio.app.core.message.payload.LinkMessagePayload
  * @author hepller
  */
 @Composable
-fun LinkButton(message: Message, payload: LinkMessagePayload, modifier: Modifier) {
+fun LinkButton(payload: LinkMessagePayload, modifier: Modifier) {
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,

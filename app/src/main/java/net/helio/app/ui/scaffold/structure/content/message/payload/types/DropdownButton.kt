@@ -29,13 +29,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import net.helio.app.core.message.model.Message
 import net.helio.app.core.message.payload.DropdownMessagePayload
 
 /**
  * Раскрывающийся текст в кнопке.
  *
- * @param message Объект сообщения.
  * @param payload Объект полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения).
  *
@@ -44,7 +42,7 @@ import net.helio.app.core.message.payload.DropdownMessagePayload
  * @author hepller
  */
 @Composable
-fun DropdownButton(message: Message, payload: DropdownMessagePayload, modifier: Modifier) {
+fun DropdownButton(payload: DropdownMessagePayload, modifier: Modifier) {
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,

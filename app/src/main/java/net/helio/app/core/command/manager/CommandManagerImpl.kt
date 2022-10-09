@@ -128,7 +128,7 @@ object CommandManagerImpl : CommandManager {
 
     val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
 
-    var buttonsList: MutableList<MessagePayload> = mutableListOf(
+    val buttonsList: MutableList<MessagePayload> = mutableListOf(
       CommandButtonPayload(
         buttonLabel = "Список команд",
         buttonCommand = "/commands"
@@ -151,7 +151,7 @@ object CommandManagerImpl : CommandManager {
 
       buttonsList.add(
         CommandButtonPayload(
-          buttonLabel = "Использовать команду (№1)",
+          buttonLabel = "Выполнить команду №1",
           buttonCommand = "/${similarAliases[0][0]} ${inputArgs.drop(1).joinToString(separator = " ")}"
         )
       )
@@ -159,7 +159,7 @@ object CommandManagerImpl : CommandManager {
 
     MessageManagerImpl.appMessage(
       text = messageScheme.toString(),
-      payload = buttonsList
+      payloadList = buttonsList
     )
   }
 
@@ -179,7 +179,7 @@ object CommandManagerImpl : CommandManager {
 
         MessageManagerImpl.appMessage(
           text = "⚠️ При выполнении команды произошла ошибка",
-          payload = listOf(
+          payloadList = listOf(
             DropdownMessagePayload(
               dropdownLabel = "Подробная информация",
               dropdownText = errorStackTrace

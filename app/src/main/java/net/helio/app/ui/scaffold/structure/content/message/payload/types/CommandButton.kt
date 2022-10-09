@@ -27,13 +27,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.core.message.model.Message
 import net.helio.app.core.message.payload.CommandButtonPayload
 
 /**
  * Кнопка-ссылка.
  *
- * @param message Объект сообщения.
  * @param payload Объект полезной нагруки.
  * @param modifier Модификатор (для корректного отображения).
  *
@@ -42,7 +40,7 @@ import net.helio.app.core.message.payload.CommandButtonPayload
  * @author hepller
  */
 @Composable
-fun CommandButton(message: Message, payload: CommandButtonPayload, modifier: Modifier) {
+fun CommandButton(payload: CommandButtonPayload, modifier: Modifier) {
   val context: Context = LocalContext.current
 
   Row(

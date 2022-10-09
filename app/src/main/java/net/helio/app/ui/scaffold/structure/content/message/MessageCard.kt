@@ -85,7 +85,7 @@ fun MessageCard(message: Message) {
         Column(
           modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
         ) {
-          val bottomPadding: Dp = if (message.payload == null) 20.dp else 5.dp
+          val bottomPadding: Dp = if (message.payloadList == null) 20.dp else 5.dp
 
           // Автор сообщения.
           Text(
