@@ -16,9 +16,6 @@
 
 package net.helio.app.core.command.session
 
-import net.helio.app.core.message.manager.MessageManager
-import net.helio.app.core.message.payload.MessagePayload
-
 /**
  * Интерфейс сессии команды.
  *
@@ -31,15 +28,4 @@ interface CommandSession {
    * Первый аргумент - имя алиаса, через который была вызвана команда.
    */
   val arguments: List<String>
-
-  /**
-   * Создает сообщение (с возможностью прикрепить полезную нагрузку).
-   *
-   * @param text Текст сообщения.
-   * @param payload Полезная нагрузка.
-   *
-   * @see MessageManager.appMessage
-   * @see MessagePayload
-   */
-  fun reply(text: String, payload: MessagePayload? = null)
 }

@@ -24,7 +24,7 @@ import net.helio.app.core.message.payload.MessagePayload
 import java.util.*
 
 /**
- * Стандартный менеджер сообщений.
+ * Реализация менеджера сообщений.
  *
  * @author hepller
  */

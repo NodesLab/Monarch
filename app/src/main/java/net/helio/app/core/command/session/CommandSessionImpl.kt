@@ -16,17 +16,10 @@
 
 package net.helio.app.core.command.session
 
-import net.helio.app.core.message.manager.MessageManagerImpl
-import net.helio.app.core.message.payload.MessagePayload
-
 /**
  * Реализация сессии команды.
  *
  * @author hepller
  */
 class CommandSessionImpl(override val arguments: List<String>) : CommandSession {
-
-  override fun reply(text: String, payload: MessagePayload?) {
-    MessageManagerImpl.appMessage(text = text, payload = payload)
-  }
 }

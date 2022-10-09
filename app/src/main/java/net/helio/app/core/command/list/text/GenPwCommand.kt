@@ -18,6 +18,7 @@ package net.helio.app.core.command.list.text
 
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
+import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.utility.TextUtility
 import java.security.SecureRandom
 import java.util.*
@@ -37,13 +38,13 @@ object GenPwCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      session.reply(text = "⛔ Укажите длину генерируемого пароля")
+      MessageManagerImpl.appMessage(text = "⛔ Укажите длину генерируемого пароля")
 
       return
     }
 
     if (!TextUtility.isNumber(session.arguments[1])) {
-      session.reply(text = "⚠️️ Длина генерируемого пароля должна быть числом")
+      MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемого пароля должна быть числом")
 
       return
     }
@@ -51,7 +52,7 @@ object GenPwCommand : Command {
     val length: Int = Integer.parseInt(session.arguments[1])
 
     if (length < 1) {
-      session.reply(text = "⚠️️ Длина генерируемого пароля должна быть больше нуля")
+      MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемого пароля должна быть больше нуля")
 
       return
     }
@@ -70,7 +71,7 @@ object GenPwCommand : Command {
     messageScheme.add("")
     messageScheme.add(generated)
 
-    session.reply(text = messageScheme.toString())
+    MessageManagerImpl.appMessage(text = messageScheme.toString())
   }
 
   /**

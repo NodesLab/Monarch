@@ -19,6 +19,7 @@ package net.helio.app.core.command.list.base
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.command.session.CommandSession
+import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.payload.CommandButtonPayload
 import java.util.*
 
@@ -41,13 +42,13 @@ object CommandsCommand : Command {
 
     messageScheme.add("\uD83C\uDF35 Доступные команды:")
     messageScheme.add("")
-    messageScheme.add(getCommandList().joinToString("\n"))
+    messageScheme.add(getCommandList().joinToString(separator = "\n"))
     messageScheme.add("")
     messageScheme.add("⚠️️ Команды помеченные \"*\" не анонимны")
     messageScheme.add("")
     messageScheme.add("\uD83D\uDCDD Префиксы команд: [/, !]")
 
-    session.reply(
+    MessageManagerImpl.appMessage(
       text = messageScheme.toString(),
       payload = CommandButtonPayload(
         buttonLabel = "Алиасы команд",

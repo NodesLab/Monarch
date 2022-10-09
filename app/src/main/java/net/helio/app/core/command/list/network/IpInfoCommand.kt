@@ -20,6 +20,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
+import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.payload.LinkMessagePayload
 import net.helio.app.core.utility.NetworkUtility
 import net.helio.app.core.utility.TextUtility
@@ -43,7 +44,7 @@ object IpInfoCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      session.reply(text = "⛔ Укажите IP-адрес, о котором необходимо найти информацию")
+      MessageManagerImpl.appMessage(text = "⛔ Укажите IP-адрес, о котором необходимо найти информацию")
 
       return
     }
@@ -57,17 +58,17 @@ object IpInfoCommand : Command {
     if (TextUtility.isNumber(string = cleanedIp)) cleanedIp = NetworkUtility.longToIPv4(ip = cleanedIp.split(":")[0].toLong())
 
     if (!NetworkUtility.isValidDomain(domain = cleanedIp) && !NetworkUtility.isValidIPv4(ip = cleanedIp) && !NetworkUtility.isValidIPv6(ip = cleanedIp) && !NetworkUtility.isValidDomain(IDN.toUnicode(cleanedIp))) {
-      session.reply(text = "⚠️️ Вы указали / переслали некорректный IP")
+      MessageManagerImpl.appMessage(text = "⚠️️ Вы указали / переслали некорректный IP")
 
       return
     }
 
-    session.reply(text = "⚙️ Получение информации об IP ...")
+    MessageManagerImpl.appMessage(text = "⚙️ Получение информации об IP ...")
 
     val response: IpApiAdapter? = NetworkUtility.readJsonHttp(url = "http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
 
     if (response?.status != "success") {
-      session.reply(text = "⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
+      MessageManagerImpl.appMessage(text = "⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
 
       return
     }
@@ -92,7 +93,7 @@ object IpInfoCommand : Command {
 
     if (response.ip != ptr) messageScheme.add("– PTR: $ptr")
 
-    session.reply(
+    MessageManagerImpl.appMessage(
       text = messageScheme.toString(),
       payload = LinkMessagePayload(
         linkLabel = "Источник информации",

@@ -19,6 +19,7 @@ package net.helio.app.core.command.list.base
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.command.session.CommandSession
+import net.helio.app.core.message.manager.MessageManagerImpl
 import java.util.*
 
 /**
@@ -41,7 +42,7 @@ object AliasesCommand : Command {
     messageScheme.add("")
     messageScheme.add(getAliasesList().joinToString(separator = "\n"))
 
-    session.reply(text = messageScheme.toString())
+    MessageManagerImpl.appMessage(text = messageScheme.toString())
   }
 
   /**

@@ -62,13 +62,13 @@ object CommandManagerImpl : CommandManager {
     val session: CommandSession = CommandSessionImpl(arguments = inputArgs)
 
     if (command == null) {
-      unknownCommandMessage(session = session, input = input)
+      unknownCommandMessage(input = input)
 
       return
     }
 
     if (context != null && command.isRequireNetwork && !NetworkUtility.hasNetworkConnection(context = context)) {
-      session.reply(text = "⚠️ Для использования этой команды необходим доступ к сети")
+      MessageManagerImpl.appMessage(text = "⚠️ Для использования этой команды необходим доступ к сети")
 
       return
     }
@@ -117,10 +117,9 @@ object CommandManagerImpl : CommandManager {
   /**
    * Производит сообщение о неизвестной команде.
    *
-   * @param session Сессия команды.
    * @param input Ввод пользователя.
    */
-  private fun unknownCommandMessage(session: CommandSession, input: String) {
+  private fun unknownCommandMessage(input: String) {
     val messageScheme = StringJoiner("\n")
 
     messageScheme.add("⚠️ Такой команды не существует")
@@ -143,7 +142,7 @@ object CommandManagerImpl : CommandManager {
       messageScheme.add("")
     }
 
-    session.reply(
+    MessageManagerImpl.appMessage(
       text = messageScheme.toString(),
       payload = CommandButtonPayload(
         buttonLabel = "Список команд",
@@ -166,7 +165,7 @@ object CommandManagerImpl : CommandManager {
       } catch (exception: Exception) {
         val errorStackTrace: String = exception.stackTrace.joinToString(separator = "\n")
 
-        session.reply(
+        MessageManagerImpl.appMessage(
           text = "⚠️ При выполнении команды произошла ошибка",
           payload = DropdownMessagePayload(
             dropdownLabel = "Подробная информация",

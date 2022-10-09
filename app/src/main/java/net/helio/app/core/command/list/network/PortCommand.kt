@@ -18,6 +18,7 @@ package net.helio.app.core.command.list.network
 
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
+import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.payload.CommandButtonPayload
 import net.helio.app.core.utility.NetworkUtility
 
@@ -36,13 +37,13 @@ object PortCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      session.reply(text = "⛔ Укажите хост и порт")
+      MessageManagerImpl.appMessage(text = "⛔ Укажите хост и порт")
 
       return
     }
 
     if (session.arguments.size < 3) {
-      session.reply(text = "⛔ Укажите порт для проверки")
+      MessageManagerImpl.appMessage(text = "⛔ Укажите порт для проверки")
 
       return
     }
@@ -51,18 +52,18 @@ object PortCommand : Command {
     val port: Int = Integer.parseInt(session.arguments[2])
 
     if (port > 65535) {
-      session.reply(text = "⚠️️ Порт должен быть числом не больше чем 65535")
+      MessageManagerImpl.appMessage(text = "⚠️️ Порт должен быть числом не больше чем 65535")
 
       return
     }
 
-    session.reply(text = "⚙️ Проверка порта на доступность ...")
+    MessageManagerImpl.appMessage(text = "⚙️ Проверка порта на доступность ...")
 
     val replyMessage: String =
       if (NetworkUtility.isPortAvailable(host = host, port = port)) "✅ Порт $port ($host) открыт"
       else "❌ Порт $port ($host) закрыт, или недоступен"
 
-    session.reply(
+    MessageManagerImpl.appMessage(
       text = replyMessage,
       payload = CommandButtonPayload(
         buttonLabel = "Информация об IP",

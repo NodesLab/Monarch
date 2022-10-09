@@ -33,7 +33,7 @@ interface MessageManager {
   val messageList: SnapshotStateList<Message>
 
   /**
-   * Добавляет сообщение ассистента в список.
+   * Добавляет сообщение ассистента в список (с возможностью прикрепить полезную нагрузку).
    *
    * @param text Текст сообщения.
    * @param payload Полезная нагрузка.
