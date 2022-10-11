@@ -17,6 +17,8 @@
 package net.helio.app.ui.scaffold.structure.content.message.payload
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -57,5 +59,7 @@ fun PayloadProcessor(message: Message, modifier: Modifier) {
         }
       }
     }
+  } else {
+    Spacer(modifier = Modifier.height(height = 20.dp))
   }
 }

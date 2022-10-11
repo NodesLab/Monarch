@@ -21,5 +21,4 @@ package net.helio.app.core.command.session
  *
  * @author hepller
  */
-class CommandSessionImpl(override val arguments: List<String>) : CommandSession {
-}
+class CommandSessionImpl(override val arguments: List<String>) : CommandSession

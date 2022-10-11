@@ -19,7 +19,6 @@ package net.helio.app.ui.scaffold
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ import net.helio.app.ui.scaffold.structure.bottom.BottomBar
 import net.helio.app.ui.scaffold.structure.content.Content
 
 /**
- * Отрисовывает интерфейс приложения по шаблону структуры "Scaffold".
+ * Шаблон интерфейса приложения.
  *
  * @author hepller
  */
@@ -56,9 +55,7 @@ fun AppScaffold() {
     backgroundColor = MaterialTheme.colors.primary,
 
     drawerBackgroundColor = MaterialTheme.colors.primary,
-    drawerScrimColor = MaterialTheme.colors.surface,
-    drawerShape = MaterialTheme.shapes.small,
-    drawerElevation = 16.dp
+    drawerScrimColor = MaterialTheme.colors.surface
   ) {
     Content(it)
   }

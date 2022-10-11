@@ -23,7 +23,6 @@ import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.payload.CommandButtonPayload
 import java.util.*
 
-
 /**
  * Команда для просмотра доступных команд.
  *
