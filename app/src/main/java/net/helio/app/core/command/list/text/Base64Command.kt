@@ -29,7 +29,7 @@ import java.util.*
  */
 object Base64Command : Command {
   override val aliases: List<String> = listOf("base64", "бейс64")
-  override val description: String = "Конвертирует текст в base64 и обратно."
+  override val description: String = "Конвертирует текст в base64 и обратно"
 
   override val isInBeta: Boolean = false
   override val isRequireNetwork: Boolean = false

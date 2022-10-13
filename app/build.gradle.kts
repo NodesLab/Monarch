@@ -42,7 +42,7 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.5.0"
+val majorProjectVersion = "1.5.1"
 
 android {
   compileSdk = 33
@@ -52,7 +52,7 @@ android {
 
     minSdk = 29
     targetSdk = 33
-    versionCode = 15
+    versionCode = 16
     versionName = "$majorProjectVersion-${getShortCommit()}"
 
     vectorDrawables {

@@ -38,23 +38,17 @@ object GenPwCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      MessageManagerImpl.appMessage(text = "⛔ Укажите длину генерируемого пароля")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⛔ Укажите длину генерируемого пароля")
     }
 
     if (!TextUtility.isNumber(session.arguments[1])) {
-      MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемого пароля должна быть числом")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемого пароля должна быть числом")
     }
 
     val length: Int = Integer.parseInt(session.arguments[1])
 
     if (length < 1) {
-      MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемого пароля должна быть больше нуля")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемого пароля должна быть больше нуля")
     }
 
     val generated: String = generateString(

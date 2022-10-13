@@ -16,9 +16,14 @@
 
 package net.helio.app.core.command.session
 
+import net.helio.app.core.command.session.properties.CommandSessionProperties
+
 /**
  * Реализация сессии команды.
  *
  * @author hepller
  */
-class CommandSessionImpl(override val arguments: List<String>) : CommandSession
+class CommandSessionImpl(
+  override val arguments: List<String>,
+  override val properties: CommandSessionProperties
+) : CommandSession

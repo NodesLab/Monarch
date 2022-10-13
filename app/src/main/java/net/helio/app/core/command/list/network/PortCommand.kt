@@ -37,24 +37,18 @@ object PortCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      MessageManagerImpl.appMessage(text = "⛔ Укажите хост и порт")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⛔ Укажите хост и порт")
     }
 
     if (session.arguments.size < 3) {
-      MessageManagerImpl.appMessage(text = "⛔ Укажите порт для проверки")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⛔ Укажите порт для проверки")
     }
 
     val host: String = NetworkUtility.clearUrl(url = session.arguments[1])
     val port: Int = Integer.parseInt(session.arguments[2])
 
     if (port > 65535) {
-      MessageManagerImpl.appMessage(text = "⚠️️ Порт должен быть числом не больше чем 65535")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⚠️️ Порт должен быть числом не больше чем 65535")
     }
 
     MessageManagerImpl.appMessage(text = "⚙️ Проверка порта на доступность ...")

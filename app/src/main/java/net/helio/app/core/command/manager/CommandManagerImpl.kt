@@ -24,6 +24,8 @@ import kotlinx.coroutines.launch
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.command.session.CommandSessionImpl
+import net.helio.app.core.command.session.properties.CommandSessionProperties
+import net.helio.app.core.command.session.properties.CommandSessionPropertiesImpl
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.payload.CommandButtonPayload
 import net.helio.app.core.message.payload.DropdownMessagePayload
@@ -54,30 +56,36 @@ object CommandManagerImpl : CommandManager {
   }
 
   @OptIn(DelicateCoroutinesApi::class)
-  override fun handleInput(input: String, context: Context?) {
+  override fun handleInput(input: String, context: Context) {
     MessageManagerImpl.userMessage(text = input.trim())
 
-    val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
-
-    val command: Command? = getCommand(alias = input.substring(startIndex = 1).lowercase().split(" ")[0])
-    val session: CommandSession = CommandSessionImpl(arguments = inputArgs)
+    val command: Command? =
+      if (input.startsWith("/")) getCommand(alias = input.substring(startIndex = 1).lowercase().split(" ")[0])
+      else null
 
     if (command == null) {
-      unknownCommandMessage(input = input)
-
-      return
+      return unknownCommandMessage(input = input)
     }
 
-    if (context != null && command.isRequireNetwork && !NetworkUtility.hasNetworkConnection(context = context)) {
-      MessageManagerImpl.appMessage(text = "⚠️ Для использования этой команды необходим доступ к сети")
+    val isNetworkAvailable: Boolean = NetworkUtility.hasNetworkConnection(context = context)
 
-      return
+    if (command.isRequireNetwork && !isNetworkAvailable) {
+      return MessageManagerImpl.appMessage(text = "⚠️ Для использования этой команды необходим доступ к сети")
     }
+
+    val sessionProperties: CommandSessionProperties = CommandSessionPropertiesImpl(
+      isNetworkAvailable = isNetworkAvailable
+    )
+
+    val commandSession: CommandSession = CommandSessionImpl(
+      arguments = input.substring(startIndex = 1).split(" "),
+      properties = sessionProperties
+    )
 
     GlobalScope.launch {
       val coroutineContext: CoroutineContext = getDispatcherFromCurrentThread(scope = this)
 
-      executeCommand(command = command, session = session, context = coroutineContext)
+      executeCommand(command = command, session = commandSession, context = coroutineContext)
     }
   }
 

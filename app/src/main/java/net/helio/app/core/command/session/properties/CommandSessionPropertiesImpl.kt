@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.command.session
-
-import net.helio.app.core.command.session.properties.CommandSessionProperties
+package net.helio.app.core.command.session.properties
 
 /**
- * Интерфейс сессии команды.
+ * Реализация свойств сессии команды.
  *
  * @author hepller
  */
-interface CommandSession {
-
-  /**
-   * Список аргументов.
-   * Первый аргумент - имя алиаса, через который была вызвана команда.
-   */
-  val arguments: List<String>
-
-  /**
-   * Свойства сессии команды.
-   */
-  val properties: CommandSessionProperties
-}
+class CommandSessionPropertiesImpl(
+  override val isNetworkAvailable: Boolean
+) : CommandSessionProperties

@@ -49,7 +49,7 @@ interface CommandManager {
    * Обрабатывает ввод пользователя.
    *
    * @param input Введённый текст.
-   * @param context Контекст (если не указан, то проверка на наличие доступа к сети не будет происходить).
+   * @param context Контекст.
    */
-  fun handleInput(input: String, context: Context? = null)
+  fun handleInput(input: String, context: Context)
 }

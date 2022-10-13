@@ -44,9 +44,7 @@ object IpInfoCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      MessageManagerImpl.appMessage(text = "⛔ Укажите IP-адрес, о котором необходимо найти информацию")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⛔ Укажите IP-адрес, о котором необходимо найти информацию")
     }
 
     var cleanedIp: String = NetworkUtility.clearUrl(url = session.arguments[1])
@@ -58,9 +56,7 @@ object IpInfoCommand : Command {
     if (TextUtility.isNumber(string = cleanedIp)) cleanedIp = NetworkUtility.longToIPv4(ip = cleanedIp.split(":")[0].toLong())
 
     if (!NetworkUtility.isValidDomain(domain = cleanedIp) && !NetworkUtility.isValidIPv4(ip = cleanedIp) && !NetworkUtility.isValidIPv6(ip = cleanedIp) && !NetworkUtility.isValidDomain(IDN.toUnicode(cleanedIp))) {
-      MessageManagerImpl.appMessage(text = "⚠️️ Вы указали / переслали некорректный IP")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⚠️️ Вы указали / переслали некорректный IP")
     }
 
     MessageManagerImpl.appMessage(text = "⚙️ Получение информации об IP ...")
@@ -68,9 +64,7 @@ object IpInfoCommand : Command {
     val response: IpApiAdapter? = NetworkUtility.readJsonHttp(url = "http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
 
     if (response?.status != "success") {
-      MessageManagerImpl.appMessage(text = "⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
-
-      return
+      return MessageManagerImpl.appMessage(text = "⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
     }
 
     val ptr: String? =

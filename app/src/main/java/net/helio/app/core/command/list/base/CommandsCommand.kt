@@ -43,9 +43,10 @@ object CommandsCommand : Command {
     messageScheme.add("")
     messageScheme.add(getCommandList().joinToString(separator = "\n"))
     messageScheme.add("")
-    messageScheme.add("⚠️️ Команды помеченные \"*\" не анонимны")
+    messageScheme.add("\uD83D\uDCDD Обозначения:")
     messageScheme.add("")
-    messageScheme.add("\uD83D\uDCDD Префиксы команд: [/, !]")
+    messageScheme.add("* – Не анонимная команда")
+    messageScheme.add("^ – Требует доступ к сети")
 
     MessageManagerImpl.appMessage(
       text = messageScheme.toString(),
@@ -67,10 +68,11 @@ object CommandsCommand : Command {
     val output: MutableList<String> = mutableListOf()
 
     for (command in CommandManagerImpl.commandList) {
-      val betaStatus = if (command.isInBeta) "ᵇᵉᵗᵃ" else ""
-      val nonAnonymous = if (!command.isAnonymous) "*" else ""
+      val betaStatus: String = if (command.isInBeta) "ᵇᵉᵗᵃ" else ""
+      val nonAnonymous: String = if (!command.isAnonymous) "*" else ""
+      val requireInternet: String = if (command.isRequireNetwork) "^" else ""
 
-      output.add(element = "$nonAnonymous/${command.aliases[0]} — ${command.description} $betaStatus".trim())
+      output.add(element = "/${command.aliases[0]}$requireInternet$nonAnonymous — ${command.description} $betaStatus".trim())
     }
 
     return output
