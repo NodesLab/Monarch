@@ -33,6 +33,11 @@ plugins {
 fun getShortCommit(): String {
   val stdout = ByteArrayOutputStream()
 
+  val file = File("../.git")
+
+  // Для возможности сборки после скачивания репозитория (т.к. он не содержит директорию .git).
+  if (!file.isDirectory) return "xxxxxxx"
+
   exec {
     commandLine("git", "rev-parse", "--short", "HEAD")
 
