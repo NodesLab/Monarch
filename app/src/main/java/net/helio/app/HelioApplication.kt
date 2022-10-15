@@ -32,6 +32,7 @@ import net.helio.app.core.message.manager.MessageManagerImpl
  * @author hepller
  */
 class HelioApplication : Application() {
+
   override fun onCreate() {
     super.onCreate()
 

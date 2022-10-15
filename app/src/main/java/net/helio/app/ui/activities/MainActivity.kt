@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.activities
+package net.helio.app.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
