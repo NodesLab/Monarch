@@ -18,9 +18,9 @@ package net.helio.app.core.message.manager
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import net.helio.app.core.message.model.Message
+import net.helio.app.core.message.model.meta.MessageMetaImpl
 import net.helio.app.core.message.model.MessageImpl
-import net.helio.app.core.message.payload.MessagePayload
+import net.helio.app.core.message.model.payload.MessagePayload
 import java.util.*
 
 /**
@@ -30,28 +30,40 @@ import java.util.*
  */
 object MessageManagerImpl : MessageManager {
 
-  override var messageList: SnapshotStateList<Message> = mutableStateListOf()
+  override var messageList: SnapshotStateList<net.helio.app.core.message.model.Message> = mutableStateListOf()
 
   /**
    * Добавляет сообщение в список сообщений.
    *
-   * @param author Автор сообщения (app | user).
+   * @param author Автор сообщения.
    * @param text Текст сообщения.
    * @param payloadList Полезная нагрузка.
    */
-  private fun addMessage(author: String, text: String, payloadList: List<MessagePayload> = listOf()) {
-    messageList.add(MessageImpl(author = author, text = text, date = Date(), payloadList = payloadList))
+  private fun addMessage(author: String, text: String, rightPosition: Boolean = false, payloadList: List<MessagePayload> = listOf()) {
+    val messageMeta: net.helio.app.core.message.model.meta.MessageMeta = MessageMetaImpl(
+      rightPosition = rightPosition,
+      payloadList = payloadList
+    )
+
+    val message: net.helio.app.core.message.model.Message = MessageImpl(
+      author = author,
+      text = text,
+      date = Date(),
+      meta = messageMeta
+    )
+
+    messageList.add(message)
   }
 
   override fun appMessage(text: String, payloadList: List<MessagePayload>) {
-    addMessage(author = "app", text = text, payloadList = payloadList)
+    addMessage(author = "Helio", text = text, payloadList = payloadList)
   }
 
   override fun userMessage(text: String) {
-    addMessage(author = "user", text = text)
+    addMessage(author = "User", text = text, rightPosition = true)
   }
 
-  override fun removeMessage(message: Message) {
+  override fun removeMessage(message: net.helio.app.core.message.model.Message) {
     messageList.remove(element = message)
   }
 }

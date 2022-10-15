@@ -47,7 +47,8 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val majorProjectVersion = "1.5.1"
+val projectVersion = "1.5.2"
+val projectVersionCode = 17
 
 android {
   compileSdk = 33
@@ -57,8 +58,8 @@ android {
 
     minSdk = 29
     targetSdk = 33
-    versionCode = 16
-    versionName = "$majorProjectVersion-${getShortCommit()}"
+    versionCode = projectVersionCode
+    versionName = "$projectVersion-$projectVersionCode-${getShortCommit()}"
 
     vectorDrawables {
       useSupportLibrary = true
@@ -102,8 +103,7 @@ android {
   }
 
   composeOptions {
-    // https://maven.google.com/web/index.html#androidx.compose.compiler:compiler
-    kotlinCompilerExtensionVersion = "1.3.1"
+    kotlinCompilerExtensionVersion = "1.3.2" // https://maven.google.com/web/index.html#androidx.compose.compiler:compiler
   }
 
   packagingOptions {
@@ -117,7 +117,7 @@ android {
 
 // region Версии библиотек.
 
-val composeVersion = "1.2.1"
+val composeVersion = "1.2.1" // https://developer.android.com/jetpack/androidx/releases/compose
 val moshiVersion = "1.14.0"
 val ktorVersion = "2.1.2"
 
@@ -134,8 +134,6 @@ dependencies {
   implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
   implementation("androidx.compose.material:material:$composeVersion")
   implementation("androidx.compose.material:material-icons-extended:$composeVersion")
-
-  // https://developer.android.com/jetpack/androidx/releases/compose
 
   // endregion
 

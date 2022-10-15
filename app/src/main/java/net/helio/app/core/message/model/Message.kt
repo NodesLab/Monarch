@@ -16,7 +16,7 @@
 
 package net.helio.app.core.message.model
 
-import net.helio.app.core.message.payload.MessagePayload
+import net.helio.app.core.message.model.meta.MessageMeta
 import java.util.*
 
 /**
@@ -25,6 +25,11 @@ import java.util.*
  * @author hepller
  */
 interface Message {
+
+  /**
+   * Автор сообщения.
+   */
+  val author: String
 
   /**
    * Текст сообщения.
@@ -36,22 +41,15 @@ interface Message {
    */
   val date: Date
 
-  /**
-   * Список полезной нагрузки сообщения.
-   */
-  val payloadList: List<MessagePayload>
+//  /**
+//   * Расположение карточки сообщения справа
+//   */
+//  val rightPosition: Boolean
+//
+//  /**
+//   * Список полезной нагрузки сообщения.
+//   */
+//  val payloadList: List<MessagePayload>
 
-  /**
-   * Проверяет, является ли сообщение созданным приложением.
-   *
-   * @return `true`, если автор сообщения - приложение.
-   */
-  fun isFromApp(): Boolean
-
-  /**
-   * Проверяет, является ли сообщение созданным пользователем.
-   *
-   * @return `true`, если автор сообщения - пользователь.
-   */
-  fun isFromUser(): Boolean
+  val meta: MessageMeta
 }

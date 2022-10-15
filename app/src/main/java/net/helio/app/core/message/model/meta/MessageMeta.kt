@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.message.payload
+package net.helio.app.core.message.model.meta
+
+import net.helio.app.core.message.model.payload.MessagePayload
 
 /**
- * Полезная нагрузка сообщения с кнопкой-ссылкой.
+ * Интерфейс мета-данных сообщения.
  */
-data class LinkMessagePayload(
+interface MessageMeta {
 
   /**
-   * Текст на кнопке.
+   * Расположение карточки сообщения справа
    */
-  val linkLabel: String,
+  val rightPosition: Boolean
 
   /**
-   * Ссылка.
+   * Список полезной нагрузки сообщения.
    */
-  val linkSource: String
-) : MessagePayload
+  val payloadList: List<MessagePayload>
+}

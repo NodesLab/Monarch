@@ -46,9 +46,8 @@ import java.util.*
  */
 @Composable
 fun MessageCard(message: Message) {
-  val color: Color = if (message.isFromApp()) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
-  val alignment: Alignment = if (message.isFromApp()) Alignment.TopStart else Alignment.TopEnd
-  val author: String = if (message.isFromApp()) "Helio" else "User"
+  val color: Color = if (message.meta.rightPosition) MaterialTheme.colors.secondary else MaterialTheme.colors.secondaryVariant
+  val alignment: Alignment = if (message.meta.rightPosition) Alignment.TopEnd else Alignment.TopStart
 
   val annotatedString: AnnotatedString = StringUtility.parseLinks(text = message.text)
 
@@ -85,7 +84,7 @@ fun MessageCard(message: Message) {
           modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
         ) {
           Text(
-            text = author,
+            text = message.author,
             color = Accent,
             style = MaterialTheme.typography.subtitle2,
             fontWeight = FontWeight.SemiBold
@@ -101,7 +100,10 @@ fun MessageCard(message: Message) {
             )
           }
 
-          PayloadProcessor(message = message, modifier = Modifier.align(Alignment.CenterHorizontally))
+          PayloadProcessor(
+            messageMeta = message.meta,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+          )
         }
 
         Text(

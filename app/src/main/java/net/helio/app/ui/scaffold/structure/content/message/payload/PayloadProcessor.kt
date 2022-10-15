@@ -23,10 +23,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import net.helio.app.core.message.model.Message
-import net.helio.app.core.message.payload.CommandButtonPayload
-import net.helio.app.core.message.payload.DropdownMessagePayload
-import net.helio.app.core.message.payload.LinkMessagePayload
+import net.helio.app.core.message.model.meta.MessageMeta
+import net.helio.app.core.message.model.payload.CommandButtonPayload
+import net.helio.app.core.message.model.payload.DropdownMessagePayload
+import net.helio.app.core.message.model.payload.LinkMessagePayload
 import net.helio.app.ui.scaffold.structure.content.message.payload.types.CommandButton
 import net.helio.app.ui.scaffold.structure.content.message.payload.types.DropdownButton
 import net.helio.app.ui.scaffold.structure.content.message.payload.types.LinkButton
@@ -34,18 +34,18 @@ import net.helio.app.ui.scaffold.structure.content.message.payload.types.LinkBut
 /**
  * Обработчик полезной нагрузки.
  *
- * @param message Объект сообщения.
+ * @param messageMeta Объект мета-данных сообщения.
  * @param modifier Модификатор (для корректного отображения некоторых типов ПН).
  *
  * @author hepller
  */
 @Composable
-fun PayloadProcessor(message: Message, modifier: Modifier) {
-  if (message.payloadList.isNotEmpty()) {
+fun PayloadProcessor(messageMeta: MessageMeta, modifier: Modifier) {
+  if (messageMeta.payloadList.isNotEmpty()) {
     Column(
       modifier = modifier.padding(bottom = 25.dp)
     ) {
-      for (payloadItem in message.payloadList) {
+      for (payloadItem in messageMeta.payloadList) {
         if (payloadItem is DropdownMessagePayload) {
           DropdownButton(payload = payloadItem, modifier = modifier)
         }

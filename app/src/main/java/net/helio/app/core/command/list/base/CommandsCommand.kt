@@ -20,7 +20,7 @@ import net.helio.app.core.command.Command
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.message.manager.MessageManagerImpl
-import net.helio.app.core.message.payload.CommandButtonPayload
+import net.helio.app.core.message.model.payload.CommandButtonPayload
 import java.util.*
 
 /**

@@ -24,13 +24,13 @@ import java.security.SecureRandom
 import java.util.*
 
 /**
- * Команда для генерации пароля.
+ * Команда для генерации строки.
  *
  * @author hepller
  */
-object GenPwCommand : Command {
-  override val aliases: List<String> = listOf("genpw", "генпв")
-  override val description: String = "Генерация надёжного пароля"
+object GenStrCommand : Command {
+  override val aliases: List<String> = listOf("genstr", "генстр")
+  override val description: String = "Генерация строки"
 
   override val isInBeta: Boolean = false
   override val isRequireNetwork: Boolean = false
@@ -38,17 +38,17 @@ object GenPwCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Укажите длину генерируемого пароля")
+      return MessageManagerImpl.appMessage(text = "⛔ Укажите длину генерируемой строки")
     }
 
     if (!TextUtility.isNumber(session.arguments[1])) {
-      return MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемого пароля должна быть числом")
+      return MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемой строки должна быть числом")
     }
 
     val length: Int = Integer.parseInt(session.arguments[1])
 
-    if (length < 1) {
-      return MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемого пароля должна быть больше нуля")
+    if (length < 1 || length > 9999) {
+      return MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемой строки должна быть больше нуля и меньше 10 000")
     }
 
     val generated: String = generateString(
@@ -61,7 +61,7 @@ object GenPwCommand : Command {
 
     val messageScheme = StringJoiner("\n")
 
-    messageScheme.add("\uD83D\uDD11 Сгенерированный пароль:")
+    messageScheme.add("\uD83D\uDCC4 Сгенерированная строка:")
     messageScheme.add("")
     messageScheme.add(generated)
 

@@ -14,20 +14,9 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.message.payload
+package net.helio.app.core.message.model.payload
 
 /**
- * Полезная нагрузка сообщения с раскрывающимся текстом.
+ * Интерфейс полезной нагрузки сообщения.
  */
-data class DropdownMessagePayload(
-
-  /**
-   * Текст кнопки.
-   */
-  val dropdownLabel: String,
-
-  /**
-   * Текст при раскрытии.
-   */
-  val dropdownText: String
-) : MessagePayload
+interface MessagePayload

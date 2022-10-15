@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
-import net.helio.app.core.message.payload.LinkMessagePayload
+import net.helio.app.core.message.model.payload.LinkMessagePayload
 
 /**
  * Кнопка-ссылка.

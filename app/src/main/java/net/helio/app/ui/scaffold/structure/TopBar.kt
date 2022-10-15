@@ -76,10 +76,10 @@ private fun Title() {
   Column(
     modifier = Modifier.padding(start = 10.dp)
   ) {
-    val appName = remember { "Helio" }
+    val appName: String = remember { "Helio" }
 
     val version: List<String> = remember { BuildConfig.VERSION_NAME.split("-") }
-    val versionField = remember { "v${version[0]} ${version[1]}" }
+    val versionField: String = remember { "v${version[0]} ${version[1]} ${version[2]}" }
 
     Text(text = appName, color = MaterialTheme.colors.onPrimary, fontSize = 18.sp)
     Text(text = versionField, color = MaterialTheme.colors.onSecondary, fontSize = 14.sp)

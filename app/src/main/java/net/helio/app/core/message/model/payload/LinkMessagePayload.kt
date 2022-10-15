@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.message.model
-
-import net.helio.app.core.message.model.meta.MessageMeta
-import java.util.*
+package net.helio.app.core.message.model.payload
 
 /**
- * Реализация модели сообщения.
- *
- * @author hepller
+ * Полезная нагрузка сообщения с кнопкой-ссылкой.
  */
-data class MessageImpl(
-  override val author: String,
-  override val text: String,
-  override val date: Date,
-  override val meta: MessageMeta,
-) : Message
+data class LinkMessagePayload(
+
+  /**
+   * Текст на кнопке.
+   */
+  val linkLabel: String,
+
+  /**
+   * Ссылка.
+   */
+  val linkSource: String
+) : MessagePayload

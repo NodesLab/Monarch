@@ -21,7 +21,7 @@ import com.squareup.moshi.JsonClass
 import net.helio.app.core.command.Command
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.message.manager.MessageManagerImpl
-import net.helio.app.core.message.payload.LinkMessagePayload
+import net.helio.app.core.message.model.payload.LinkMessagePayload
 import net.helio.app.core.utility.NetworkUtility
 import net.helio.app.core.utility.TextUtility
 import java.net.IDN

@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.message.payload
+package net.helio.app.core.message.model.meta
+
+import net.helio.app.core.message.model.payload.MessagePayload
 
 /**
- * Интерфейс полезной нагрузки сообщения.
+ * Реализация мета-данных сообщения.
  */
-interface MessagePayload
+data class MessageMetaImpl(
+  override val rightPosition: Boolean,
+  override val payloadList: List<MessagePayload>
+) : MessageMeta

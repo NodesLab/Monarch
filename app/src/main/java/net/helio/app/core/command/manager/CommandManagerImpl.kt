@@ -27,9 +27,9 @@ import net.helio.app.core.command.session.CommandSessionImpl
 import net.helio.app.core.command.session.properties.CommandSessionProperties
 import net.helio.app.core.command.session.properties.CommandSessionPropertiesImpl
 import net.helio.app.core.message.manager.MessageManagerImpl
-import net.helio.app.core.message.payload.CommandButtonPayload
-import net.helio.app.core.message.payload.DropdownMessagePayload
-import net.helio.app.core.message.payload.MessagePayload
+import net.helio.app.core.message.model.payload.CommandButtonPayload
+import net.helio.app.core.message.model.payload.DropdownMessagePayload
+import net.helio.app.core.message.model.payload.MessagePayload
 import net.helio.app.core.utility.NetworkUtility
 import net.helio.app.core.utility.TextUtility
 import java.util.*
@@ -57,14 +57,16 @@ object CommandManagerImpl : CommandManager {
 
   @OptIn(DelicateCoroutinesApi::class)
   override fun handleInput(input: String, context: Context) {
-    MessageManagerImpl.userMessage(text = input.trim())
+    val formattedInput: String = input.trim()
+
+    MessageManagerImpl.userMessage(text = formattedInput)
 
     val command: Command? =
-      if (input.startsWith("/")) getCommand(alias = input.substring(startIndex = 1).lowercase().split(" ")[0])
+      if (formattedInput.startsWith("/")) getCommand(alias = formattedInput.substring(startIndex = 1).lowercase().split(" ")[0])
       else null
 
     if (command == null) {
-      return unknownCommandMessage(input = input)
+      return unknownCommandMessage(input = formattedInput)
     }
 
     val isNetworkAvailable: Boolean = NetworkUtility.hasNetworkConnection(context = context)
@@ -78,7 +80,7 @@ object CommandManagerImpl : CommandManager {
     )
 
     val commandSession: CommandSession = CommandSessionImpl(
-      arguments = input.substring(startIndex = 1).split(" "),
+      arguments = formattedInput.substring(startIndex = 1).split(" "),
       properties = sessionProperties
     )
 

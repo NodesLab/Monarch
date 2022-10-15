@@ -16,9 +16,11 @@
 
 package net.helio.app.ui.scaffold
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -55,7 +57,13 @@ fun AppScaffold() {
     backgroundColor = MaterialTheme.colors.primary,
 
     drawerBackgroundColor = MaterialTheme.colors.primary,
-    drawerScrimColor = MaterialTheme.colors.surface
+    drawerScrimColor = MaterialTheme.colors.surface,
+    drawerShape = RoundedCornerShape(
+      topStart = 0.dp,
+      topEnd = 16.dp,
+      bottomStart = 0.dp,
+      bottomEnd = 16.dp
+    )
   ) {
     Content(it)
   }

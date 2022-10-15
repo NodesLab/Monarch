@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.message.payload
+package net.helio.app.core.message.model.payload
 
 /**
- * Полезная нагрузка сообщения с кнопкой содержащей команду.
+ * Полезная нагрузка сообщения с раскрывающимся текстом.
  */
-data class CommandButtonPayload(
+data class DropdownMessagePayload(
 
   /**
-   * Текст на кнопке.
+   * Текст кнопки.
    */
-  val buttonLabel: String,
+  val dropdownLabel: String,
 
   /**
-   * Команда, которая будет выполнена при нажатии на кнопку..
+   * Текст при раскрытии.
    */
-  val buttonCommand: String
+  val dropdownText: String
 ) : MessagePayload

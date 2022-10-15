@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package net.helio.app.core.message.model
-
-import net.helio.app.core.message.model.meta.MessageMeta
-import java.util.*
+package net.helio.app.core.message.model.payload
 
 /**
- * Реализация модели сообщения.
- *
- * @author hepller
+ * Полезная нагрузка сообщения с кнопкой содержащей команду.
  */
-data class MessageImpl(
-  override val author: String,
-  override val text: String,
-  override val date: Date,
-  override val meta: MessageMeta,
-) : Message
+data class CommandButtonPayload(
+
+  /**
+   * Текст на кнопке.
+   */
+  val buttonLabel: String,
+
+  /**
+   * Команда, которая будет выполнена при нажатии на кнопку..
+   */
+  val buttonCommand: String
+) : MessagePayload
