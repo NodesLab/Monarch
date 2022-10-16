@@ -37,11 +37,11 @@ object PortCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Укажите хост и порт")
+      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} <хост> <порт>")
     }
 
     if (session.arguments.size < 3) {
-      return MessageManagerImpl.appMessage(text = "⛔ Укажите порт для проверки")
+      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} <хост> <порт>")
     }
 
     val host: String = NetworkUtility.clearUrl(url = session.arguments[1])

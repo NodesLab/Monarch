@@ -14,42 +14,41 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.structure.content.message.payload.types
+package net.helio.app.ui.main.scaffold.structure.content.message.payload.types
 
-import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Code
+import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
-import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.core.message.model.payload.CommandButtonPayload
+import net.helio.app.core.message.model.payload.LinkMessagePayload
 
 /**
  * Кнопка-ссылка.
  *
- * @param payload Объект полезной нагруки.
+ * @param payload Объект полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения).
  *
- * @see CommandButtonPayload
+ * @see LinkMessagePayload
  *
  * @author hepller
  */
 @Composable
-fun CommandButton(payload: CommandButtonPayload, modifier: Modifier) {
-  val context: Context = LocalContext.current
-
+fun LinkButton(payload: LinkMessagePayload, modifier: Modifier) {
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,
     modifier = modifier.padding(top = 5.dp)
   ) {
+    val uriHandler: UriHandler = LocalUriHandler.current
+
     TextButton(
-      onClick = { CommandManagerImpl.handleInput(input = payload.buttonCommand, context = context) },
+      onClick = { uriHandler.openUri(payload.linkSource) },
       colors = ButtonDefaults.buttonColors(
         backgroundColor = MaterialTheme.colors.secondary
       ),
@@ -57,7 +56,7 @@ fun CommandButton(payload: CommandButtonPayload, modifier: Modifier) {
       shape = MaterialTheme.shapes.medium
     ) {
       Text(
-        text = payload.buttonLabel,
+        text = payload.linkLabel,
         color = MaterialTheme.colors.onPrimary
       )
 
@@ -66,8 +65,8 @@ fun CommandButton(payload: CommandButtonPayload, modifier: Modifier) {
       )
 
       Icon(
-        imageVector = Icons.Rounded.Code,
-        contentDescription = "Отправить команду",
+        imageVector = Icons.Rounded.OpenInNew,
+        contentDescription = "Открыть ссылку",
         tint = MaterialTheme.colors.onPrimary
       )
     }

@@ -38,7 +38,7 @@ object GenStrCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Укажите длину генерируемой строки")
+      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} <длина>")
     }
 
     if (!TextUtility.isNumber(session.arguments[1])) {

@@ -44,7 +44,7 @@ object IpInfoCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Укажите IP-адрес, о котором необходимо найти информацию")
+      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} <хост>")
     }
 
     var cleanedIp: String = NetworkUtility.clearUrl(url = session.arguments[1])
@@ -56,7 +56,7 @@ object IpInfoCommand : Command {
     if (TextUtility.isNumber(string = cleanedIp)) cleanedIp = NetworkUtility.longToIPv4(ip = cleanedIp.split(":")[0].toLong())
 
     if (!NetworkUtility.isValidDomain(domain = cleanedIp) && !NetworkUtility.isValidIPv4(ip = cleanedIp) && !NetworkUtility.isValidIPv6(ip = cleanedIp) && !NetworkUtility.isValidDomain(IDN.toUnicode(cleanedIp))) {
-      return MessageManagerImpl.appMessage(text = "⚠️️ Вы указали / переслали некорректный IP")
+      return MessageManagerImpl.appMessage(text = "⚠️️ Вы указали некорректный IP")
     }
 
     MessageManagerImpl.appMessage(text = "⚙️ Получение информации об IP ...")

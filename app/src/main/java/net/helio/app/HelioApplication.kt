@@ -23,6 +23,7 @@ import net.helio.app.core.command.list.network.IpInfoCommand
 import net.helio.app.core.command.list.network.PortCommand
 import net.helio.app.core.command.list.text.Base64Command
 import net.helio.app.core.command.list.text.GenStrCommand
+import net.helio.app.core.command.list.text.HashCommand
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.message.manager.MessageManagerImpl
 
@@ -47,6 +48,7 @@ class HelioApplication : Application() {
     // text
     CommandManagerImpl.registerCommand(Base64Command)
     CommandManagerImpl.registerCommand(GenStrCommand)
+    CommandManagerImpl.registerCommand(HashCommand)
 
     MessageManagerImpl.appMessage(text = "⚙️ Helio запущен, введите команду")
   }

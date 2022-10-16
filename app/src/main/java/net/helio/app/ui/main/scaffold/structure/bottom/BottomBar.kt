@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.structure.bottom
+package net.helio.app.ui.main.scaffold.structure.bottom
 
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -30,8 +30,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.helio.app.core.command.manager.CommandManagerImpl
-import net.helio.app.ui.scaffold.structure.bottom.buttons.SendButton
-import net.helio.app.ui.scaffold.structure.bottom.buttons.VoiceButton
+import net.helio.app.ui.main.scaffold.structure.bottom.buttons.SendButton
+import net.helio.app.ui.main.scaffold.structure.bottom.buttons.VoiceButton
 
 /**
  * Нижняя панель.

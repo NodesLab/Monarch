@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.structure.bottom.buttons
+package net.helio.app.ui.main.scaffold.structure.bottom.buttons
 
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween

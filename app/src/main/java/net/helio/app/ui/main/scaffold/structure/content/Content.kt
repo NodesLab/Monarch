@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.structure.content
+package net.helio.app.ui.main.scaffold.structure.content
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +23,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import net.helio.app.core.message.manager.MessageManagerImpl.messageList
-import net.helio.app.ui.scaffold.structure.content.message.MessageColumn
+import net.helio.app.ui.main.scaffold.structure.content.message.MessageColumn
 
 /**
  * Содержимое основного поля.

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.structure.content.message
+package net.helio.app.ui.main.scaffold.structure.content.message
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Cancel
+import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.model.Message
-import net.helio.app.ui.scaffold.structure.content.message.payload.PayloadProcessor
+import net.helio.app.ui.main.scaffold.structure.content.message.payload.PayloadProcessor
 import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.utility.StringUtility
 import java.text.SimpleDateFormat
@@ -74,7 +74,7 @@ fun MessageCard(message: Message) {
             .align(Alignment.TopEnd)
         ) {
           Icon(
-            imageVector = Icons.Rounded.Cancel,
+            imageVector = Icons.Rounded.Clear,
             contentDescription = "Удалить сообщение",
             tint = MaterialTheme.colors.onSecondary
           )

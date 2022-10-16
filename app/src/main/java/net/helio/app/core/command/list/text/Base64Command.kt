@@ -29,7 +29,7 @@ import java.util.*
  */
 object Base64Command : Command {
   override val aliases: List<String> = listOf("base64", "бейс64")
-  override val description: String = "Конвертирует текст в base64 и обратно"
+  override val description: String = "Конвертирует текст в Base64 и обратно"
 
   override val isInBeta: Boolean = false
   override val isRequireNetwork: Boolean = false
@@ -37,10 +37,10 @@ object Base64Command : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Укажите текст для конвертации")
+      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} [encode|decode] <текст>")
     }
 
-    if (session.arguments[1] != "encode" && session.arguments[1] != "decode") {
+    if (!listOf("encode", "decode").contains(session.arguments[1])) {
       return MessageManagerImpl.appMessage(
         text = "⛔ Укажите действие, для текста",
         payloadList = listOf(
@@ -71,7 +71,11 @@ object Base64Command : Command {
       "decode" -> {
         convertingType = "Декодированный"
 
-        byteArray = Base64.getDecoder().decode(text.toByteArray())
+        try {
+          byteArray = Base64.getDecoder().decode(text.toByteArray())
+        } catch (_: IllegalArgumentException) {
+          return MessageManagerImpl.appMessage(text = "⚠️️ Base64 схема некорректна")
+        }
       }
 
       else -> {

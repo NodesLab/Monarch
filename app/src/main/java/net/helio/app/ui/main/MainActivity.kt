@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.activities
+package net.helio.app.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,7 +22,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.runtime.CompositionLocalProvider
-import net.helio.app.ui.scaffold.AppScaffold
+import net.helio.app.ui.main.scaffold.ChatScreenScaffold
 import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.theme.HelioTheme
 
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
         // Обёртка для установки цветов выделения текста.
         CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
-          AppScaffold()
+          ChatScreenScaffold()
         }
       }
     }

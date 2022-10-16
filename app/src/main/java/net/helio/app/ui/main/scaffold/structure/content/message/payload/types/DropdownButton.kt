@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold.structure.content.message.payload.types
+package net.helio.app.ui.main.scaffold.structure.content.message.payload.types
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

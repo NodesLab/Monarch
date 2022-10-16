@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.scaffold
+package net.helio.app.ui.main.scaffold
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -24,18 +24,18 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import net.helio.app.ui.scaffold.structure.DrawerContent
-import net.helio.app.ui.scaffold.structure.TopBar
-import net.helio.app.ui.scaffold.structure.bottom.BottomBar
-import net.helio.app.ui.scaffold.structure.content.Content
+import net.helio.app.ui.main.scaffold.structure.DrawerContent
+import net.helio.app.ui.main.scaffold.structure.TopBar
+import net.helio.app.ui.main.scaffold.structure.bottom.BottomBar
+import net.helio.app.ui.main.scaffold.structure.content.Content
 
 /**
- * Шаблон интерфейса приложения.
+ * Чато-подобный UI.
  *
  * @author hepller
  */
 @Composable
-fun AppScaffold() {
+fun ChatScreenScaffold() {
   val scaffoldState: ScaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
   val scope: CoroutineScope = rememberCoroutineScope()
 
