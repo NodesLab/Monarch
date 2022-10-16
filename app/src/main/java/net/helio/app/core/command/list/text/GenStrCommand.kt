@@ -21,7 +21,6 @@ import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.utility.TextUtility
 import java.security.SecureRandom
-import java.util.*
 
 /**
  * Команда для генерации строки.
@@ -59,13 +58,13 @@ object GenStrCommand : Command {
       length = length
     )
 
-    val messageScheme = StringJoiner("\n")
+    val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add("\uD83D\uDCC4 Сгенерированная строка:")
-    messageScheme.add("")
-    messageScheme.add(generated)
+    messageScheme.add(element = "\uD83D\uDCC4 Сгенерированная строка:")
+    messageScheme.add(element = "")
+    messageScheme.add(element = generated)
 
-    MessageManagerImpl.appMessage(text = messageScheme.toString())
+    MessageManagerImpl.appMessage(text = messageScheme.joinToString(separator = "\n"))
   }
 
   /**

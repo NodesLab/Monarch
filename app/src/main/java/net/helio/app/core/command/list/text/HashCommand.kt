@@ -22,7 +22,6 @@ import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.model.payload.CommandButtonPayload
 import net.helio.app.core.message.model.payload.MessagePayload
 import java.security.MessageDigest
-import java.util.*
 import kotlin.text.Charsets.UTF_8
 
 /**
@@ -62,13 +61,13 @@ object HashCommand : Command {
       text = session.arguments.drop(n = 2).joinToString(" ")
     )
 
-    val messageScheme = StringJoiner("\n")
+    val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add("⚙️ Хешированный текст:")
-    messageScheme.add("")
-    messageScheme.add(hashedString)
+    messageScheme.add(element = "⚙️ Хешированный текст:")
+    messageScheme.add(element = "")
+    messageScheme.add(element = hashedString)
 
-    MessageManagerImpl.appMessage(text = messageScheme.toString())
+    MessageManagerImpl.appMessage(text = messageScheme.joinToString(separator = "\n"))
   }
 
   /**

@@ -71,24 +71,24 @@ object IpInfoCommand : Command {
       if (response.reverse == "") InetAddress.getByName(response.ip).canonicalHostName
       else response.reverse
 
-    val messageScheme = StringJoiner("\n")
+    val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add("⚙️ Информация о $cleanedIp:")
-    messageScheme.add("")
-    messageScheme.add("– Локация: ${response.country}, ${response.regionName}, ${response.city} ${response.countryCode.let { TextUtility.getCountryFlagEmoji(it) }}")
-    messageScheme.add("– Организация: ${response.org}")
-    messageScheme.add("– Провайдер: ${response.org}")
+    messageScheme.add(element = "⚙️ Информация о $cleanedIp:")
+    messageScheme.add(element = "")
+    messageScheme.add(element = "– Локация: ${response.country}, ${response.regionName}, ${response.city} ${response.countryCode.let { TextUtility.getCountryFlagEmoji(it) }}")
+    messageScheme.add(element = "– Организация: ${response.org}")
+    messageScheme.add(element = "– Провайдер: ${response.org}")
 
-    if (response.asCode.isNotEmpty()) messageScheme.add("– AS: ${response.asCode}")
-    if (response.asName.isNotEmpty()) messageScheme.add("– ASNAME: ${response.asName}")
-    if (response.zip.isNotEmpty()) messageScheme.add("– ZIP: ${response.zip}")
+    if (response.asCode.isNotEmpty()) messageScheme.add(element = "– AS: ${response.asCode}")
+    if (response.asName.isNotEmpty()) messageScheme.add(element = "– ASNAME: ${response.asName}")
+    if (response.zip.isNotEmpty()) messageScheme.add(element = "– ZIP: ${response.zip}")
 
-    messageScheme.add("– IP: ${response.ip}")
+    messageScheme.add(element = "– IP: ${response.ip}")
 
-    if (response.ip != ptr) messageScheme.add("– PTR: $ptr")
+    if (response.ip != ptr) messageScheme.add(element = "– PTR: $ptr")
 
     MessageManagerImpl.appMessage(
-      text = messageScheme.toString(),
+      text = messageScheme.joinToString(separator = "\n"),
       payloadList = listOf(
         LinkMessagePayload(
           linkLabel = "Источник информации",

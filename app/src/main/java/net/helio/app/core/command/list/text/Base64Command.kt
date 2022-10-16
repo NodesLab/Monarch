@@ -95,12 +95,12 @@ object Base64Command : Command {
       }
     }
 
-    val messageScheme = StringJoiner("\n")
+    val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add("\uD83D\uDD11 $convertingType текст:")
-    messageScheme.add("")
-    messageScheme.add(String(byteArray))
+    messageScheme.add(element = "\uD83D\uDD11 $convertingType текст:")
+    messageScheme.add(element = "")
+    messageScheme.add(element = String(byteArray))
 
-    MessageManagerImpl.appMessage(text = messageScheme.toString())
+    MessageManagerImpl.appMessage(text = messageScheme.joinToString(separator = "\n"))
   }
 }

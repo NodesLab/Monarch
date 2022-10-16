@@ -21,7 +21,6 @@ import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.model.payload.CommandButtonPayload
-import java.util.*
 
 /**
  * Команда для просмотра доступных команд.
@@ -37,19 +36,19 @@ object CommandsCommand : Command {
   override val isAnonymous: Boolean = true
 
   override suspend fun execute(session: CommandSession) {
-    val messageScheme = StringJoiner("\n")
+    val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add("\uD83C\uDF35 Доступные команды:")
-    messageScheme.add("")
-    messageScheme.add(getCommandList().joinToString(separator = "\n"))
-    messageScheme.add("")
-    messageScheme.add("\uD83D\uDCDD Обозначения:")
-    messageScheme.add("")
-    messageScheme.add("* – Не анонимная команда")
-    messageScheme.add("^ – Требует доступ к сети")
+    messageScheme.add(element = "\uD83C\uDF35 Доступные команды:")
+    messageScheme.add(element = "")
+    messageScheme.add(element = getCommandList().joinToString(separator = "\n"))
+    messageScheme.add(element = "")
+    messageScheme.add(element = "\uD83D\uDCDD Обозначения:")
+    messageScheme.add(element = "")
+    messageScheme.add(element = "* – Не анонимная команда")
+    messageScheme.add(element = "^ – Требует доступ к сети")
 
     MessageManagerImpl.appMessage(
-      text = messageScheme.toString(),
+      text = messageScheme.joinToString(separator = "\n"),
       payloadList = listOf(
         CommandButtonPayload(
           buttonLabel = "Алиасы команд",

@@ -20,7 +20,6 @@ import net.helio.app.core.command.Command
 import net.helio.app.core.command.manager.CommandManagerImpl
 import net.helio.app.core.command.session.CommandSession
 import net.helio.app.core.message.manager.MessageManagerImpl
-import java.util.*
 
 /**
  * Команда для просмотра алиасов команд.
@@ -36,13 +35,13 @@ object AliasesCommand : Command {
   override val isAnonymous: Boolean = true
 
   override suspend fun execute(session: CommandSession) {
-    val messageScheme = StringJoiner("\n")
+    val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add("\uD83D\uDCAC Алиасы команд:")
-    messageScheme.add("")
-    messageScheme.add(getAliasesList().joinToString(separator = "\n"))
+    messageScheme.add(element = "\uD83D\uDCAC Алиасы команд:")
+    messageScheme.add(element = "")
+    messageScheme.add(element = getAliasesList().joinToString(separator = "\n"))
 
-    MessageManagerImpl.appMessage(text = messageScheme.toString())
+    MessageManagerImpl.appMessage(text = messageScheme.joinToString(separator = "\n"))
   }
 
   /**
