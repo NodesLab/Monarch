@@ -23,7 +23,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import net.helio.app.core.message.manager.MessageManagerImpl.messageList
-import net.helio.app.ui.main.scaffold.structure.content.message.MessageColumn
+import net.helio.app.ui.main.scaffold.structure.content.chat.MessageColumn
 
 /**
  * Содержимое основного поля.
@@ -31,7 +31,7 @@ import net.helio.app.ui.main.scaffold.structure.content.message.MessageColumn
  * @param contentPadding Отспупы для содержимого.
  */
 @Composable
-fun Content(contentPadding: PaddingValues) {
+fun ChatContent(contentPadding: PaddingValues) {
   Surface(
     modifier = Modifier
       .fillMaxSize()

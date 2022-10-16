@@ -25,17 +25,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import net.helio.app.ui.main.scaffold.structure.DrawerContent
-import net.helio.app.ui.main.scaffold.structure.TopBar
-import net.helio.app.ui.main.scaffold.structure.bottom.BottomBar
-import net.helio.app.ui.main.scaffold.structure.content.ChatContent
+import net.helio.app.ui.main.scaffold.structure2.content.ActionsContent
+import net.helio.app.ui.main.scaffold.structure2.top.TopBar
 
 /**
- * Чато-подобный UI.
+ * Карточный UI.
  *
  * @author hepller
  */
 @Composable
-fun ChatScreenScaffold() {
+fun CardScreenScaffold() {
   val scaffoldState: ScaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
   val scope: CoroutineScope = rememberCoroutineScope()
 
@@ -52,7 +51,6 @@ fun ChatScreenScaffold() {
 
     topBar = { TopBar { onNavigationIconClick() } },
     drawerContent = { DrawerContent() },
-    bottomBar = { BottomBar() },
 
     backgroundColor = MaterialTheme.colors.primary,
 
@@ -65,6 +63,6 @@ fun ChatScreenScaffold() {
       bottomEnd = 16.dp
     )
   ) {
-    ChatContent(it)
+    ActionsContent(it)
   }
 }

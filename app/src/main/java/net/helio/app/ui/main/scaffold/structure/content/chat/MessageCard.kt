@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.main.scaffold.structure.content.message
+package net.helio.app.ui.main.scaffold.structure.content.chat
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.helio.app.core.message.manager.MessageManagerImpl
 import net.helio.app.core.message.model.Message
-import net.helio.app.ui.main.scaffold.structure.content.message.payload.PayloadProcessor
+import net.helio.app.ui.main.scaffold.structure.content.chat.payload.PayloadProcessor
 import net.helio.app.ui.theme.Accent
 import net.helio.app.ui.utility.StringUtility
 import java.text.SimpleDateFormat

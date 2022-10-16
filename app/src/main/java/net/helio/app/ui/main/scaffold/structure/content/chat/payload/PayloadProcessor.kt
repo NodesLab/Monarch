@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.main.scaffold.structure.content.message.payload
+package net.helio.app.ui.main.scaffold.structure.content.chat.payload
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,9 +27,9 @@ import net.helio.app.core.message.model.meta.MessageMeta
 import net.helio.app.core.message.model.payload.CommandButtonPayload
 import net.helio.app.core.message.model.payload.DropdownMessagePayload
 import net.helio.app.core.message.model.payload.LinkMessagePayload
-import net.helio.app.ui.main.scaffold.structure.content.message.payload.types.CommandButton
-import net.helio.app.ui.main.scaffold.structure.content.message.payload.types.DropdownButton
-import net.helio.app.ui.main.scaffold.structure.content.message.payload.types.LinkButton
+import net.helio.app.ui.main.scaffold.structure.content.chat.payload.types.CommandButton
+import net.helio.app.ui.main.scaffold.structure.content.chat.payload.types.DropdownButton
+import net.helio.app.ui.main.scaffold.structure.content.chat.payload.types.LinkButton
 
 /**
  * Обработчик полезной нагрузки.

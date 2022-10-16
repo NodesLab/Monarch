@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.helio.app.ui.main.scaffold.structure.content.message
+package net.helio.app.ui.main.scaffold.structure.content.chat
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

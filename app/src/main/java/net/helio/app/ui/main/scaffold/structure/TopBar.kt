@@ -17,6 +17,8 @@
 package net.helio.app.ui.main.scaffold.structure
 
 import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -26,6 +28,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -102,7 +105,7 @@ private fun ClearHistoryIcon(
   disabledColor: Color = MaterialTheme.colors.onSecondary,
   onClick: () -> Unit
 ) {
-  val iconColor = remember { Animatable(initialValue = disabledColor) }
+  val iconColor: Animatable<Color, AnimationVector4D> = remember { Animatable(initialValue = disabledColor) }
 
   if (enabled) {
     LaunchedEffect(key1 = Unit) {
@@ -133,6 +136,52 @@ private fun ClearHistoryIcon(
 }
 
 /**
+ * Кнопка открытия меню действий.
+ *
+ * @param enabled Доступна ли кнопка для нажатия.
+ * @param enabledColor Цвет доступной для нажатия кнопки.
+ * @param disabledColor Цвет недоступной для нажатия кнопки.
+ *
+ * @author hepller
+ */
+@Composable
+private fun ActionsIcon(
+  enabled: Boolean,
+  enabledColor: Color = MaterialTheme.colors.onPrimary,
+  disabledColor: Color = MaterialTheme.colors.onSecondary,
+  onClick: () -> Unit
+) {
+  val iconColor: Animatable<Color, AnimationVector4D> = remember { Animatable(initialValue = disabledColor) }
+
+  if (enabled) {
+    LaunchedEffect(key1 = Unit) {
+      iconColor.animateTo(
+        targetValue = enabledColor,
+        animationSpec = tween(durationMillis = 300)
+      )
+    }
+  } else {
+    LaunchedEffect(Unit) {
+      iconColor.animateTo(
+        targetValue = disabledColor,
+        animationSpec = tween(durationMillis = 300)
+      )
+    }
+  }
+
+  IconButton(
+    onClick = { onClick() },
+    enabled = enabled
+  ) {
+    Icon(
+      imageVector = Icons.Rounded.GridView,
+      contentDescription = "Открыть меню действий",
+      tint = iconColor.value
+    )
+  }
+}
+
+/**
  * Верхняя панель.
  *
  * @param onNavigationIconClick Функция, выполняемая при нажатии на иконку навигации.
@@ -146,7 +195,10 @@ fun TopBar(onNavigationIconClick: () -> Unit) {
   TopAppBar(
     navigationIcon = { NavigationIcon(onNavigationIconClick) },
     title = { Title() },
-    actions = { ClearHistoryIcon(clearHistoryButtonEnable) { MessageManagerImpl.messageList.clear() } },
+    actions = {
+      ClearHistoryIcon(enabled = clearHistoryButtonEnable) { MessageManagerImpl.messageList.clear() }
+      ActionsIcon(enabled = false) { TODO() }
+    },
     backgroundColor = MaterialTheme.colors.primary
   )
 }
