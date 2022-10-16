@@ -32,7 +32,7 @@ import kotlin.text.Charsets.UTF_8
  */
 object HashCommand : Command {
   override val aliases: List<String> = listOf("hash", "хеш")
-  override val description: String = "Хеширует строку"
+  override val description: String = "Хеширование строку"
 
   override val isInBeta: Boolean = false
   override val isRequireNetwork: Boolean = false
