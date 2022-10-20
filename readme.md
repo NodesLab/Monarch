@@ -8,7 +8,9 @@ __Monarch__ — Мобильный ассистент с чато-подобны
 [Kotlin](https://kotlinlang.org/) и [Jetpack Compose](https://developer.android.com/jetpack/compose)
 
 <p align="center">
-  <img src="docs/screenshot.png" alt="Снимок экрана" width="25%" height="25%">
+  <img src="docs/screenshot_1.png" alt="Снимок экрана 2" width="25%" height="25%">
+  <img src="docs/screenshot_2.png" alt="Снимок экрана 2" width="25%" height="25%">
+  <img src="docs/screenshot_3.png" alt="Снимок экрана 2" width="25%" height="25%">
 </p>
 
 ## Функционал
