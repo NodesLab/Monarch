@@ -4,8 +4,15 @@
 
 ## Описание
 
-__Monarch__ — Мобильный ассистент с чато-подобным интерфейсом для выполнения различных задач, построенный на основе
+__Monarch__ (*mon*olithic *arch*itecture) — Мобильный ассистент с чато-подобным интерфейсом для выполнения различных задач, построенный на основе
 [Kotlin](https://kotlinlang.org/) и [Jetpack Compose](https://developer.android.com/jetpack/compose)
+
+Проект состоит из двух компонентов:
+
+1. [Ядро](app/src/main/java/net/monarch/app/core) - функциональная часть (команды)
+2. [UI](app/src/main/java/net/monarch/app/ui) - пользовательский интерфейс
+
+## Скриншоты
 
 <p align="center">
   <img src="docs/screenshot_1.png" alt="Снимок экрана 2" width="25%" height="25%">
@@ -38,6 +45,10 @@ __Голосовой ввод на данный момент не работае
 - Git 2.37 *(только для сборки)*
 
 *Дополнительные зависимости указаны в [`app/build.gradle.kts`](app/build.gradle.kts) и [`build.gradle.kts`](build.gradle.kts)*
+
+## Дополнительная информация
+
+- [TODO-список проекта](todo.md)
 
 ## Лицензия
 
