@@ -1,4 +1,4 @@
-# Monarch <sup>alpha</sup> ![Release](https://img.shields.io/github/v/release/TheNodeOrg/Monarch)
+# Monarch <sup>*beta*</sup> ![Релиз](https://img.shields.io/github/v/release/TheNodeOrg/Monarch)
 
 > Многофункциональный ассистент
 
@@ -6,6 +6,10 @@
 
 __Monarch__ — Мобильный ассистент с чато-подобным интерфейсом для выполнения различных задач, построенный на основе
 [Kotlin](https://kotlinlang.org/) и [Jetpack Compose](https://developer.android.com/jetpack/compose)
+
+<p align="center">
+  <img src="docs/screenshot.png">
+</p>
 
 ## Функционал
 
@@ -22,6 +26,8 @@ __Monarch__ — Мобильный ассистент с чато-подобны
 - `/genstr` - Генерация строки случайных символов
 - `/hash` - Хеширование строки через разные алгоритмы (sha-512, sha-384, sha-256, sha-1, md5)
 
+__Голосовой ввод на данный момент не работает!__
+
 ## Зависимости
 
 - Android 10
@@ -30,10 +36,6 @@ __Monarch__ — Мобильный ассистент с чато-подобны
 - Git 2.37 *(только для сборки)*
 
 *Дополнительные зависимости указаны в [`app/build.gradle.kts`](app/build.gradle.kts) и [`build.gradle.kts`](build.gradle.kts)*
-
-## Установка и запуск
-
-__TODO__
 
 ## Лицензия
 
