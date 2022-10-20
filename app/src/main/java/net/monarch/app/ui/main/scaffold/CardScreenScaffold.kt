@@ -31,6 +31,8 @@ import net.monarch.app.ui.main.scaffold.structure2.top.TopBar
 /**
  * Карточный UI.
  *
+ * TODO: Дописать.
+ *
  * @author hepller
  */
 @Composable

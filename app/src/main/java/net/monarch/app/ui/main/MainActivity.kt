@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         // Обёртка для установки цветов выделения текста.
         CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
           ChatScreenScaffold()
-//          CardScreenScaffold()
+//          CardScreenScaffold() // TODO: Дописать.
         }
       }
     }
