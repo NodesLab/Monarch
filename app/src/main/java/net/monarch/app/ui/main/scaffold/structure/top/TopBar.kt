@@ -19,6 +19,8 @@ package net.monarch.app.ui.main.scaffold.structure.top
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import net.monarch.app.core.message.manager.MessageManagerImpl
+import net.monarch.app.ui.main.scaffold.structure.top.buttons.ClearHistoryIcon
 import net.monarch.app.ui.main.scaffold.structure.top.buttons.NavigationIcon
 
 /**
@@ -30,8 +32,11 @@ import net.monarch.app.ui.main.scaffold.structure.top.buttons.NavigationIcon
  */
 @Composable
 fun TopBar(onNavigationIconClick: () -> Unit) {
+  val clearHistoryButtonEnable: Boolean = MessageManagerImpl.messageList.isNotEmpty()
+
   TopAppBar(
     navigationIcon = { NavigationIcon(onNavigationIconClick) },
+    actions = { ClearHistoryIcon(clearHistoryButtonEnable) { MessageManagerImpl.messageList.clear() } },
     title = { Title() },
     backgroundColor = MaterialTheme.colors.primary
   )
