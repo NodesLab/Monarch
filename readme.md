@@ -1,10 +1,10 @@
-# Helio <sup>alpha</sup> ![Release](https://img.shields.io/github/v/release/hepller/HelioApp)
+# Monarch <sup>alpha</sup> ![Release](https://img.shields.io/github/v/release/TheNodeOrg/Monarch)
 
 > Многофункциональный ассистент
 
 ## Описание
 
-__Helio__ — Мобильный ассистент с чато-подобным интерфейсом для выполнения различных задач, построенный на основе
+__Monarch__ — Мобильный ассистент с чато-подобным интерфейсом для выполнения различных задач, построенный на основе
 [Kotlin](https://kotlinlang.org/) и [Jetpack Compose](https://developer.android.com/jetpack/compose)
 
 ## Функционал
@@ -37,6 +37,6 @@ __TODO__
 
 ## Лицензия
 
-Copyright © 2022 [The Helio contributors](contributors.md)
+Copyright © 2022 [The Monarch Contributors](contributors.md)
 
 Проект распространяется под лицензией [Apache License 2.0](license)

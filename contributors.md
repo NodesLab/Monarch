@@ -1,5 +1,3 @@
-## The Helio contributors
+# Разработчики Monarch
 
-```text
-hepller
-```
+- [`hepller`](https://github.com/hepller)

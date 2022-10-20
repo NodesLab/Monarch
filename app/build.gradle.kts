@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 The Helio contributors.
+ * Copyright © 2022 The Monarch Contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,14 +47,14 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val projectVersion = "2.0.0.beta"
-val projectVersionCode = 19
+val projectVersion = "1.6.0"
+val projectVersionCode = 18
 
 android {
   compileSdk = 33
 
   defaultConfig {
-    applicationId = "net.helio.app"
+    applicationId = "net.monarch.app"
 
     minSdk = 29
     targetSdk = 33
@@ -68,7 +68,7 @@ android {
 
   signingConfigs {
     create("release") {
-      storeFile = file("helio_key.jks")
+      storeFile = file("monarch_key.jks")
       storePassword = "public"
       keyAlias = "public_key"
       keyPassword = "public"
@@ -112,7 +112,7 @@ android {
     }
   }
 
-  namespace = "net.helio.app"
+  namespace = "net.monarch.app"
 }
 
 // region Версии библиотек.
