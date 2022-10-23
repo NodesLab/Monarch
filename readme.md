@@ -52,6 +52,6 @@ __Голосовой ввод на данный момент не работае
 
 ## Лицензия
 
-Copyright © 2022 [The Monarch Contributors](contributors.md)
+Copyright © 2022 [Node](https://github/TheNodeOrg)
 
 Проект распространяется под лицензией [Apache License 2.0](license)
