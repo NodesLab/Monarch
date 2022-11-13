@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 // region Цвета не зависящие от темы.
 
 val Accent: Color = Color(0xFF42A5F5)
+// TODO: val SecondaryText: Color = Color(0xFF888888)
 
 // endregion
 

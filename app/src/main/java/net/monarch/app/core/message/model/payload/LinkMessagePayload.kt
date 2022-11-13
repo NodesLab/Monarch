@@ -31,3 +31,4 @@ data class LinkMessagePayload(
    */
   val linkSource: String
 ) : MessagePayload
+
