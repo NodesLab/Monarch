@@ -26,6 +26,7 @@ import net.monarch.app.core.command.list.text.GenStrCommand
 import net.monarch.app.core.command.list.text.HashCommand
 import net.monarch.app.core.command.manager.CommandManagerImpl
 import net.monarch.app.core.message.manager.MessageManagerImpl
+import net.monarch.app.core.message.model.payload.CommandButtonPayload
 
 /**
  * Входная точка приложения.
@@ -37,19 +38,27 @@ class MonarchApplication : Application() {
   override fun onCreate() {
     super.onCreate()
 
-    // base
+    // BASE.
     CommandManagerImpl.registerCommand(AliasesCommand)
     CommandManagerImpl.registerCommand(CommandsCommand)
 
-    // network
+    // NETWORK.
     CommandManagerImpl.registerCommand(IpInfoCommand)
     CommandManagerImpl.registerCommand(PortCommand)
 
-    // text
+    // TEXT.
     CommandManagerImpl.registerCommand(Base64Command)
     CommandManagerImpl.registerCommand(GenStrCommand)
     CommandManagerImpl.registerCommand(HashCommand)
 
-    MessageManagerImpl.appMessage(text = "⚙️ Monarch запущен, введите команду")
+    MessageManagerImpl.appMessage(
+      text = "⚙️ Monarch запущен, введите команду",
+      payloadList = listOf(
+        CommandButtonPayload(
+          buttonLabel = "Список команд",
+          buttonCommand = "/commands"
+        )
+      )
+    )
   }
 }

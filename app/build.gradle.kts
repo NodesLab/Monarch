@@ -47,8 +47,8 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val projectVersion = "1.6.0"
-val projectVersionCode = 18
+val projectVersion = "1.6.1"
+val projectVersionCode = 19
 
 android {
   compileSdk = 33
@@ -128,7 +128,7 @@ dependencies {
 
   // region Compose-зависимости
 
-  implementation("androidx.activity:activity-compose:1.6.0")
+  implementation("androidx.activity:activity-compose:1.6.1")
   implementation("androidx.core:core-ktx:1.9.0")
   implementation("androidx.compose.ui:ui:$composeVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")

@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.Color
 // SecondaryVariant<Type> - Фон сообщения бота.
 // * Background<Type> - Не используется.
 // Surface<Type> - Эффект тени для выдвижных меню.
-// Error<Type> - Цвет для ошибок.
+// * Error<Type> - Не используется.
 // OnPrimary<Type> - Цвет для основных текстов и иконок.
 // OnSecondary<Type> - Цвет для дополнительных текстов и недоступных иконок.
 // * OnBackground<Type> - Не используется.
@@ -68,7 +68,7 @@ val SecondaryLight: Color = Color(0xFFFCFCFC)
 val SecondaryVariantLight: Color = Color(0xFFF8F8F8)
 val BackgroundLight: Color = Color(0xFFFFFFFF)
 val SurfaceLight: Color = Color(0xB3FFFFFF)
-val ErrorLight: Color = Color(0xFF000000)
+val ErrorLight: Color = Color(0xFFFFFFFF)
 val OnPrimaryLight: Color = Color(0xFF000000)
 val OnSecondaryLight: Color = Color(0xFF888888)
 val OnBackgroundLight: Color = Color(0xFFFFFFFF)
