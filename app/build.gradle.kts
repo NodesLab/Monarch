@@ -112,6 +112,8 @@ android {
     }
   }
 
+  buildToolsVersion = "33.0.0"
+
   namespace = "net.monarch.app"
 }
 
