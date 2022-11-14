@@ -19,9 +19,9 @@ package net.monarch.app
 import android.app.Application
 import net.monarch.app.core.command.list.base.AliasesCommand
 import net.monarch.app.core.command.list.base.CommandsCommand
+import net.monarch.app.core.command.list.crypt.Base64Command
 import net.monarch.app.core.command.list.network.IpInfoCommand
 import net.monarch.app.core.command.list.network.PortCommand
-import net.monarch.app.core.command.list.text.Base64Command
 import net.monarch.app.core.command.list.text.GenStrCommand
 import net.monarch.app.core.command.list.text.HashCommand
 import net.monarch.app.core.command.manager.CommandManagerImpl
@@ -42,12 +42,14 @@ class MonarchApplication : Application() {
     CommandManagerImpl.registerCommand(AliasesCommand)
     CommandManagerImpl.registerCommand(CommandsCommand)
 
+    // CRYPT.
+    CommandManagerImpl.registerCommand(Base64Command)
+
     // NETWORK.
     CommandManagerImpl.registerCommand(IpInfoCommand)
     CommandManagerImpl.registerCommand(PortCommand)
 
     // TEXT.
-    CommandManagerImpl.registerCommand(Base64Command)
     CommandManagerImpl.registerCommand(GenStrCommand)
     CommandManagerImpl.registerCommand(HashCommand)
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.monarch.app.core.command.list.text
+package net.monarch.app.core.command.list.crypt
 
 import net.monarch.app.core.command.Command
 import net.monarch.app.core.command.session.CommandSession
@@ -28,7 +28,7 @@ import java.util.*
  * @author hepller
  */
 object Base64Command : Command {
-  override val aliases: List<String> = listOf("base64", "бейс64")
+  override val aliases: List<String> = listOf("base64", "бейс64", "b64", "б64")
   override val description: String = "Конвертирование текста в Base64 и обратно"
 
   override val isInBeta: Boolean = false
@@ -74,7 +74,7 @@ object Base64Command : Command {
         try {
           byteArray = Base64.getDecoder().decode(text.toByteArray())
         } catch (_: IllegalArgumentException) {
-          return MessageManagerImpl.appMessage(text = "⚠️️ Base64 схема некорректна")
+          return MessageManagerImpl.appMessage(text = "⚠️️ Base64-строка некорректна")
         }
       }
 

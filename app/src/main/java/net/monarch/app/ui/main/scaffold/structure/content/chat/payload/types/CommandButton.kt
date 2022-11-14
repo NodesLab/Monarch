@@ -65,6 +65,7 @@ fun CommandButton(payload: CommandButtonPayload, modifier: Modifier) {
         modifier = Modifier.width(5.dp)
       )
 
+      // TODO: Пофиксить уменьшение иконки при слишком длинном тексте.
       Icon(
         imageVector = Icons.Rounded.Code,
         contentDescription = "Отправить команду",

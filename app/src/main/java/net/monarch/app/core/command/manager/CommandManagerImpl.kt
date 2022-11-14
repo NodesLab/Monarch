@@ -38,6 +38,8 @@ import kotlin.coroutines.CoroutineContext
 /**
  * Реализация менеджера команд.
  *
+ * Управляет обработкой команд и их ошибок.
+ *
  * @author hepller
  */
 object CommandManagerImpl : CommandManager {
@@ -72,7 +74,15 @@ object CommandManagerImpl : CommandManager {
     val isNetworkAvailable: Boolean = NetworkUtility.hasNetworkConnection(context = context)
 
     if (command.isRequireNetwork && !isNetworkAvailable) {
-      return MessageManagerImpl.appMessage(text = "⚠️ Для использования этой команды необходим доступ к сети")
+      return MessageManagerImpl.appMessage(
+        text = "⚠️ Для использования этой команды необходим доступ к сети",
+        payloadList = listOf(
+          CommandButtonPayload(
+            buttonLabel = "Повторить команду",
+            buttonCommand = input
+          )
+        )
+      )
     }
 
     val sessionProperties: CommandSessionProperties = CommandSessionPropertiesImpl(

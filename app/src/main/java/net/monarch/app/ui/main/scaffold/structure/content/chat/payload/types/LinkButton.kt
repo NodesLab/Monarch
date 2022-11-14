@@ -64,6 +64,7 @@ fun LinkButton(payload: LinkMessagePayload, modifier: Modifier) {
         modifier = Modifier.width(5.dp)
       )
 
+      // TODO: Пофиксить уменьшение иконки при слишком длинном тексте.
       Icon(
         imageVector = Icons.Rounded.OpenInNew,
         contentDescription = "Открыть ссылку",

@@ -28,6 +28,8 @@ import java.util.*
 /**
  * Реализация менеджера сообщений.
  *
+ * Управляет сообщениями и используется для их отправки.
+ *
  * @author hepller
  */
 object MessageManagerImpl : MessageManager {

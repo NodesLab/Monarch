@@ -46,21 +46,29 @@ import java.util.*
  */
 @Composable
 fun MessageCard(message: Message) {
-  val color: Color = if (message.meta.rightPosition) MaterialTheme.colors.secondary else MaterialTheme.colors.secondaryVariant
-  val alignment: Alignment = if (message.meta.rightPosition) Alignment.TopEnd else Alignment.TopStart
-
-  val annotatedString: AnnotatedString = StringUtility.parseLinks(text = message.text)
-
   Box(
     modifier = Modifier.fillMaxWidth()
   ) {
+    val color: Color =
+      if (message.meta.rightPosition) MaterialTheme.colors.secondary
+      else MaterialTheme.colors.secondaryVariant
+
+    val alignment: Alignment =
+      if (message.meta.rightPosition) Alignment.TopEnd
+      else Alignment.TopStart
+
+    val paddings: PaddingValues =
+      if (message.meta.rightPosition) PaddingValues(start = 65.dp, end = 2.dp)
+      else PaddingValues(start = 2.dp, end = 65.dp)
+
     Surface(
       shape = MaterialTheme.shapes.large,
       color = color,
       elevation = 1.dp,
       modifier = Modifier
         .align(alignment)
-        .widthIn(min = 80.dp, max = 280.dp) // Устанавливает лимиты ширины сообщения.
+        .padding(paddings)
+        .widthIn(min = 80.dp, max = 500.dp) // Устанавливает лимиты ширины сообщения.
         .heightIn(min = 80.dp) // Устанавливает лимиты высоты сообщения.
     ) {
       Box(
@@ -91,11 +99,13 @@ fun MessageCard(message: Message) {
           )
 
           SelectionContainer {
+            val annotatedString: AnnotatedString = StringUtility.parseLinks(text = message.text)
+
             Text(
               text = annotatedString,
               color = MaterialTheme.colors.onPrimary,
               style = MaterialTheme.typography.body2,
-              fontSize = 15.sp, // TODO: перенести типографию в тему
+              fontSize = 15.sp, // TODO: перенести типографию в тему.
               modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
             )
           }
@@ -109,7 +119,7 @@ fun MessageCard(message: Message) {
         Text(
           text = SimpleDateFormat("HH:mm:ss", Locale.US).format(message.date),
           style = MaterialTheme.typography.body2,
-          fontSize = 12.sp, // TODO: перенести типографию в тему
+          fontSize = 12.sp, // TODO: перенести типографию в тему.
           color = MaterialTheme.colors.onSecondary,
           modifier = Modifier
             .align(alignment = Alignment.BottomEnd)
