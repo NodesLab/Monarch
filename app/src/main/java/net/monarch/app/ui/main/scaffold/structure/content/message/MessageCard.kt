@@ -14,26 +14,39 @@
  * limitations under the License.
  */
 
-package net.monarch.app.ui.main.scaffold.structure.content.chat
+package net.monarch.app.ui.main.scaffold.structure.content.message
 
+import android.content.Context
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.ContentCopy
+import androidx.compose.material.icons.rounded.CopyAll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.message.model.Message
-import net.monarch.app.ui.main.scaffold.structure.content.chat.payload.PayloadProcessor
+import net.monarch.app.ui.main.scaffold.structure.content.message.payload.PayloadProcessor
 import net.monarch.app.ui.theme.Accent
 import net.monarch.app.ui.utility.StringUtility
+import net.monarch.app.ui.utility.ToastUtility
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,6 +57,7 @@ import java.util.*
  *
  * @author hepller
  */
+// TODO: Рассортировать на подкомпоненты.
 @Composable
 fun MessageCard(message: Message) {
   Box(
@@ -68,24 +82,52 @@ fun MessageCard(message: Message) {
       modifier = Modifier
         .align(alignment)
         .padding(paddings)
-        .widthIn(min = 80.dp, max = 500.dp) // Устанавливает лимиты ширины сообщения.
+        .widthIn(min = 100.dp, max = 500.dp) // Устанавливает лимиты ширины сообщения.
         .heightIn(min = 80.dp) // Устанавливает лимиты высоты сообщения.
     ) {
       Box(
         contentAlignment = Alignment.TopStart
       ) {
-        IconButton(
-          onClick = { MessageManagerImpl.removeMessage(message = message) },
+        Row(
           modifier = Modifier
-            .size(size = 25.dp)
-            .padding(end = 5.dp, top = 5.dp)
             .align(Alignment.TopEnd)
+            .padding(end = 3.dp, top = 3.dp)
         ) {
-          Icon(
-            imageVector = Icons.Rounded.Clear,
-            contentDescription = "Удалить сообщение",
-            tint = MaterialTheme.colors.onSecondary
-          )
+          val context: Context = LocalContext.current
+          val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
+          val messageAnnotatedString: AnnotatedString = buildAnnotatedString {
+            append(text = message.text)
+          }
+
+          IconButton(
+            onClick = {
+              clipboardManager.setText(annotatedString = messageAnnotatedString)
+
+              ToastUtility.makeShortToast(text = "Скопировано в буфер обмена", context = context)
+            },
+            modifier = Modifier
+              .size(size = 25.dp)
+              .padding(end = 5.dp)
+          ) {
+            Icon(
+              imageVector = Icons.Rounded.ContentCopy,
+              contentDescription = "Копировать сообщение",
+              tint = MaterialTheme.colors.onSecondary
+            )
+          }
+
+          IconButton(
+            onClick = { MessageManagerImpl.removeMessage(message = message) },
+            modifier = Modifier
+              .size(size = 25.dp)
+          ) {
+            Icon(
+              imageVector = Icons.Rounded.Clear,
+              contentDescription = "Удалить сообщение",
+              tint = MaterialTheme.colors.onSecondary
+            )
+          }
         }
 
         Column(

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.ui.main.scaffold.structure.top.buttons.ClearHistoryIcon
 import net.monarch.app.ui.main.scaffold.structure.top.buttons.NavigationIcon
+import net.monarch.app.ui.main.scaffold.structure.top.title.Title
 
 /**
  * Верхняя панель.

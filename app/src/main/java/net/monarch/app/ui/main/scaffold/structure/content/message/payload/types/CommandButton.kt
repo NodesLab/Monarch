@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.monarch.app.ui.main.scaffold.structure.content.chat.payload.types
+package net.monarch.app.ui.main.scaffold.structure.content.message.payload.types
 
 import android.content.Context
 import androidx.compose.foundation.layout.*

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.monarch.app.ui.main.scaffold.structure.content.chat.payload
+package net.monarch.app.ui.main.scaffold.structure.content.message.payload
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,9 +27,9 @@ import net.monarch.app.core.message.model.meta.MessageMeta
 import net.monarch.app.core.message.model.payload.CommandButtonPayload
 import net.monarch.app.core.message.model.payload.DropdownMessagePayload
 import net.monarch.app.core.message.model.payload.LinkMessagePayload
-import net.monarch.app.ui.main.scaffold.structure.content.chat.payload.types.CommandButton
-import net.monarch.app.ui.main.scaffold.structure.content.chat.payload.types.DropdownButton
-import net.monarch.app.ui.main.scaffold.structure.content.chat.payload.types.LinkButton
+import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.CommandButton
+import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.DropdownButton
+import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.LinkButton
 
 /**
  * Обработчик полезной нагрузки.

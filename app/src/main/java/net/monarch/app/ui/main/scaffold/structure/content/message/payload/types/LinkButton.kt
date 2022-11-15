@@ -14,60 +14,62 @@
  * limitations under the License.
  */
 
-package net.monarch.app.ui.main.scaffold.structure.content.chat.payload.types
+package net.monarch.app.ui.main.scaffold.structure.content.message.payload.types
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
-import net.monarch.app.core.message.model.payload.DropdownMessagePayload
+import net.monarch.app.core.message.model.payload.LinkMessagePayload
 
 /**
- * Раскрывающийся текст в кнопке.
+ * Кнопка-ссылка.
  *
  * @param payload Объект полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения).
  *
- * @see DropdownMessagePayload
+ * @see LinkMessagePayload
  *
  * @author hepller
  */
 @Composable
-fun DropdownButton(payload: DropdownMessagePayload, modifier: Modifier) {
+fun LinkButton(payload: LinkMessagePayload, modifier: Modifier) {
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,
     modifier = modifier.padding(top = 5.dp)
   ) {
-    var isExpanded: Boolean by remember { mutableStateOf(false) }
-    var expandText: String by remember { mutableStateOf(payload.dropdownLabel) }
+    val uriHandler: UriHandler = LocalUriHandler.current
 
     TextButton(
-      onClick = {
-        isExpanded = !isExpanded
-        expandText = if (expandText == payload.dropdownLabel) payload.dropdownText else payload.dropdownLabel
-      },
+      onClick = { uriHandler.openUri(payload.linkSource) },
       colors = ButtonDefaults.buttonColors(
         backgroundColor = MaterialTheme.colors.secondary
       ),
       modifier = Modifier.fillMaxWidth(),
       shape = MaterialTheme.shapes.medium
     ) {
-      SelectionContainer {
-        Text(
-          text = expandText,
-          color = MaterialTheme.colors.onPrimary
-        )
-      }
+      Text(
+        text = payload.linkLabel,
+        color = MaterialTheme.colors.onPrimary
+      )
+
+      Spacer(
+        modifier = Modifier.width(5.dp)
+      )
+
+      // TODO: Пофиксить уменьшение иконки при слишком длинном тексте.
+      Icon(
+        imageVector = Icons.Rounded.OpenInNew,
+        contentDescription = "Открыть ссылку",
+        tint = MaterialTheme.colors.onPrimary
+      )
     }
   }
 }

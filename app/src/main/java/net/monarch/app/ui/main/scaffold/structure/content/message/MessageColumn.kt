@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.monarch.app.ui.main.scaffold.structure.content.chat
+package net.monarch.app.ui.main.scaffold.structure.content.message
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,20 +29,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.monarch.app.core.message.model.Message
-
-/**
- * Добавляет автопрокрутку списка до последнего элемента.
- *
- * @param listState Состояние списка.
- *
- * @author hepller
- */
-@Composable
-private fun AutoScroll(listState: LazyListState) {
-  LaunchedEffect(key1 = Unit) {
-    if (!listState.isScrollInProgress) listState.animateScrollToItem(index = listState.layoutInfo.totalItemsCount)
-  }
-}
 
 /**
  * Колонна сообщений с автопрокруткой.

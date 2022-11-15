@@ -23,7 +23,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import net.monarch.app.core.message.manager.MessageManagerImpl.messageList
-import net.monarch.app.ui.main.scaffold.structure.content.chat.MessageColumn
+import net.monarch.app.ui.main.scaffold.structure.content.message.MessageColumn
 
 /**
  * Содержимое основного поля.
