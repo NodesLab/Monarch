@@ -76,8 +76,8 @@ fun MessageCard(message: Message) {
       modifier = Modifier
         .align(alignment)
         .padding(paddings)
-        .widthIn(min = 100.dp, max = 500.dp) // Устанавливает лимиты ширины сообщения.
-        .heightIn(min = 80.dp) // Устанавливает лимиты высоты сообщения.
+        .widthIn(min = 105.dp, max = 500.dp) // Устанавливает лимиты ширины карточки сообщения.
+        .heightIn(min = 80.dp) // Устанавливает лимиты высоты карточки сообщения.
     ) {
       Box(
         contentAlignment = Alignment.TopStart
@@ -85,7 +85,7 @@ fun MessageCard(message: Message) {
         Row(
           modifier = Modifier
             .align(Alignment.TopEnd)
-            .padding(end = 3.dp, top = 3.dp)
+            .padding(end = 5.dp, top = 5.dp)
         ) {
           val context: Context = LocalContext.current
           val clipboardManager: ClipboardManager = LocalClipboardManager.current
@@ -125,7 +125,7 @@ fun MessageCard(message: Message) {
         }
 
         Column(
-          modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 5.dp)
+          modifier = Modifier.padding(start = 12.dp, end = 10.dp, top = 8.dp)
         ) {
           Text(
             text = message.author,
