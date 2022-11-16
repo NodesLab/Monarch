@@ -52,7 +52,7 @@ fun DropdownVersionField(isVersionFieldExpanded: MutableState<Boolean>, version:
     ) {
       val versionField: AnnotatedString = buildAnnotatedString {
         withStyle(style = SpanStyle(color = MaterialTheme.colors.onSecondary)) {
-          append("Version code: ")
+          append("Код версии: ")
         }
 
         withStyle(style = SpanStyle(color = MaterialTheme.colors.onPrimary)) {
@@ -62,7 +62,7 @@ fun DropdownVersionField(isVersionFieldExpanded: MutableState<Boolean>, version:
 
       val commitField: AnnotatedString = buildAnnotatedString {
         withStyle(style = SpanStyle(color = MaterialTheme.colors.onSecondary)) {
-          append("Commit: ")
+          append("Коммит: ")
         }
 
         withStyle(style = SpanStyle(color = MaterialTheme.colors.onPrimary)) {

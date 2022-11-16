@@ -21,7 +21,7 @@ import com.squareup.moshi.JsonClass
 import net.monarch.app.core.command.Command
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
-import net.monarch.app.core.message.model.payload.LinkMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.LinkMessagePayload
 import net.monarch.app.core.utility.NetworkUtility
 import net.monarch.app.core.utility.TextUtility
 import java.net.IDN

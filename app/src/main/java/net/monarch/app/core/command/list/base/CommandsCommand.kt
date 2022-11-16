@@ -20,7 +20,7 @@ import net.monarch.app.core.command.Command
 import net.monarch.app.core.command.manager.CommandManagerImpl
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
-import net.monarch.app.core.message.model.payload.CommandButtonPayload
+import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
 
 /**
  * Команда для просмотра доступных команд.

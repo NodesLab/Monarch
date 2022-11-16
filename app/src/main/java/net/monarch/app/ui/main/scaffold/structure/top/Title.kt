@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package net.monarch.app.ui.main.scaffold.structure.top.title
+package net.monarch.app.ui.main.scaffold.structure.top
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import net.monarch.app.BuildConfig
+import net.monarch.app.ui.main.scaffold.structure.top.title.DropdownVersionField
+import net.monarch.app.ui.main.scaffold.structure.top.title.TitleRow
 
 /**
  * Заголовок приложения.

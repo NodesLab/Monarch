@@ -47,8 +47,8 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val projectVersion = "1.6.3"
-val projectVersionCode = 21
+val projectVersion = "1.7.0"
+val projectVersionCode = 22
 
 android {
   compileSdk = 33
@@ -119,9 +119,9 @@ android {
 
 // region Версии библиотек.
 
-val composeVersion = "1.2.1" // https://developer.android.com/jetpack/androidx/releases/compose
+val composeVersion = "1.3.1" // https://developer.android.com/jetpack/androidx/releases/compose
 val moshiVersion = "1.14.0"
-val ktorVersion = "2.1.2"
+val ktorVersion = "2.1.3"
 
 // endregion
 
@@ -135,13 +135,13 @@ dependencies {
   implementation("androidx.compose.ui:ui:$composeVersion")
   implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
   implementation("androidx.compose.material:material:$composeVersion")
-  implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+  implementation("androidx.compose.material:material-icons-extended:1.3.1")
 
   // endregion
 
   // region Сторонние зависимости.
 
-  implementation("com.google.accompanist:accompanist-systemuicontroller:0.23.1")
+  implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
   implementation("com.squareup.moshi:moshi:$moshiVersion")
   implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
@@ -149,7 +149,7 @@ dependencies {
   kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
 
   implementation("io.ktor:ktor-client-core:$ktorVersion")
-  implementation("io.ktor:ktor-client-cio:$ktorVersion")
+  implementation("io.ktor:ktor-client-cio:2.1.3")
 
   implementation("com.linkedin.urls:url-detector:0.1.17")
 

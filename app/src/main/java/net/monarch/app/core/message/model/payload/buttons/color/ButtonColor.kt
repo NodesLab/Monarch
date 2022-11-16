@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package net.monarch.app.core.message.model.payload
+package net.monarch.app.core.message.model.payload.buttons.color
 
 /**
- * Полезная нагрузка сообщения с кнопкой-ссылкой.
+ * Цвета кнопок.
+ *
+ * @author hepller
  */
-data class LinkMessagePayload(
-
-  /**
-   * Текст на кнопке.
-   */
-  val linkLabel: String,
-
-  /**
-   * Ссылка.
-   */
-  val linkSource: String
-) : MessagePayload
-
+enum class ButtonColor {
+  PRIMARY,
+  SECONDARY,
+  GREEN,
+  RED,
+}

@@ -24,9 +24,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.monarch.app.core.message.model.meta.MessageMeta
-import net.monarch.app.core.message.model.payload.CommandButtonPayload
-import net.monarch.app.core.message.model.payload.DropdownMessagePayload
-import net.monarch.app.core.message.model.payload.LinkMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
+import net.monarch.app.core.message.model.payload.buttons.DropdownMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.LinkMessagePayload
 import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.CommandButton
 import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.DropdownButton
 import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.LinkButton

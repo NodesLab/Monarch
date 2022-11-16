@@ -19,7 +19,7 @@ package net.monarch.app.core.command.list.network
 import net.monarch.app.core.command.Command
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
-import net.monarch.app.core.message.model.payload.CommandButtonPayload
+import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
 import net.monarch.app.core.utility.NetworkUtility
 
 /**

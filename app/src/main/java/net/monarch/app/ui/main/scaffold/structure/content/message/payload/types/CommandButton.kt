@@ -24,10 +24,12 @@ import androidx.compose.material.icons.rounded.Code
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import net.monarch.app.core.command.manager.CommandManagerImpl
-import net.monarch.app.core.message.model.payload.CommandButtonPayload
+import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
+import net.monarch.app.ui.utility.ColorUtility
 
 /**
  * Кнопка-ссылка.
@@ -48,17 +50,20 @@ fun CommandButton(payload: CommandButtonPayload, modifier: Modifier) {
     verticalAlignment = Alignment.CenterVertically,
     modifier = modifier.padding(top = 5.dp)
   ) {
+    val buttonColor: Color = ColorUtility.resolveButtonColor(buttonColor = payload.buttonColor, materialColor = MaterialTheme.colors)
+    val buttonContentColor: Color = ColorUtility.resolveButtonContentColor(buttonColor = payload.buttonColor, materialColor = MaterialTheme.colors)
+
     TextButton(
       onClick = { CommandManagerImpl.handleInput(input = payload.buttonCommand, context = context) },
       colors = ButtonDefaults.buttonColors(
-        backgroundColor = MaterialTheme.colors.secondary
+        backgroundColor = buttonColor
       ),
       modifier = Modifier.fillMaxWidth(),
       shape = MaterialTheme.shapes.medium
     ) {
       Text(
         text = payload.buttonLabel,
-        color = MaterialTheme.colors.onPrimary
+        color = buttonContentColor
       )
 
       Spacer(
@@ -69,7 +74,7 @@ fun CommandButton(payload: CommandButtonPayload, modifier: Modifier) {
       Icon(
         imageVector = Icons.Rounded.Code,
         contentDescription = "Отправить команду",
-        tint = MaterialTheme.colors.onPrimary
+        tint = buttonContentColor
       )
     }
   }

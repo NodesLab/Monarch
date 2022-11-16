@@ -14,21 +14,29 @@
  * limitations under the License.
  */
 
-package net.monarch.app.core.message.model.payload
+package net.monarch.app.core.message.model.payload.buttons
+
+import net.monarch.app.core.message.model.payload.MessagePayload
+import net.monarch.app.core.message.model.payload.buttons.color.ButtonColor
 
 /**
- * Полезная нагрузка сообщения с раскрывающимся текстом.
+ * Полезная нагрузка сообщения с кнопкой-ссылкой.
  */
-data class DropdownMessagePayload(
+data class LinkMessagePayload(
 
   /**
-   * Текст кнопки.
+   * Текст на кнопке.
    */
-  val dropdownLabel: String,
+  val linkLabel: String,
 
   /**
-   * Текст при раскрытии.
+   * Ссылка.
    */
-  val dropdownText: String
+  val linkSource: String,
+
+  /**
+   * Цвет кнопки.
+   */
+  val buttonColor: ButtonColor = ButtonColor.PRIMARY
 ) : MessagePayload
 

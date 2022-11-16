@@ -23,10 +23,12 @@ import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
-import net.monarch.app.core.message.model.payload.LinkMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.LinkMessagePayload
+import net.monarch.app.ui.utility.ColorUtility
 
 /**
  * Кнопка-ссылка.
@@ -47,17 +49,20 @@ fun LinkButton(payload: LinkMessagePayload, modifier: Modifier) {
   ) {
     val uriHandler: UriHandler = LocalUriHandler.current
 
+    val buttonColor: Color = ColorUtility.resolveButtonColor(buttonColor = payload.buttonColor, materialColor = MaterialTheme.colors)
+    val buttonContentColor: Color = ColorUtility.resolveButtonContentColor(buttonColor = payload.buttonColor, materialColor = MaterialTheme.colors)
+
     TextButton(
       onClick = { uriHandler.openUri(payload.linkSource) },
       colors = ButtonDefaults.buttonColors(
-        backgroundColor = MaterialTheme.colors.secondary
+        backgroundColor = buttonColor
       ),
       modifier = Modifier.fillMaxWidth(),
       shape = MaterialTheme.shapes.medium
     ) {
       Text(
         text = payload.linkLabel,
-        color = MaterialTheme.colors.onPrimary
+        color = buttonContentColor
       )
 
       Spacer(
@@ -68,7 +73,7 @@ fun LinkButton(payload: LinkMessagePayload, modifier: Modifier) {
       Icon(
         imageVector = Icons.Rounded.OpenInNew,
         contentDescription = "Открыть ссылку",
-        tint = MaterialTheme.colors.onPrimary
+        tint = buttonContentColor
       )
     }
   }

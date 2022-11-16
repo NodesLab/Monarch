@@ -27,9 +27,10 @@ import net.monarch.app.core.command.session.CommandSessionImpl
 import net.monarch.app.core.command.session.properties.CommandSessionProperties
 import net.monarch.app.core.command.session.properties.CommandSessionPropertiesImpl
 import net.monarch.app.core.message.manager.MessageManagerImpl
-import net.monarch.app.core.message.model.payload.CommandButtonPayload
-import net.monarch.app.core.message.model.payload.DropdownMessagePayload
 import net.monarch.app.core.message.model.payload.MessagePayload
+import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
+import net.monarch.app.core.message.model.payload.buttons.DropdownMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.color.ButtonColor
 import net.monarch.app.core.utility.NetworkUtility
 import net.monarch.app.core.utility.TextUtility
 import java.util.*
@@ -155,7 +156,7 @@ object CommandManagerImpl : CommandManager {
       )
     )
 
-    val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = inputArgs[0], distance = 0.4)
+    val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = inputArgs[0], distance = 0.3)
 
     if (similarAliases.isNotEmpty()) {
       val mutableSimilarList: MutableList<String> = mutableListOf()
@@ -172,7 +173,8 @@ object CommandManagerImpl : CommandManager {
       buttonsList.add(
         CommandButtonPayload(
           buttonLabel = "Выполнить команду №1",
-          buttonCommand = "/${similarAliases[0][0]} ${inputArgs.drop(n = 1).joinToString(separator = " ")}"
+          buttonCommand = "/${similarAliases[0][0]} ${inputArgs.drop(n = 1).joinToString(separator = " ")}",
+          buttonColor = ButtonColor.SECONDARY
         )
       )
     }

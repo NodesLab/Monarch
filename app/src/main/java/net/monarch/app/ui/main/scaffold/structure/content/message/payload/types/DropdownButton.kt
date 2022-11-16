@@ -16,20 +16,17 @@
 
 package net.monarch.app.ui.main.scaffold.structure.content.message.payload.types
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import net.monarch.app.core.message.model.payload.DropdownMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.DropdownMessagePayload
+import net.monarch.app.ui.utility.ColorUtility
 
 /**
  * Раскрывающийся текст в кнопке.
@@ -51,23 +48,35 @@ fun DropdownButton(payload: DropdownMessagePayload, modifier: Modifier) {
     var isExpanded: Boolean by remember { mutableStateOf(false) }
     var expandText: String by remember { mutableStateOf(payload.dropdownLabel) }
 
+    val buttonColor: Color = ColorUtility.resolveButtonColor(buttonColor = payload.buttonColor, materialColor = MaterialTheme.colors)
+    val buttonContentColor: Color = ColorUtility.resolveButtonContentColor(buttonColor = payload.buttonColor, materialColor = MaterialTheme.colors)
+
     TextButton(
       onClick = {
         isExpanded = !isExpanded
         expandText = if (expandText == payload.dropdownLabel) payload.dropdownText else payload.dropdownLabel
       },
       colors = ButtonDefaults.buttonColors(
-        backgroundColor = MaterialTheme.colors.secondary
+        backgroundColor = buttonColor
       ),
       modifier = Modifier.fillMaxWidth(),
       shape = MaterialTheme.shapes.medium
     ) {
-      SelectionContainer {
-        Text(
-          text = expandText,
-          color = MaterialTheme.colors.onPrimary
-        )
-      }
+      Text(
+        text = expandText,
+        color = buttonContentColor
+      )
+
+      Spacer(
+        modifier = Modifier.width(5.dp)
+      )
+
+      // TODO: Пофиксить уменьшение иконки при слишком длинном тексте.
+      Icon(
+        imageVector = Icons.Rounded.ExpandMore,
+        contentDescription = "Раскрыть текст",
+        tint = buttonContentColor
+      )
     }
   }
 }
