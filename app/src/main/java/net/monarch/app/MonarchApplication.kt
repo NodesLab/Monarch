@@ -23,7 +23,7 @@ import net.monarch.app.core.command.list.crypt.Base64Command
 import net.monarch.app.core.command.list.network.IpInfoCommand
 import net.monarch.app.core.command.list.network.PortCommand
 import net.monarch.app.core.command.list.text.GenStrCommand
-import net.monarch.app.core.command.list.text.HashCommand
+import net.monarch.app.core.command.list.crypt.HashCommand
 import net.monarch.app.core.command.manager.CommandManagerImpl
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
@@ -44,6 +44,7 @@ class MonarchApplication : Application() {
 
     // CRYPT.
     CommandManagerImpl.registerCommand(command = Base64Command)
+    CommandManagerImpl.registerCommand(command = HashCommand)
 
     // NETWORK.
     CommandManagerImpl.registerCommand(command = IpInfoCommand)
@@ -51,7 +52,6 @@ class MonarchApplication : Application() {
 
     // TEXT.
     CommandManagerImpl.registerCommand(command = GenStrCommand)
-    CommandManagerImpl.registerCommand(command = HashCommand)
 
     MessageManagerImpl.appMessage(
       text = "⚙️ Monarch запущен, введите команду",

@@ -26,8 +26,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import net.monarch.app.core.message.model.Message
+import net.monarch.app.ui.utility.scrollbar
 
 /**
  * Колонна сообщений с автопрокруткой.
@@ -44,7 +46,17 @@ fun MessageColumn(messages: List<Message>) {
     state = listState,
     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 10.dp),
     verticalArrangement = Arrangement.spacedBy(space = 10.dp),
-    modifier = Modifier.background(color = MaterialTheme.colors.primary)
+    modifier = Modifier
+      .background(color = MaterialTheme.colors.primary)
+      .scrollbar(
+        state = listState,
+        horizontal = false,
+        knobColor = MaterialTheme.colors.onPrimary,
+        trackColor = Color.Transparent,
+        knobCornerRadius = 0.dp,
+        visibleAlpha = 0.2f,
+        fixedKnobRatio = 0.1f
+      )
   ) {
     items(items = messages) { message ->
       MessageCard(message = message)

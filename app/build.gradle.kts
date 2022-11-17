@@ -47,8 +47,8 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val projectVersion = "1.7.0"
-val projectVersionCode = 22
+val projectVersion = "1.7.1"
+val projectVersionCode = 23
 
 android {
   compileSdk = 33

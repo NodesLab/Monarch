@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.monarch.app.core.command.list.text
+package net.monarch.app.core.command.list.crypt
 
 import net.monarch.app.core.command.Command
 import net.monarch.app.core.command.session.CommandSession
@@ -42,7 +42,7 @@ object HashCommand : Command {
       return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} [<алгоритм>] <текст>")
     }
 
-    val algorithms: List<String> = listOf("sha-512", "sha-384", "sha-256", "sha-1", "md5")
+    val algorithms: List<String> = listOf("SHA-512", "SHA-384", "SHA-256", "SHA-1", "MD5")
 
     if (!algorithms.contains(session.arguments[1])) {
       val buttonList: List<MessagePayload> = getButtons(
@@ -63,7 +63,7 @@ object HashCommand : Command {
 
     val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add(element = "⚙️ Хешированный текст:")
+    messageScheme.add(element = "⚙️ Хешированный текст (${session.arguments[1]}):")
     messageScheme.add(element = "")
     messageScheme.add(element = hashedString)
 

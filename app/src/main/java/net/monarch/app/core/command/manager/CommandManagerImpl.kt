@@ -156,7 +156,7 @@ object CommandManagerImpl : CommandManager {
       )
     )
 
-    val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = inputArgs[0], distance = 0.3)
+    val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = "/${inputArgs[0]}", distance = 0.4)
 
     if (similarAliases.isNotEmpty()) {
       val mutableSimilarList: MutableList<String> = mutableListOf()
