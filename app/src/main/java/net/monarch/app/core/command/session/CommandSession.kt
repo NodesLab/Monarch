@@ -16,6 +16,7 @@
 
 package net.monarch.app.core.command.session
 
+import android.content.Context
 import net.monarch.app.core.command.session.properties.CommandSessionProperties
 
 /**
@@ -35,4 +36,9 @@ interface CommandSession {
    * Свойства сессии команды.
    */
   val properties: CommandSessionProperties
+
+  /**
+   * Контекст ([Context]).
+   */
+  val context: Context
 }

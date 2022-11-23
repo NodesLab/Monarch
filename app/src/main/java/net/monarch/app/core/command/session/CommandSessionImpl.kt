@@ -16,6 +16,7 @@
 
 package net.monarch.app.core.command.session
 
+import android.content.Context
 import net.monarch.app.core.command.session.properties.CommandSessionProperties
 
 /**
@@ -25,5 +26,6 @@ import net.monarch.app.core.command.session.properties.CommandSessionProperties
  */
 class CommandSessionImpl(
   override val arguments: List<String>,
-  override val properties: CommandSessionProperties
+  override val properties: CommandSessionProperties,
+  override val context: Context
 ) : CommandSession

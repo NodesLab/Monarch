@@ -20,10 +20,10 @@ import android.app.Application
 import net.monarch.app.core.command.list.base.AliasesCommand
 import net.monarch.app.core.command.list.base.CommandsCommand
 import net.monarch.app.core.command.list.crypt.Base64Command
+import net.monarch.app.core.command.list.crypt.HashCommand
 import net.monarch.app.core.command.list.network.IpInfoCommand
 import net.monarch.app.core.command.list.network.PortCommand
 import net.monarch.app.core.command.list.text.GenStrCommand
-import net.monarch.app.core.command.list.crypt.HashCommand
 import net.monarch.app.core.command.manager.CommandManagerImpl
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload

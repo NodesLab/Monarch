@@ -92,7 +92,8 @@ object CommandManagerImpl : CommandManager {
 
     val commandSession: CommandSession = CommandSessionImpl(
       arguments = formattedInput.substring(startIndex = 1).split(" "),
-      properties = sessionProperties
+      properties = sessionProperties,
+      context = context
     )
 
     GlobalScope.launch {

@@ -60,9 +60,9 @@ fun ChatScreenScaffold() {
     drawerScrimColor = MaterialTheme.colors.surface,
     drawerShape = RoundedCornerShape(
       topStart = 0.dp,
-      topEnd = 16.dp,
+      topEnd = 0.dp,
       bottomStart = 0.dp,
-      bottomEnd = 16.dp
+      bottomEnd = 0.dp
     )
   ) {
     ChatContent(it)

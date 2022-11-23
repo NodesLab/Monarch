@@ -33,7 +33,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
  * @author hepller
  */
 @SuppressLint("ConflictingOnColor")
-private val DarkColorPalette = darkColors(
+private val DarkColorPalette: Colors = darkColors(
   primary = PrimaryDark,
   primaryVariant = PrimaryVariantDark,
   secondary = SecondaryDark,
@@ -54,7 +54,7 @@ private val DarkColorPalette = darkColors(
  * @author hepller
  */
 @SuppressLint("ConflictingOnColor")
-private val LightColorPalette = lightColors(
+private val LightColorPalette: Colors = lightColors(
   primary = PrimaryLight,
   primaryVariant = PrimaryVariantLight,
   secondary = SecondaryLight,

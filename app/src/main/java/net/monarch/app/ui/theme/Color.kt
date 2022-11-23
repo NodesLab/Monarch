@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 
 // Accent - Цвет акцента.
 
-// Primary<Type> - Для меню, панелей и системного UI.
+// Primary<Type> - Для фонов меню, панелей и системного UI.
 // * PrimaryVariant<Type> - Не используется.
 // Secondary<Type> - Фон сообщения пользователя.
 // SecondaryVariant<Type> - Фон сообщения бота.
@@ -49,33 +49,33 @@ val Red: Color = Color(0xFFDB2B39)
 // region Тёмная тема.
 
 val PrimaryDark: Color = Color.Black
-val PrimaryVariantDark: Color = Color(0xFFFFFFFF) // *
+/**/ val PrimaryVariantDark: Color = Color.Transparent
 val SecondaryDark: Color = Color(0xFF3F3F3F)
 val SecondaryVariantDark: Color = Color(0xFF1A1A1A)
-val BackgroundDark: Color = Color(0xFFFFFFFF) // *
+/**/ val BackgroundDark: Color = Color.Transparent
 val SurfaceDark: Color = Color(0xB31B1B1B)
-val ErrorDark: Color = Color(0xFFFFFFFF) // *
-val OnPrimaryDark: Color = Color(0xFFFFFFFF) // *
+/**/ val ErrorDark: Color = Color.Transparent
+val OnPrimaryDark: Color = Color(0xFFFFFFFF)
 val OnSecondaryDark: Color = Color(0xFF888888)
-val OnBackgroundDark: Color = Color(0xFFFFFFFF) // *
-val OnSurfaceDark: Color = Color(0xFFFFFFFF) // *
-val OnErrorDark: Color = Color(0xFFFFFFFF) // *
+/**/ val OnBackgroundDark: Color = Color.Transparent
+/**/ val OnSurfaceDark: Color = Color.Transparent
+/**/ val OnErrorDark: Color = Color.Transparent
 
 // endregion
 
 // region Светлая тема.
 
-val PrimaryLight: Color = Color(0xFFFFFFFF) // *
-val PrimaryVariantLight: Color = Color(0xFFFFFFFF) // *
-val SecondaryLight: Color = Color(0xFFFCFCFC)
+val PrimaryLight: Color = Color(0xFFF5F5F5) // Color(0xFFF0F2F5)
+/**/ val PrimaryVariantLight: Color = Color.Transparent
+val SecondaryLight: Color = Color(0xFFE9E9E9)
 val SecondaryVariantLight: Color = Color(0xFFF8F8F8)
-val BackgroundLight: Color = Color(0xFFFFFFFF) // *
+/**/ val BackgroundLight: Color = Color.Transparent
 val SurfaceLight: Color = Color(0xB3FFFFFF)
-val ErrorLight: Color = Color(0xFFFFFFFF)
-val OnPrimaryLight: Color = Color(0xFF000000) // *
+/**/ val ErrorLight: Color = Color.Transparent
+val OnPrimaryLight: Color = Color.Black
 val OnSecondaryLight: Color = Color(0xFF888888)
-val OnBackgroundLight: Color = Color(0xFFFFFFFF) // *
-val OnSurfaceLight: Color = Color(0xFFFFFFFF) // *
-val OnErrorLight: Color = Color(0xFFFFFFFF) // *
+/**/ val OnBackgroundLight: Color = Color.Transparent
+/**/ val OnSurfaceLight: Color = Color.Transparent
+/**/ val OnErrorLight: Color = Color.Transparent
 
 // endregion

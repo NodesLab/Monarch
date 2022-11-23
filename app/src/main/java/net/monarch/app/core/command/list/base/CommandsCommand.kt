@@ -47,6 +47,11 @@ object CommandsCommand : Command {
     messageScheme.add(element = "* – Не анонимная команда")
     messageScheme.add(element = "^ – Требует доступ к сети")
 
+//    // TEST
+//    val intent = Intent(Intent.ACTION_MAIN)
+//    intent.component = ComponentName("net.monarch.app", "net.monarch.app.ui.main.MainActivity")
+//    startActivity(session.context, intent, null)
+
     MessageManagerImpl.appMessage(
       text = messageScheme.joinToString(separator = "\n"),
       payloadList = listOf(
