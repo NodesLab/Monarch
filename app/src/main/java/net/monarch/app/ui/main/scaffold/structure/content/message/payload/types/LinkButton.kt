@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.unit.dp
-import net.monarch.app.core.message.model.payload.buttons.LinkMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.LinkButtonPayload
 import net.monarch.app.ui.utility.ColorUtility
 
 /**
@@ -36,12 +36,12 @@ import net.monarch.app.ui.utility.ColorUtility
  * @param payload Объект полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения).
  *
- * @see LinkMessagePayload
+ * @see LinkButtonPayload
  *
  * @author hepller
  */
 @Composable
-fun LinkButton(payload: LinkMessagePayload, modifier: Modifier) {
+fun LinkButton(payload: LinkButtonPayload, modifier: Modifier) {
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,

@@ -14,29 +14,22 @@
  * limitations under the License.
  */
 
-package net.monarch.app.core.message.model.payload.buttons
-
-import net.monarch.app.core.message.model.payload.MessagePayload
-import net.monarch.app.core.message.model.payload.buttons.color.ButtonColor
+package net.monarch.app.core.message.model
 
 /**
- * Полезная нагрузка сообщения с кнопкой-ссылкой.
+ * Автор сообщения.
+ *
+ * @author hepller
  */
-data class LinkMessagePayload(
+enum class MessageAuthor {
 
   /**
-   * Текст на кнопке.
+   * Приложение.
    */
-  val linkLabel: String,
+  APP,
 
   /**
-   * Ссылка.
+   * Пользователь.
    */
-  val linkSource: String,
-
-  /**
-   * Цвет кнопки.
-   */
-  val buttonColor: ButtonColor = ButtonColor.PRIMARY
-) : MessagePayload
-
+  USER
+}

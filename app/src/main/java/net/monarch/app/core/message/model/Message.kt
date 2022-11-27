@@ -27,9 +27,9 @@ import java.util.*
 interface Message {
 
   /**
-   * Автор сообщения.
+   * Автор сообщения ([MessageAuthor]).
    */
-  val author: String
+  val author: MessageAuthor
 
   /**
    * Текст сообщения.
@@ -41,15 +41,8 @@ interface Message {
    */
   val date: Date
 
-//  /**
-//   * Расположение карточки сообщения справа
-//   */
-//  val rightPosition: Boolean
-//
-//  /**
-//   * Список полезной нагрузки сообщения.
-//   */
-//  val payloadList: List<MessagePayload>
-
+  /**
+   * Мета-данные сообщения.
+   */
   val meta: MessageMeta
 }

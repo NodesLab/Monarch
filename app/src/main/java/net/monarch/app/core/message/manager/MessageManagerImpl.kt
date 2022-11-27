@@ -19,11 +19,18 @@ package net.monarch.app.core.message.manager
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import net.monarch.app.core.message.model.Message
+import net.monarch.app.core.message.model.MessageAuthor
 import net.monarch.app.core.message.model.MessageImpl
 import net.monarch.app.core.message.model.meta.MessageMeta
 import net.monarch.app.core.message.model.meta.MessageMetaImpl
 import net.monarch.app.core.message.model.payload.MessagePayload
 import java.util.*
+
+enum class MessageType {
+  INFO,
+  WARN,
+  ERROR
+}
 
 /**
  * Реализация менеджера сообщений.
@@ -43,9 +50,8 @@ object MessageManagerImpl : MessageManager {
    * @param text Текст сообщения.
    * @param payloadList Полезная нагрузка.
    */
-  private fun addMessage(author: String, text: String, rightPosition: Boolean = false, payloadList: List<MessagePayload> = listOf()) {
+  private fun addMessage(author: MessageAuthor, text: String, payloadList: List<MessagePayload> = listOf()) {
     val messageMeta: MessageMeta = MessageMetaImpl(
-      rightPosition = rightPosition,
       payloadList = payloadList
     )
 
@@ -60,11 +66,11 @@ object MessageManagerImpl : MessageManager {
   }
 
   override fun appMessage(text: String, payloadList: List<MessagePayload>) {
-    addMessage(author = "Monarch", text = text, payloadList = payloadList)
+    addMessage(author = MessageAuthor.APP, text = text, payloadList = payloadList)
   }
 
   override fun userMessage(text: String) {
-    addMessage(author = "User", text = text, rightPosition = true)
+    addMessage(author = MessageAuthor.USER, text = text)
   }
 
   override fun removeMessage(message: Message) {

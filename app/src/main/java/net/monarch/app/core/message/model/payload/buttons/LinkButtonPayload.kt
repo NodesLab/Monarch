@@ -14,17 +14,29 @@
  * limitations under the License.
  */
 
-package net.monarch.app.core.message.model.meta
+package net.monarch.app.core.message.model.payload.buttons
 
 import net.monarch.app.core.message.model.payload.MessagePayload
+import net.monarch.app.core.message.model.payload.buttons.color.ButtonColor
 
 /**
- * Интерфейс мета-данных сообщения.
+ * Полезная нагрузка сообщения с кнопкой-ссылкой.
  */
-interface MessageMeta {
+data class LinkButtonPayload(
 
   /**
-   * Список полезной нагрузки сообщения.
+   * Текст на кнопке.
    */
-  val payloadList: List<MessagePayload>
-}
+  val linkLabel: String,
+
+  /**
+   * Ссылка.
+   */
+  val linkSource: String,
+
+  /**
+   * Цвет кнопки.
+   */
+  val buttonColor: ButtonColor = ButtonColor.PRIMARY
+) : MessagePayload
+

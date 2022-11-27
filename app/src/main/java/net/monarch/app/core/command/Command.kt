@@ -30,6 +30,8 @@ interface Command {
    */
   val aliases: List<String>
 
+  // TODO: Добавить: val regex: String
+
   /**
    * Описание команды.
    */

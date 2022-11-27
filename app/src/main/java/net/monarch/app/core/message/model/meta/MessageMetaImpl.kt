@@ -22,6 +22,5 @@ import net.monarch.app.core.message.model.payload.MessagePayload
  * Реализация мета-данных сообщения.
  */
 data class MessageMetaImpl(
-  override val rightPosition: Boolean,
   override val payloadList: List<MessagePayload>
 ) : MessageMeta

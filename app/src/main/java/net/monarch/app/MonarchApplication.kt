@@ -62,5 +62,11 @@ class MonarchApplication : Application() {
         )
       )
     )
+
+    // TODO: Проверка на наличие обновлений.
+
+//    MessageManagerImpl.appMessage(
+//      text = "default | <format:accent> accent <format:reset> | <format:gray> gray <format:reset> | <format:accent> accent2 <format:reset> "
+//    )
   }
 }

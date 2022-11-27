@@ -25,7 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import net.monarch.app.core.message.model.payload.buttons.DropdownMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.DropdownButtonPayload
 import net.monarch.app.ui.utility.ColorUtility
 
 /**
@@ -34,12 +34,12 @@ import net.monarch.app.ui.utility.ColorUtility
  * @param payload Объект полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения).
  *
- * @see DropdownMessagePayload
+ * @see DropdownButtonPayload
  *
  * @author hepller
  */
 @Composable
-fun DropdownButton(payload: DropdownMessagePayload, modifier: Modifier) {
+fun DropdownButton(payload: DropdownButtonPayload, modifier: Modifier) {
   Row(
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically,

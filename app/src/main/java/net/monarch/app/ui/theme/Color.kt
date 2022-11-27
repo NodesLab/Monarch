@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 // region Цвета не зависящие от темы.
 
 val Accent: Color = Color(0xFF42A5F5)
+//val Accent2: Color = Color(0xFF1282A2)
 val Green: Color = Color(0xFF1FAD36)
 val Red: Color = Color(0xFFDB2B39)
 // TODO: val LightGray: Color = Color(0xFF888888)

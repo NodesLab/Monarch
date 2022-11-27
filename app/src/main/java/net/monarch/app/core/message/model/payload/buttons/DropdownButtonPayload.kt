@@ -22,7 +22,7 @@ import net.monarch.app.core.message.model.payload.buttons.color.ButtonColor
 /**
  * Полезная нагрузка сообщения с раскрывающимся текстом.
  */
-data class DropdownMessagePayload(
+data class DropdownButtonPayload(
 
   /**
    * Текст кнопки.

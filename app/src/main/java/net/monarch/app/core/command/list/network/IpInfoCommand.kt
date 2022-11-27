@@ -21,7 +21,7 @@ import com.squareup.moshi.JsonClass
 import net.monarch.app.core.command.Command
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
-import net.monarch.app.core.message.model.payload.buttons.LinkMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.LinkButtonPayload
 import net.monarch.app.core.utility.NetworkUtility
 import net.monarch.app.core.utility.TextUtility
 import java.net.IDN
@@ -90,7 +90,7 @@ object IpInfoCommand : Command {
     MessageManagerImpl.appMessage(
       text = messageScheme.joinToString(separator = "\n"),
       payloadList = listOf(
-        LinkMessagePayload(
+        LinkButtonPayload(
           linkLabel = "Источник информации",
           linkSource = "https://ip-api.com"
         )

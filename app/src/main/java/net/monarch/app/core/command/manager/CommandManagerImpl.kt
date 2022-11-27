@@ -29,7 +29,7 @@ import net.monarch.app.core.command.session.properties.CommandSessionPropertiesI
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.message.model.payload.MessagePayload
 import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
-import net.monarch.app.core.message.model.payload.buttons.DropdownMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.DropdownButtonPayload
 import net.monarch.app.core.message.model.payload.buttons.color.ButtonColor
 import net.monarch.app.core.utility.NetworkUtility
 import net.monarch.app.core.utility.TextUtility
@@ -203,7 +203,7 @@ object CommandManagerImpl : CommandManager {
         MessageManagerImpl.appMessage(
           text = "⚠️ При выполнении команды произошла ошибка",
           payloadList = listOf(
-            DropdownMessagePayload(
+            DropdownButtonPayload(
               dropdownLabel = "Подробная информация",
               dropdownText = errorStackTrace
             )

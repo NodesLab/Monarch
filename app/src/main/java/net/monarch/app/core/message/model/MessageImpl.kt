@@ -25,7 +25,7 @@ import java.util.*
  * @author hepller
  */
 data class MessageImpl(
-  override val author: String,
+  override val author: MessageAuthor,
   override val text: String,
   override val date: Date,
   override val meta: MessageMeta,

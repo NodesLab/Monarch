@@ -23,10 +23,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import net.monarch.app.core.message.model.meta.MessageMeta
+import net.monarch.app.core.message.model.payload.MessagePayload
 import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
-import net.monarch.app.core.message.model.payload.buttons.DropdownMessagePayload
-import net.monarch.app.core.message.model.payload.buttons.LinkMessagePayload
+import net.monarch.app.core.message.model.payload.buttons.DropdownButtonPayload
+import net.monarch.app.core.message.model.payload.buttons.LinkButtonPayload
 import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.CommandButton
 import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.DropdownButton
 import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.LinkButton
@@ -34,23 +34,23 @@ import net.monarch.app.ui.main.scaffold.structure.content.message.payload.types.
 /**
  * Обработчик полезной нагрузки.
  *
- * @param messageMeta Объект мета-данных сообщения.
+ * @param payloadList Список полезной нагрузки.
  * @param modifier Модификатор (для корректного отображения некоторых типов ПН).
  *
  * @author hepller
  */
 @Composable
-fun PayloadProcessor(messageMeta: MessageMeta, modifier: Modifier) {
-  if (messageMeta.payloadList.isNotEmpty()) {
+fun PayloadProcessor(payloadList: List<MessagePayload>, modifier: Modifier) {
+  if (payloadList.isNotEmpty()) {
     Column(
       modifier = modifier.padding(bottom = 25.dp)
     ) {
-      for (payloadItem in messageMeta.payloadList) {
-        if (payloadItem is DropdownMessagePayload) {
+      for (payloadItem in payloadList) {
+        if (payloadItem is DropdownButtonPayload) {
           DropdownButton(payload = payloadItem, modifier = modifier)
         }
 
-        if (payloadItem is LinkMessagePayload) {
+        if (payloadItem is LinkButtonPayload) {
           LinkButton(payload = payloadItem, modifier = modifier)
         }
 
