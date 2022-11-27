@@ -64,9 +64,13 @@ object CommandManagerImpl : CommandManager {
 
     MessageManagerImpl.userMessage(text = formattedInput)
 
+    val trigger: String =
+      if (formattedInput.startsWith("/")) "/"
+      else getNlAlias(formattedInput)
+
     val command: Command? =
-      if (formattedInput.startsWith("/")) getCommand(alias = formattedInput.substring(startIndex = 1).lowercase().split(" ")[0])
-      else null
+      if (trigger == "/") getCommand(alias = formattedInput.substring(startIndex = 1).lowercase().split(" ")[0])
+      else getCommandFromNL(trigger.lowercase())
 
     if (command == null) {
       return unknownCommandMessage(input = formattedInput)
@@ -91,7 +95,7 @@ object CommandManagerImpl : CommandManager {
     )
 
     val commandSession: CommandSession = CommandSessionImpl(
-      arguments = formattedInput.substring(startIndex = 1).split(" "),
+      arguments = formattedInput.replaceFirst(trigger, "").split(" "), // formattedInput.substring(startIndex = 1).split(" "),
       properties = sessionProperties,
       context = context
     )
@@ -145,7 +149,7 @@ object CommandManagerImpl : CommandManager {
   private fun unknownCommandMessage(input: String) {
     val messageScheme = StringJoiner("\n")
 
-    messageScheme.add("⚠️ Такой команды не существует")
+    messageScheme.add("⚠️ Команда не распознана")
     messageScheme.add("")
 
     val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
@@ -211,5 +215,37 @@ object CommandManagerImpl : CommandManager {
         )
       }
     }
+  }
+
+  /**
+   * Получает алиас на натуральном языке из текста.
+   *
+   * @param text Текст, из которого будет получатся алиас.
+   */
+  private fun getNlAlias(text: String): String {
+    for (test in commandList) {
+      for (x in test.nlAliases) {
+        if (text.startsWith(x)) return text.replaceAfter(x, "")
+
+        if (TextUtility.getStringSimilarity(x, text.replaceAfter(x, "")) > 0.8F) return text.replaceAfter(x, "")
+      }
+    }
+
+    return ""
+  }
+
+  /**
+   * Получает команду из списка по алиасу на натуральном языке.
+   *
+   * @param alias Алиас на натуральном языке.
+   */
+  private fun getCommandFromNL(alias: String): Command? {
+    for (command in commandList) {
+      for (commandAlias in command.nlAliases) {
+        if (TextUtility.getStringSimilarity(commandAlias, alias) > 0.8F) return command
+      }
+    }
+
+    return null
   }
 }

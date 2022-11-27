@@ -28,6 +28,8 @@ import net.monarch.app.core.message.manager.MessageManagerImpl
  */
 object AliasesCommand : Command {
   override val aliases: List<String> = listOf("aliases", "алиасы")
+  override val nlAliases: List<String> = listOf("алиасы", "список алиасов", "покажи алиасы")
+
   override val description: String = "Информация об алиасах команд"
 
   override val isInBeta: Boolean = false

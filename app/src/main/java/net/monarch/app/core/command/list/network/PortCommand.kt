@@ -29,6 +29,8 @@ import net.monarch.app.core.utility.NetworkUtility
  */
 object PortCommand : Command {
   override val aliases: List<String> = listOf("port", "порт")
+  override val nlAliases: List<String> = listOf("проверь порт", "проверка порта", "порт")
+
   override val description: String = "Проверка порта на доступность"
 
   override val isInBeta: Boolean = false

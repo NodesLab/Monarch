@@ -29,12 +29,15 @@ import java.security.SecureRandom
  */
 object GenStrCommand : Command {
   override val aliases: List<String> = listOf("genstr", "генстр")
+  override val nlAliases: List<String> = listOf("генерация строки", "сгенерируй строку", "генерация текста", "сгенерируй текст")
+
   override val description: String = "Генерация строки"
 
   override val isInBeta: Boolean = false
   override val isRequireNetwork: Boolean = false
   override val isAnonymous: Boolean = true
 
+  // TODO: Добавить автоввод аршументов по аналогии с Base64Command.
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
       return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} <длина>")

@@ -35,7 +35,9 @@ import java.util.*
  */
 @Suppress("BlockingMethodInNonBlockingContext")
 object IpInfoCommand : Command {
-  override val aliases: List<String> = listOf("ipinfo", "ip", "ипинфо", "ип")
+  override val aliases: List<String> = listOf("ipinfo", "ip", "ипинфо", "ип", "айпи")
+  override val nlAliases: List<String> = listOf("ip", "айпи", "информация об айпи", "проверь айпи", "проверка айпи")
+
   override val description: String = "Получение информации об IP"
 
   override val isInBeta: Boolean = false

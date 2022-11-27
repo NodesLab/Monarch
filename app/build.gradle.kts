@@ -47,7 +47,7 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val projectVersion = "1.7.2"
+val projectVersion = "1.7.3"
 val projectVersionCode = 24
 
 android {
@@ -126,10 +126,10 @@ val ktorVersion = "2.1.3"
 // endregion
 
 dependencies {
+
+  // region Compose/Android зависимости.
+
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-
-  // region Compose-зависимости
-
   implementation("androidx.activity:activity-compose:1.6.1")
   implementation("androidx.core:core-ktx:1.9.0")
   implementation("androidx.compose.ui:ui:$composeVersion")

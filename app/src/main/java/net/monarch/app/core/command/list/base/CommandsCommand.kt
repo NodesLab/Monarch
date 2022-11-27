@@ -29,6 +29,8 @@ import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
  */
 object CommandsCommand : Command {
   override val aliases: List<String> = listOf("commands", "cmds", "команды", "help", "помощь")
+  override val nlAliases: List<String> = listOf("команды", "помощь", "список команд", "покажи команды")
+
   override val description: String = "Информация о доступных командах"
 
   override val isInBeta: Boolean = false

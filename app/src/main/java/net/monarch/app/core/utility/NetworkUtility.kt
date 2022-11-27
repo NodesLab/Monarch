@@ -218,6 +218,7 @@ object NetworkUtility {
 
       varIp = varIp shr 8
     }
+
     return ipv4.toString()
   }
 

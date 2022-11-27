@@ -31,6 +31,8 @@ import kotlin.text.Charsets.UTF_8
  */
 object HashCommand : Command {
   override val aliases: List<String> = listOf("hash", "хеш")
+  override val nlAliases: List<String> = listOf("хешировать", "хешируй", "хеш")
+
   override val description: String = "Хеширование строки"
 
   override val isInBeta: Boolean = false
