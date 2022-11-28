@@ -39,7 +39,7 @@ object Base64Command : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} [encode|decode] <текст>")
+      return MessageManagerImpl.appMessage(text = "⛔ Вы не указали текст для конвертации")
     }
 
     if (!listOf("encode", "decode").contains(session.arguments[1])) {
@@ -76,7 +76,7 @@ object Base64Command : Command {
         try {
           byteArray = Base64.getDecoder().decode(text.toByteArray())
         } catch (_: IllegalArgumentException) {
-          return MessageManagerImpl.appMessage(text = "⚠️️ Base64-строка некорректна")
+          return MessageManagerImpl.appMessage(text = "⚠️️ Указанная Base64-строка некорректна")
         }
       }
 

@@ -40,7 +40,7 @@ object GenStrCommand : Command {
   // TODO: Добавить автоввод аршументов по аналогии с Base64Command.
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} <длина>")
+      return MessageManagerImpl.appMessage(text = "⛔ Вы не указали длину строки")
     }
 
     if (!TextUtility.isNumber(session.arguments[1])) {

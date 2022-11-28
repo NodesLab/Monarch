@@ -46,7 +46,7 @@ object IpInfoCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} <хост>")
+      return MessageManagerImpl.appMessage(text = "⛔ Вы не указали IP")
     }
 
     var cleanedIp: String = NetworkUtility.clearUrl(url = session.arguments[1])
@@ -65,7 +65,7 @@ object IpInfoCommand : Command {
 
     val response: IpApiAdapter? = NetworkUtility.readJsonHttp(url = "http://ip-api.com/json/${IDN.toASCII(cleanedIp)}?lang=ru&fields=4259583", IpApiAdapter::class.java)
 
-    if (response?.status != "success") {
+    if (response == null || response.status != "success") {
       return MessageManagerImpl.appMessage(text = "⚠️️ Не удалось получить информацию об этом IP (отсутствие информации со стороны API)")
     }
 

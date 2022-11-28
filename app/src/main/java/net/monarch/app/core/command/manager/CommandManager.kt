@@ -39,13 +39,6 @@ interface CommandManager {
   fun registerCommand(command: Command)
 
   /**
-   * Получает команду по алиасу из списка.
-   *
-   * @param alias Алиас команды.
-   */
-  fun getCommand(alias: String): Command?
-
-  /**
    * Обрабатывает ввод пользователя.
    *
    * @param input Введённый текст.

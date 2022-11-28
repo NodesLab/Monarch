@@ -52,12 +52,6 @@ object CommandManagerImpl : CommandManager {
     commandList.add(command)
   }
 
-  override fun getCommand(alias: String): Command? {
-    return commandList.find {
-      it.aliases.contains(element = alias)
-    }
-  }
-
   @OptIn(DelicateCoroutinesApi::class)
   override fun handleInput(input: String, context: Context) {
     val formattedInput: String = input.trim()
@@ -202,14 +196,12 @@ object CommandManagerImpl : CommandManager {
       try {
         command.execute(session = session)
       } catch (exception: Exception) {
-        val errorStackTrace: String = exception.stackTrace.joinToString(separator = "\n")
-
         MessageManagerImpl.appMessage(
           text = "⚠️ При выполнении команды произошла ошибка",
           payloadList = listOf(
             DropdownButtonPayload(
               dropdownLabel = "Подробная информация",
-              dropdownText = errorStackTrace
+              dropdownText = exception.stackTrace.joinToString(separator = "\n")
             )
           )
         )
@@ -223,11 +215,11 @@ object CommandManagerImpl : CommandManager {
    * @param text Текст, из которого будет получатся алиас.
    */
   private fun getNlAlias(text: String): String {
-    for (test in commandList) {
-      for (x in test.nlAliases) {
-        if (text.startsWith(x)) return text.replaceAfter(x, "")
+    for (command in commandList) {
+      for (nlAlias in command.nlAliases) {
+        if (text.startsWith(nlAlias)) return text.replaceAfter(nlAlias, "")
 
-        if (TextUtility.getStringSimilarity(x, text.replaceAfter(x, "")) > 0.8F) return text.replaceAfter(x, "")
+        if (TextUtility.getStringSimilarity(nlAlias, text.replaceAfter(nlAlias, "")) > 0.6F) return text.replaceAfter(nlAlias, "")
       }
     }
 
@@ -247,5 +239,16 @@ object CommandManagerImpl : CommandManager {
     }
 
     return null
+  }
+
+  /**
+   * Получает команду по алиасу из списка.
+   *
+   * @param alias Алиас команды.
+   */
+  private fun getCommand(alias: String): Command? {
+    return commandList.find {
+      it.aliases.contains(element = alias)
+    }
   }
 }

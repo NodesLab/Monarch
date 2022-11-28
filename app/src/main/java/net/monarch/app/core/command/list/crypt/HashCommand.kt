@@ -41,7 +41,7 @@ object HashCommand : Command {
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
-      return MessageManagerImpl.appMessage(text = "⛔ Использование: /${aliases[0]} [<алгоритм>] <текст>")
+      return MessageManagerImpl.appMessage(text = "⛔ Вы не указали текст для хеширования")
     }
 
     val algorithms: List<String> = listOf("SHA-512", "SHA-384", "SHA-256", "SHA-1", "MD5")
@@ -53,7 +53,7 @@ object HashCommand : Command {
       )
 
       return MessageManagerImpl.appMessage(
-        text = "⛔ Укажите алгоритм хеширования",
+        text = "⛔ Выберите алгоритм хеширования",
         payloadList = buttonList
       )
     }
