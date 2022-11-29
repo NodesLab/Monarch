@@ -43,10 +43,8 @@ class MainActivity : ComponentActivity() {
           backgroundColor = Accent.copy(alpha = 0.4f)
         )
 
-        // Обёртка для установки цветов выделения текста.
         CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors) {
           ChatScreenScaffold()
-//          CardScreenScaffold() // TODO: Дописать.
         }
       }
     }

@@ -141,11 +141,12 @@ dependencies {
 
   // region Сторонние зависимости.
 
-  implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+  implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.1")
 
   implementation("com.squareup.moshi:moshi:$moshiVersion")
   implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
   implementation("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
+
   kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
 
   implementation("io.ktor:ktor-client-core:$ktorVersion")

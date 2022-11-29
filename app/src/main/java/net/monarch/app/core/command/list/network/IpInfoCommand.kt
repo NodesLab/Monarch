@@ -49,6 +49,8 @@ object IpInfoCommand : Command {
       return MessageManagerImpl.appMessage(text = "⛔ Вы не указали IP")
     }
 
+    // TODO: Сделать получение IP из текста сообщения.
+    // TODO: Парсинг слов в IP.
     var cleanedIp: String = NetworkUtility.clearUrl(url = session.arguments[1])
 
     // Удаление порта у доменов и IPv4

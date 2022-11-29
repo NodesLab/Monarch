@@ -37,7 +37,7 @@ object GenStrCommand : Command {
   override val isRequireNetwork: Boolean = false
   override val isAnonymous: Boolean = true
 
-  // TODO: Добавить автоввод аршументов по аналогии с Base64Command.
+  // TODO: Добавить автоввод аргументов по аналогии с Base64Command.
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.size < 2) {
       return MessageManagerImpl.appMessage(text = "⛔ Вы не указали длину строки")

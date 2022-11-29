@@ -25,9 +25,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import net.monarch.app.ui.main.scaffold.structure.DrawerContent
-import net.monarch.app.ui.main.scaffold.structure.bottom.BottomBar
-import net.monarch.app.ui.main.scaffold.structure.content.ChatContent
-import net.monarch.app.ui.main.scaffold.structure.top.TopBar
+import net.monarch.app.ui.main.scaffold.bottom.BottomBar
+import net.monarch.app.ui.main.scaffold.content.ChatContent
+import net.monarch.app.ui.main.scaffold.top.TopBar
 
 /**
  * Чато-подобный UI.

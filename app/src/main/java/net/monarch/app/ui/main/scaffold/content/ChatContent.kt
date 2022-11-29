@@ -1,0 +1,42 @@
+/*
+ * Copyright © 2022 Node.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package net.monarch.app.ui.main.scaffold.content
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import net.monarch.app.core.message.manager.MessageManagerImpl.messageList
+import net.monarch.app.ui.main.scaffold.content.message.MessageColumn
+
+/**
+ * Содержимое основного поля.
+ *
+ * @param contentPadding Отспупы для содержимого.
+ */
+@Composable
+fun ChatContent(contentPadding: PaddingValues) {
+  Surface(
+    modifier = Modifier
+      .fillMaxSize()
+      .padding(paddingValues = contentPadding)
+  ) {
+    MessageColumn(messages = messageList)
+  }
+}

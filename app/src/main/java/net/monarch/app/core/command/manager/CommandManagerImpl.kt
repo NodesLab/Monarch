@@ -60,7 +60,7 @@ object CommandManagerImpl : CommandManager {
 
     val trigger: String =
       if (formattedInput.startsWith("/")) "/"
-      else getNlAlias(formattedInput)
+      else resolveNlAlias(formattedInput)
 
     val command: Command? =
       if (trigger == "/") getCommand(alias = formattedInput.substring(startIndex = 1).lowercase().split(" ")[0])
@@ -89,7 +89,7 @@ object CommandManagerImpl : CommandManager {
     )
 
     val commandSession: CommandSession = CommandSessionImpl(
-      arguments = formattedInput.replaceFirst(trigger, "").split(" "), // formattedInput.substring(startIndex = 1).split(" "),
+      arguments = formattedInput.replaceFirst(trigger, "").split(" "),
       properties = sessionProperties,
       context = context
     )
@@ -115,24 +115,26 @@ object CommandManagerImpl : CommandManager {
   /**
    * Получает похожие алиасы команд с заданной точностью.
    *
+   * Если у одной команды похожи несколько алиасов, то сохраняется только последний.
+   *
    * @param commandList Список команд.
    * @param input Входной текст.
    * @param distance Точность (расстояние Левенштейна).
    *
    * @return Список из списков похожих команд.
    */
-  private fun getSimilarCommandAliases(commandList: List<Command>, input: String, distance: Double): List<List<String>> {
-    val aliasesList: MutableList<List<String>> = mutableListOf()
+  private fun getSimilarCommandAliases(commandList: List<Command>, input: String, distance: Double): MutableMap<String, String> {
+    val aliasesMap: MutableMap<String, String> = mutableMapOf()
 
     for (commandItem: Command in commandList) {
       for (aliasItem: String in commandItem.aliases) {
         if (TextUtility.getStringSimilarity(aliasItem, input) > distance) {
-          aliasesList.add(listOf(aliasItem, commandItem.aliases[0]))
+          aliasesMap[commandItem.aliases[0]] = aliasItem
         }
       }
     }
 
-    return aliasesList
+    return aliasesMap
   }
 
   /**
@@ -155,13 +157,15 @@ object CommandManagerImpl : CommandManager {
       )
     )
 
-    val similarAliases: List<List<String>> = getSimilarCommandAliases(commandList = commandList, input = "/${inputArgs[0]}", distance = 0.4)
+    // TODO: Добавить список возможных NL-алиасов.
+
+    val similarAliases: Map<String, String> = getSimilarCommandAliases(commandList = commandList, input = "/${inputArgs[0]}", distance = 0.4)
 
     if (similarAliases.isNotEmpty()) {
       val mutableSimilarList: MutableList<String> = mutableListOf()
 
-      for (similarItem: List<String> in similarAliases) {
-        mutableSimilarList.add("– /${similarItem[0]} (${similarItem[1]})")
+      for (similarItem: Map.Entry<String, String> in similarAliases) {
+        mutableSimilarList.add("– /${similarItem.value} (${similarItem.key})")
       }
 
       messageScheme.add("Возможно вы хотели ввести один из следующих алиасов:")
@@ -172,7 +176,7 @@ object CommandManagerImpl : CommandManager {
       buttonsList.add(
         CommandButtonPayload(
           buttonLabel = "Выполнить команду №1",
-          buttonCommand = "/${similarAliases[0][0]} ${inputArgs.drop(n = 1).joinToString(separator = " ")}",
+          buttonCommand = "/${similarAliases.iterator().next().value} ${inputArgs.drop(n = 1).joinToString(separator = " ")}",
           buttonColor = ButtonColor.SECONDARY
         )
       )
@@ -213,13 +217,14 @@ object CommandManagerImpl : CommandManager {
    * Получает алиас на натуральном языке из текста.
    *
    * @param text Текст, из которого будет получатся алиас.
+   * @param similarityMultiplier Множитель схожести (алиас будет возвращен, если совпадает больше указанного значения).
    */
-  private fun getNlAlias(text: String): String {
+  private fun resolveNlAlias(text: String, similarityMultiplier: Float = 0.6F): String {
     for (command in commandList) {
-      for (nlAlias in command.nlAliases) {
-        if (text.startsWith(nlAlias)) return text.replaceAfter(nlAlias, "")
+      for (commandNlAlias in command.nlAliases) {
+        if (text.startsWith(commandNlAlias)) return text.replaceAfter(commandNlAlias, "") // commandNlAlias
 
-        if (TextUtility.getStringSimilarity(nlAlias, text.replaceAfter(nlAlias, "")) > 0.6F) return text.replaceAfter(nlAlias, "")
+        if (TextUtility.getStringSimilarity(commandNlAlias, text.replaceAfter(commandNlAlias, "")) > similarityMultiplier) return text.replaceAfter(commandNlAlias, "") // commandNlAlias
       }
     }
 
@@ -230,11 +235,12 @@ object CommandManagerImpl : CommandManager {
    * Получает команду из списка по алиасу на натуральном языке.
    *
    * @param alias Алиас на натуральном языке.
+   * @param similarityMultiplier Множитель схожести (команда будет возвращена, если схожесть с одним из алиасов больше чем указанное значение).
    */
-  private fun getCommandFromNL(alias: String): Command? {
+  private fun getCommandFromNL(alias: String, similarityMultiplier: Float = 0.8F): Command? {
     for (command in commandList) {
       for (commandAlias in command.nlAliases) {
-        if (TextUtility.getStringSimilarity(commandAlias, alias) > 0.8F) return command
+        if (TextUtility.getStringSimilarity(commandAlias, alias) > similarityMultiplier) return command
       }
     }
 
