@@ -68,7 +68,7 @@ object PortCommand : Command {
       payloadList = listOf(
         CommandButtonPayload(
           buttonLabel = "Информация об IP",
-          buttonCommand = "/ip $host"
+          buttonCommand = "Информация об IP $host"
         )
       )
     )

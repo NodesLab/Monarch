@@ -91,7 +91,7 @@ object HashCommand : Command {
     for (algorithm: String in algorithms) {
       val button = CommandButtonPayload(
         buttonLabel = algorithm,
-        buttonCommand = "Хешируй $algorithm ${arguments.joinToString(separator = " ")}"
+        buttonCommand = "Хеширование $algorithm ${arguments.joinToString(separator = " ")}"
       )
 
       buttonsList.add(button)
