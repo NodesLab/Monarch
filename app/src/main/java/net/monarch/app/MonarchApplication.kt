@@ -17,8 +17,8 @@
 package net.monarch.app
 
 import android.app.Application
-import net.monarch.app.core.command.list.base.AliasesCommand
 import net.monarch.app.core.command.list.base.CommandsCommand
+import net.monarch.app.core.command.list.base.TriggersCommand
 import net.monarch.app.core.command.list.crypt.Base64Command
 import net.monarch.app.core.command.list.crypt.HashCommand
 import net.monarch.app.core.command.list.network.IpInfoCommand
@@ -39,8 +39,8 @@ class MonarchApplication : Application() {
     super.onCreate()
 
     // BASE.
-    CommandManagerImpl.registerCommand(command = AliasesCommand)
     CommandManagerImpl.registerCommand(command = CommandsCommand)
+    CommandManagerImpl.registerCommand(command = TriggersCommand)
 
     // CRYPT.
     CommandManagerImpl.registerCommand(command = Base64Command)
@@ -58,7 +58,7 @@ class MonarchApplication : Application() {
       payloadList = listOf(
         CommandButtonPayload(
           buttonLabel = "Список команд",
-          buttonCommand = "/commands"
+          buttonCommand = "Список команд"
         )
       )
     )

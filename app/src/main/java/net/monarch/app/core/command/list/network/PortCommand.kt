@@ -28,8 +28,12 @@ import net.monarch.app.core.utility.NetworkUtility
  * @author hepller
  */
 object PortCommand : Command {
-  override val aliases: List<String> = listOf("port", "порт")
-  override val nlAliases: List<String> = listOf("проверь порт", "проверка порта", "порт")
+  override val triggers: List<String> = listOf(
+    "port",
+    "проверь порт",
+    "проверка порта",
+    "порт"
+  )
 
   override val description: String = "Проверка порта на доступность"
 
@@ -38,16 +42,16 @@ object PortCommand : Command {
   override val isAnonymous: Boolean = false
 
   override suspend fun execute(session: CommandSession) {
-    if (session.arguments.size < 2) {
+    if (session.arguments.isEmpty()) {
       return MessageManagerImpl.appMessage(text = "⛔ Вы не указали хост и порт")
     }
 
-    if (session.arguments.size < 3) {
+    if (session.arguments.size < 2) {
       return MessageManagerImpl.appMessage(text = "⛔ Вы не указали порт")
     }
 
-    val host: String = NetworkUtility.clearUrl(url = session.arguments[1])
-    val port: Int = Integer.parseInt(session.arguments[2])
+    val host: String = NetworkUtility.clearUrl(url = session.arguments[0])
+    val port: Int = Integer.parseInt(session.arguments[1])
 
     if (port > 65535) {
       return MessageManagerImpl.appMessage(text = "⚠️️ Порт должен быть числом не больше чем 65535")

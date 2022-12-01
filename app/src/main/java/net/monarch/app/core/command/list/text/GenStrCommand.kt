@@ -28,8 +28,14 @@ import java.security.SecureRandom
  * @author hepller
  */
 object GenStrCommand : Command {
-  override val aliases: List<String> = listOf("genstr", "генстр")
-  override val nlAliases: List<String> = listOf("генерация строки", "сгенерируй строку", "генерация текста", "сгенерируй текст")
+  override val triggers: List<String> = listOf(
+    "genstr",
+    "генстр",
+    "генерация строки",
+    "сгенерируй строку",
+    "генерация текста",
+    "сгенерируй текст"
+  )
 
   override val description: String = "Генерация строки"
 
@@ -39,15 +45,15 @@ object GenStrCommand : Command {
 
   // TODO: Добавить автоввод аргументов по аналогии с Base64Command.
   override suspend fun execute(session: CommandSession) {
-    if (session.arguments.size < 2) {
+    if (session.arguments.isEmpty()) {
       return MessageManagerImpl.appMessage(text = "⛔ Вы не указали длину строки")
     }
 
-    if (!TextUtility.isNumber(session.arguments[1])) {
+    if (!TextUtility.isNumber(session.arguments[0])) {
       return MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемой строки должна быть числом")
     }
 
-    val length: Int = Integer.parseInt(session.arguments[1])
+    val length: Int = Integer.parseInt(session.arguments[0])
 
     if (length < 1 || length > 9999) {
       return MessageManagerImpl.appMessage(text = "⚠️️ Длина генерируемой строки должна быть больше нуля и меньше 10 000")

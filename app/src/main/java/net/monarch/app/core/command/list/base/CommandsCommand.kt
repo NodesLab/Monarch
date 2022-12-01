@@ -28,8 +28,15 @@ import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
  * @author hepller
  */
 object CommandsCommand : Command {
-  override val aliases: List<String> = listOf("commands", "cmds", "команды", "help", "помощь")
-  override val nlAliases: List<String> = listOf("команды", "помощь", "список команд", "покажи команды")
+  override val triggers: List<String> = listOf(
+    "commands",
+    "cmds",
+    "help",
+    "команды",
+    "помощь",
+    "список команд",
+    "покажи команды"
+  )
 
   override val description: String = "Информация о доступных командах"
 
@@ -58,8 +65,8 @@ object CommandsCommand : Command {
       text = messageScheme.joinToString(separator = "\n"),
       payloadList = listOf(
         CommandButtonPayload(
-          buttonLabel = "Алиасы команд",
-          buttonCommand = "/aliases"
+          buttonLabel = "Триггеры команд",
+          buttonCommand = "Триггеры команд"
         )
       )
     )
@@ -73,12 +80,12 @@ object CommandsCommand : Command {
   private fun getCommandList(): MutableList<String> {
     val output: MutableList<String> = mutableListOf()
 
-    for (command in CommandManagerImpl.commandList) {
+    for (command: Command in CommandManagerImpl.commandList) {
       val betaStatus: String = if (command.isInBeta) "ᵇᵉᵗᵃ" else ""
       val nonAnonymous: String = if (!command.isAnonymous) "*" else ""
       val requireInternet: String = if (command.isRequireNetwork) "^" else ""
 
-      output.add(element = "/${command.aliases[0]}$requireInternet$nonAnonymous — ${command.description} $betaStatus".trim())
+      output.add(element = "${command.triggers[0]}$requireInternet$nonAnonymous — ${command.description} $betaStatus".trim())
     }
 
     return output

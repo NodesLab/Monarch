@@ -22,15 +22,19 @@ import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
 
 /**
- * Команда для просмотра алиасов команд.
+ * Команда для просмотра триггеров команд.
  *
  * @author hepller
  */
-object AliasesCommand : Command {
-  override val aliases: List<String> = listOf("aliases", "алиасы")
-  override val nlAliases: List<String> = listOf("алиасы", "список алиасов", "покажи алиасы")
+object TriggersCommand : Command {
+  override val triggers: List<String> = listOf(
+    "triggers",
+    "триггеры",
+    "список триггеров",
+    "покажи триггеры"
+  )
 
-  override val description: String = "Информация об алиасах команд"
+  override val description: String = "Информация о триггерах команд"
 
   override val isInBeta: Boolean = false
   override val isRequireNetwork: Boolean = false
@@ -39,9 +43,9 @@ object AliasesCommand : Command {
   override suspend fun execute(session: CommandSession) {
     val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add(element = "\uD83D\uDCAC Алиасы команд:")
+    messageScheme.add(element = "\uD83D\uDCAC Триггеры команд:")
     messageScheme.add(element = "")
-    messageScheme.add(element = getAliasesList().joinToString(separator = "\n"))
+    messageScheme.add(element = getTriggersList().joinToString(separator = "\n"))
 
     MessageManagerImpl.appMessage(text = messageScheme.joinToString(separator = "\n"))
   }
@@ -51,13 +55,13 @@ object AliasesCommand : Command {
    *
    * @return Список алиасов команд.
    */
-  private fun getAliasesList(): MutableList<String> {
+  private fun getTriggersList(): MutableList<String> {
     val output: MutableList<String> = mutableListOf()
 
-    for (command in CommandManagerImpl.commandList) {
-      val aliasesString = command.aliases.joinToString(separator = ", ")
+    for (command: Command in CommandManagerImpl.commandList) {
+      val triggersString = command.triggers.joinToString(separator = " | ")
 
-      output.add(element = "/${command.aliases[0]}: [$aliasesString]")
+      output.add(element = "${command.triggers[0]}: [$triggersString]")
     }
 
     return output

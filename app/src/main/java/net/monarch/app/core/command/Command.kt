@@ -26,14 +26,9 @@ import net.monarch.app.core.command.session.CommandSession
 interface Command {
 
   /**
-   * Алиасы команды.
+   * Триггеры при которых срабатывает команда.
    */
-  val aliases: List<String>
-
-  /**
-   * Алиасы команды на натуральном языке.
-   */
-  val nlAliases: List<String>
+  val triggers: List<String>
 
   /**
    * Описание команды.

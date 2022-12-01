@@ -28,8 +28,18 @@ import java.util.*
  * @author hepller
  */
 object Base64Command : Command {
-  override val aliases: List<String> = listOf("base64", "бейс64", "b64", "б64")
-  override val nlAliases: List<String> = listOf("конвертируй base64", "конвертировать base64", "бейс64")
+  override val triggers: List<String> = listOf(
+    "base64",
+    "конвертируй base64",
+    "конвертировать base64",
+    "конвертация base64",
+    "конвертируй бейс64",
+    "конвертировать бейс64",
+    "конвертация бейс64",
+    "бейс64",
+    "b64",
+    "б64"
+  )
 
   override val description: String = "Конвертирование текста в Base64 и обратно"
 
@@ -38,39 +48,39 @@ object Base64Command : Command {
   override val isAnonymous: Boolean = true
 
   override suspend fun execute(session: CommandSession) {
-    if (session.arguments.size < 2) {
+    if (session.arguments.isEmpty()) {
       return MessageManagerImpl.appMessage(text = "⛔ Вы не указали текст для конвертации")
     }
 
-    if (!listOf("encode", "decode").contains(session.arguments[1])) {
+    if (!listOf("кодировка", "декодировка").contains(session.arguments[0])) {
       return MessageManagerImpl.appMessage(
-        text = "⛔ Укажите действие, для текста",
+        text = "⛔ Укажите действие для текста",
         payloadList = listOf(
           CommandButtonPayload(
             buttonLabel = "Кодировать",
-            buttonCommand = "/base64 encode ${session.arguments.drop(n = 1).joinToString(separator = " ")}"
+            buttonCommand = "Конвертация Base64 кодировка ${session.arguments.joinToString(separator = " ")}"
           ),
           CommandButtonPayload(
             buttonLabel = "Декодировать",
-            buttonCommand = "/base64 decode ${session.arguments.drop(n = 1).joinToString(separator = " ")}"
+            buttonCommand = "Конвертация Base64 декодировка ${session.arguments.joinToString(separator = " ")}"
           )
         )
       )
     }
 
-    val text: String = session.arguments.drop(n = 2).joinToString(" ")
+    val text: String = session.arguments.drop(n = 1).joinToString(" ") // drop 1, чтобы в текст не попадало название алгоритма.
 
     val convertingType: String
     val byteArray: ByteArray
 
-    when (session.arguments[1]) {
-      "encode" -> {
+    when (session.arguments[0]) {
+      "кодировка" -> {
         convertingType = "Закодированный"
 
         byteArray = Base64.getEncoder().encode(text.toByteArray())
       }
 
-      "decode" -> {
+      "декодировка" -> {
         convertingType = "Декодированный"
 
         try {
@@ -86,11 +96,11 @@ object Base64Command : Command {
           payloadList = listOf(
             CommandButtonPayload(
               buttonLabel = "Кодировать",
-              buttonCommand = "/base64 encode $text"
+              buttonCommand = "Конвертирование Base64 кодировка $text"
             ),
             CommandButtonPayload(
               buttonLabel = "Декодировать",
-              buttonCommand = "/base64 decode $text"
+              buttonCommand = "Конвертирование Base64 декодировка $text"
             )
           )
         )

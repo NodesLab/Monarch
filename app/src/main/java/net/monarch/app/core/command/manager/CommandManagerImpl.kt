@@ -27,12 +27,9 @@ import net.monarch.app.core.command.session.CommandSessionImpl
 import net.monarch.app.core.command.session.properties.CommandSessionProperties
 import net.monarch.app.core.command.session.properties.CommandSessionPropertiesImpl
 import net.monarch.app.core.message.manager.MessageManagerImpl
-import net.monarch.app.core.message.model.payload.MessagePayload
 import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
 import net.monarch.app.core.message.model.payload.buttons.DropdownButtonPayload
-import net.monarch.app.core.message.model.payload.buttons.color.ButtonColor
 import net.monarch.app.core.utility.NetworkUtility
-import net.monarch.app.core.utility.TextUtility
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
@@ -58,17 +55,19 @@ object CommandManagerImpl : CommandManager {
 
     MessageManagerImpl.userMessage(text = formattedInput)
 
-    val trigger: String =
-      if (formattedInput.startsWith("/")) "/"
-      else resolveNlAlias(formattedInput)
+    val trigger: String = resolveTrigger(formattedInput)
+      ?: return MessageManagerImpl.appMessage(
+        text = "⚠️ Команда не распознана",
+        payloadList = listOf(
+          CommandButtonPayload(
+            buttonLabel = "Список команд",
+            buttonCommand = "Список команд"
+          )
+        )
+      )
 
-    val command: Command? =
-      if (trigger == "/") getCommand(alias = formattedInput.substring(startIndex = 1).lowercase().split(" ")[0])
-      else getCommandFromNL(trigger.lowercase())
-
-    if (command == null) {
-      return unknownCommandMessage(input = formattedInput)
-    }
+    val command: Command = getCommand(trigger)
+      ?: return
 
     val isNetworkAvailable: Boolean = NetworkUtility.hasNetworkConnection(context = context)
 
@@ -89,103 +88,16 @@ object CommandManagerImpl : CommandManager {
     )
 
     val commandSession: CommandSession = CommandSessionImpl(
-      arguments = formattedInput.replaceFirst(trigger, "").split(" "),
+      arguments = formattedInput.replaceFirst(oldValue = trigger, newValue = "", ignoreCase = true).split(" ").drop(n = 1),
       properties = sessionProperties,
       context = context
     )
 
     GlobalScope.launch {
-      val coroutineContext: CoroutineContext = getDispatcherFromCurrentThread(scope = this)
+      val coroutineContext: CoroutineContext = this.coroutineContext // getDispatcherFromCurrentThread(scope = this)
 
       executeCommand(command = command, session = commandSession, context = coroutineContext)
     }
-  }
-
-  /**
-   * Получает контекст для корутины из области.
-   *
-   * @param scope Область корутины.
-   *
-   * @return Контекст для корутины.
-   */
-  private fun getDispatcherFromCurrentThread(scope: CoroutineScope): CoroutineContext {
-    return scope.coroutineContext
-  }
-
-  /**
-   * Получает похожие алиасы команд с заданной точностью.
-   *
-   * Если у одной команды похожи несколько алиасов, то сохраняется только последний.
-   *
-   * @param commandList Список команд.
-   * @param input Входной текст.
-   * @param distance Точность (расстояние Левенштейна).
-   *
-   * @return Список из списков похожих команд.
-   */
-  private fun getSimilarCommandAliases(commandList: List<Command>, input: String, distance: Double): MutableMap<String, String> {
-    val aliasesMap: MutableMap<String, String> = mutableMapOf()
-
-    for (commandItem: Command in commandList) {
-      for (aliasItem: String in commandItem.aliases) {
-        if (TextUtility.getStringSimilarity(aliasItem, input) > distance) {
-          aliasesMap[commandItem.aliases[0]] = aliasItem
-        }
-      }
-    }
-
-    return aliasesMap
-  }
-
-  /**
-   * Производит сообщение о неизвестной команде.
-   *
-   * @param input Ввод пользователя.
-   */
-  private fun unknownCommandMessage(input: String) {
-    val messageScheme = StringJoiner("\n")
-
-    messageScheme.add("⚠️ Команда не распознана")
-    messageScheme.add("")
-
-    val inputArgs: List<String> = input.substring(startIndex = 1).split(" ")
-
-    val buttonsList: MutableList<MessagePayload> = mutableListOf(
-      CommandButtonPayload(
-        buttonLabel = "Список команд",
-        buttonCommand = "/commands"
-      )
-    )
-
-    // TODO: Добавить список возможных NL-алиасов.
-
-    val similarAliases: Map<String, String> = getSimilarCommandAliases(commandList = commandList, input = "/${inputArgs[0]}", distance = 0.4)
-
-    if (similarAliases.isNotEmpty()) {
-      val mutableSimilarList: MutableList<String> = mutableListOf()
-
-      for (similarItem: Map.Entry<String, String> in similarAliases) {
-        mutableSimilarList.add("– /${similarItem.value} (${similarItem.key})")
-      }
-
-      messageScheme.add("Возможно вы хотели ввести один из следующих алиасов:")
-      messageScheme.add("")
-      messageScheme.add(mutableSimilarList.joinToString("\n"))
-      messageScheme.add("")
-
-      buttonsList.add(
-        CommandButtonPayload(
-          buttonLabel = "Выполнить команду №1",
-          buttonCommand = "/${similarAliases.iterator().next().value} ${inputArgs.drop(n = 1).joinToString(separator = " ")}",
-          buttonColor = ButtonColor.SECONDARY
-        )
-      )
-    }
-
-    MessageManagerImpl.appMessage(
-      text = messageScheme.toString(),
-      payloadList = buttonsList
-    )
   }
 
   /**
@@ -214,33 +126,19 @@ object CommandManagerImpl : CommandManager {
   }
 
   /**
-   * Получает алиас на натуральном языке из текста.
+   * Получает из текста триггер команды.
    *
-   * @param text Текст, из которого будет получатся алиас.
-   * @param similarityMultiplier Множитель схожести (алиас будет возвращен, если совпадает больше указанного значения).
-   */
-  private fun resolveNlAlias(text: String, similarityMultiplier: Float = 0.6F): String {
-    for (command in commandList) {
-      for (commandNlAlias in command.nlAliases) {
-        if (text.startsWith(commandNlAlias)) return text.replaceAfter(commandNlAlias, "") // commandNlAlias
-
-        if (TextUtility.getStringSimilarity(commandNlAlias, text.replaceAfter(commandNlAlias, "")) > similarityMultiplier) return text.replaceAfter(commandNlAlias, "") // commandNlAlias
-      }
-    }
-
-    return ""
-  }
-
-  /**
-   * Получает команду из списка по алиасу на натуральном языке.
+   * @param text Текст, из которого будет получаться триггер.
    *
-   * @param alias Алиас на натуральном языке.
-   * @param similarityMultiplier Множитель схожести (команда будет возвращена, если схожесть с одним из алиасов больше чем указанное значение).
+   * @return Триггер, если он содержится в начале текста, иначе `null`.
    */
-  private fun getCommandFromNL(alias: String, similarityMultiplier: Float = 0.8F): Command? {
-    for (command in commandList) {
-      for (commandAlias in command.nlAliases) {
-        if (TextUtility.getStringSimilarity(commandAlias, alias) > similarityMultiplier) return command
+  private fun resolveTrigger(text: String): String? {
+    for (command: Command in commandList) {
+      for (trigger: String in command.triggers) {
+        // TODO: Переписать.
+        // Не самое лучшее решение, т.к. если у какой-либо команды есть триггер, который начинается
+        // так-же как триггер другой команды, то будет выполнена неподходящая команда.
+        if (text.startsWith(trigger, ignoreCase = true)) return trigger
       }
     }
 
@@ -248,13 +146,19 @@ object CommandManagerImpl : CommandManager {
   }
 
   /**
-   * Получает команду по алиасу из списка.
+   * Получает команду по её триггеру.
    *
-   * @param alias Алиас команды.
+   * @param trigger Триггер, по которому будет происходить поиск команды.
+   *
+   * @return Команда, если она обнаружена, иначе `null`.
    */
-  private fun getCommand(alias: String): Command? {
-    return commandList.find {
-      it.aliases.contains(element = alias)
+  private fun getCommand(trigger: String): Command? {
+    for (command: Command in commandList) {
+      for (commandAlias: String in command.triggers) {
+        if (trigger == commandAlias) return command
+      }
     }
+
+    return null
   }
 }

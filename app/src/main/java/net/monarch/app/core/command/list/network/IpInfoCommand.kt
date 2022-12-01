@@ -35,8 +35,16 @@ import java.util.*
  */
 @Suppress("BlockingMethodInNonBlockingContext")
 object IpInfoCommand : Command {
-  override val aliases: List<String> = listOf("ipinfo", "ip", "ипинфо", "ип", "айпи")
-  override val nlAliases: List<String> = listOf("ip", "айпи", "информация об айпи", "проверь айпи", "проверка айпи")
+  override val triggers: List<String> = listOf(
+    "ipinfo",
+    "ip",
+    "айпи",
+    "информация об айпи",
+    "проверь айпи",
+    "проверка айпи",
+    "ипинфо",
+    "ип"
+  )
 
   override val description: String = "Получение информации об IP"
 
@@ -45,13 +53,13 @@ object IpInfoCommand : Command {
   override val isAnonymous: Boolean = true
 
   override suspend fun execute(session: CommandSession) {
-    if (session.arguments.size < 2) {
+    if (session.arguments.isEmpty()) {
       return MessageManagerImpl.appMessage(text = "⛔ Вы не указали IP")
     }
 
     // TODO: Сделать получение IP из текста сообщения.
     // TODO: Парсинг слов в IP.
-    var cleanedIp: String = NetworkUtility.clearUrl(url = session.arguments[1])
+    var cleanedIp: String = NetworkUtility.clearUrl(url = session.arguments[0])
 
     // Удаление порта у доменов и IPv4
     if (!NetworkUtility.isValidIPv6(ip = cleanedIp)) cleanedIp = cleanedIp.split(":")[0]

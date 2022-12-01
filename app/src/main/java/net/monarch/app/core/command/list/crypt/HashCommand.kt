@@ -30,8 +30,13 @@ import kotlin.text.Charsets.UTF_8
  * @author hepller
  */
 object HashCommand : Command {
-  override val aliases: List<String> = listOf("hash", "хеш")
-  override val nlAliases: List<String> = listOf("хешировать", "хешируй", "хеш")
+  override val triggers: List<String> = listOf(
+    "hash",
+    "хеширование",
+    "хешировать",
+    "хешируй",
+    "хеш"
+  )
 
   override val description: String = "Хеширование строки"
 
@@ -40,13 +45,13 @@ object HashCommand : Command {
   override val isAnonymous: Boolean = true
 
   override suspend fun execute(session: CommandSession) {
-    if (session.arguments.size < 2) {
+    if (session.arguments.isEmpty()) {
       return MessageManagerImpl.appMessage(text = "⛔ Вы не указали текст для хеширования")
     }
 
     val algorithms: List<String> = listOf("SHA-512", "SHA-384", "SHA-256", "SHA-1", "MD5")
 
-    if (!algorithms.contains(session.arguments[1])) {
+    if (!algorithms.contains(session.arguments[0])) {
       val buttonList: List<MessagePayload> = getButtons(
         algorithms = algorithms,
         arguments = session.arguments
@@ -59,13 +64,13 @@ object HashCommand : Command {
     }
 
     val hashedString: String = hashString(
-      algorithm = session.arguments[1],
-      text = session.arguments.drop(n = 2).joinToString(" ")
+      algorithm = session.arguments[0],
+      text = session.arguments.drop(n = 1).joinToString(" ") // drop 1, чтобы в хеш не попадало название алгоритма.
     )
 
     val messageScheme: MutableList<String> = mutableListOf()
 
-    messageScheme.add(element = "⚙️ Хешированный текст (${session.arguments[1]}):")
+    messageScheme.add(element = "⚙️ Хешированный текст (${session.arguments[0]}):")
     messageScheme.add(element = "")
     messageScheme.add(element = hashedString)
 
@@ -86,7 +91,7 @@ object HashCommand : Command {
     for (algorithm: String in algorithms) {
       val button = CommandButtonPayload(
         buttonLabel = algorithm,
-        buttonCommand = "/hash $algorithm ${arguments.drop(n = 1).joinToString(separator = " ")}"
+        buttonCommand = "Хешируй $algorithm ${arguments.joinToString(separator = " ")}"
       )
 
       buttonsList.add(button)

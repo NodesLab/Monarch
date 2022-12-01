@@ -47,8 +47,8 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val projectVersion = "1.7.3"
-val projectVersionCode = 24
+val projectVersion = "1.8.0"
+val projectVersionCode = 25
 
 android {
   compileSdk = 33
@@ -141,7 +141,7 @@ dependencies {
 
   // region Сторонние зависимости.
 
-  implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.1")
+  implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
   implementation("com.squareup.moshi:moshi:$moshiVersion")
   implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
