@@ -42,16 +42,15 @@ import kotlin.math.pow
 object NetworkUtility {
 
   // TODO: Адаптировать для других языков.
+  // TODO: Переписать на Kotlin Regex.
   private val VALID_DOMAIN_PATTERN: Pattern = Pattern.compile("^((?!-)[A-Za-zА-Яа-я0-9-]{1,63}(?<!-)\\.)+[A-Za-zА-Яа-я]{2,16}$")
-
   private val VALID_IPV4_PATTERN: Pattern = Pattern.compile("^(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])$")
   private val VALID_IPV6_PATTERN: Pattern = Pattern.compile("(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]+|::(ffff(:0{1,4})?:)?((25[0-5]|(2[0-4]|1?[0-9])?[0-9])\\.){3}(25[0-5]|(2[0-4]|1?[0-9])?[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1?[0-9])?[0-9])\\.){3}(25[0-5]|(2[0-4]|1?[0-9])?[0-9]))")
-
 
   /**
    * Ktor-клиент.
    */
-  private val ktorClient = HttpClient(CIO) {
+  private val ktorClient: HttpClient = HttpClient(CIO) {
     install(UserAgent) {
       agent = "Monarch"
     }
@@ -60,7 +59,7 @@ object NetworkUtility {
   /**
    * Moshi-клиент.
    */
-  private val moshiClient = Moshi.Builder().build()
+  private val moshiClient: Moshi = Moshi.Builder().build()
 
   /**
    * Получает ответ с URL-адреса.
@@ -99,7 +98,7 @@ object NetworkUtility {
    * @return Очищенный URl адрес.
    */
   fun clearUrl(url: String): String {
-    return url.replaceFirst("^(http[s]?://www\\.|http[s]?://|www\\.)".toRegex(), "").split("/").toTypedArray()[0]
+    return url.replaceFirst(regex = Regex(pattern = "^(http[s]?://www\\.|http[s]?://|www\\.)"), replacement =  "").split("/").toTypedArray()[0]
   }
 
   /**
@@ -112,7 +111,7 @@ object NetworkUtility {
    * @see NetworkUtility.isValidAddress
    */
   fun isValidDomain(domain: String?): Boolean {
-    return isValidAddress(domain, VALID_DOMAIN_PATTERN)
+    return isValidAddress(hostname = domain, pattern = VALID_DOMAIN_PATTERN)
   }
 
   /**
@@ -125,7 +124,7 @@ object NetworkUtility {
    * @see NetworkUtility.isValidAddress
    */
   fun isValidIPv4(ip: String?): Boolean {
-    return isValidAddress(ip, VALID_IPV4_PATTERN)
+    return isValidAddress(hostname = ip, pattern = VALID_IPV4_PATTERN)
   }
 
   /**
@@ -138,7 +137,7 @@ object NetworkUtility {
    * @see NetworkUtility.isValidAddress
    */
   fun isValidIPv6(ip: String?): Boolean {
-    return isValidAddress(ip, VALID_IPV6_PATTERN)
+    return isValidAddress(hostname = ip, pattern = VALID_IPV6_PATTERN)
   }
 
   /**
@@ -160,16 +159,16 @@ object NetworkUtility {
   /**
    * Проверяет ссылку на корректность.
    *
-   * @param url Ссылка.
+   * @param url Ссылка в виде строки.
    *
    * @return `true`, если ссылка корректна и `false`, если нет.
    */
   fun isValidURL(url: String?): Boolean {
     try {
       URL(url).toURI()
-    } catch (exception: MalformedURLException) {
+    } catch (_: MalformedURLException) {
       return false
-    } catch (exception: URISyntaxException) {
+    } catch (_: URISyntaxException) {
       return false
     }
 
@@ -225,7 +224,7 @@ object NetworkUtility {
   /**
    * Проверяет наличие у устройства доступа к сети.
    *
-   * @param context Контекст.
+   * @param context Контекст (Android).
    */
   fun hasNetworkConnection(context: Context): Boolean {
     val connectivityManager: ConnectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

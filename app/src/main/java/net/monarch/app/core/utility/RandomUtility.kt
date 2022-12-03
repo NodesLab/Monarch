@@ -27,6 +27,8 @@ object RandomUtility {
    * Получает случайный элемент из списка.
    *
    * @param list Список элементов.
+   *
+   * @return Случайный элемент из списка.
    */
   @JvmStatic
   fun <T> getRandomListElement(list: List<T>): T? {

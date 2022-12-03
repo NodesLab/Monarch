@@ -73,13 +73,13 @@ object TextUtility {
    */
   @Throws(IllegalArgumentException::class)
   fun getCountryFlagEmoji(countryCode: String): String {
-    require(countryCode.length <= 2) { "The \"countryCode\" parameter must not exceed a length of 2 characters" }
+    require(value = countryCode.length <= 2) { "The \"countryCode\" parameter must not exceed a length of 2 characters" }
 
     val flagOffset = 0x1F1E6
     val asciiOffset = 0x41
 
-    val firstChar = Character.codePointAt(countryCode, 0) - asciiOffset + flagOffset
-    val secondChar = Character.codePointAt(countryCode, 1) - asciiOffset + flagOffset
+    val firstChar: Int = Character.codePointAt(countryCode, 0) - asciiOffset + flagOffset
+    val secondChar: Int = Character.codePointAt(countryCode, 1) - asciiOffset + flagOffset
 
     return String(Character.toChars(firstChar)) + String(Character.toChars(secondChar))
   }
@@ -96,7 +96,7 @@ object TextUtility {
       string.toInt()
 
       true
-    } catch (exception: NumberFormatException) {
+    } catch (_: NumberFormatException) {
       false
     }
   }
