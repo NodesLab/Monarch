@@ -40,7 +40,7 @@ import net.monarch.app.ui.utility.scrollbar
  */
 @Composable
 fun MessageColumn(messages: List<Message>) {
-  val listState: LazyListState = rememberLazyListState()
+  val listState: LazyListState = rememberLazyListState(messages.size)
 
   LazyColumn(
     state = listState,

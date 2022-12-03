@@ -26,12 +26,6 @@ import net.monarch.app.core.message.model.meta.MessageMetaImpl
 import net.monarch.app.core.message.model.payload.MessagePayload
 import java.util.*
 
-enum class MessageType {
-  INFO,
-  WARN,
-  ERROR
-}
-
 /**
  * Реализация менеджера сообщений.
  *

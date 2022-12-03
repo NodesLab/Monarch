@@ -17,6 +17,8 @@
 package net.monarch.app.core.command.list.text
 
 import net.monarch.app.core.command.Command
+import net.monarch.app.core.command.properties.CommandProperties
+import net.monarch.app.core.command.properties.CommandPropertiesImpl
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.utility.TextUtility
@@ -39,9 +41,11 @@ object GenStrCommand : Command {
 
   override val description: String = "Генерация строки"
 
-  override val isInBeta: Boolean = false
-  override val isRequireNetwork: Boolean = false
-  override val isAnonymous: Boolean = true
+  override val properties: CommandProperties = CommandPropertiesImpl(
+    isInBeta = false,
+    isRequireNetwork = false,
+    isAnonymous = true
+  )
 
   // TODO: Добавить автоввод аргументов по аналогии с Base64Command.
   override suspend fun execute(session: CommandSession) {

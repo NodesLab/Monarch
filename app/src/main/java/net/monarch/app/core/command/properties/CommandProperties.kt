@@ -14,39 +14,28 @@
  * limitations under the License.
  */
 
-package net.monarch.app.core.command
-
-import net.monarch.app.core.command.properties.CommandProperties
-import net.monarch.app.core.command.session.CommandSession
+package net.monarch.app.core.command.properties
 
 /**
- * Интерфейс команды.
+ * Интерфейс свойств команды.
  *
  * @author hepller
  */
-interface Command {
+interface CommandProperties {
 
   /**
-   * Триггеры, при которых срабатывает команда.
+   * Бета-статус команды.
    */
-  val triggers: List<String>
+  val isInBeta: Boolean
 
   /**
-   * Описание команды.
+   * Требует ли команда доступ в сеть.
    */
-  val description: String
+  val isRequireNetwork: Boolean
 
   /**
-   * Свойства команды
+   * Анонимна ли команда.
+   * Под анонимностью подразумевается отсутствие прямых соединений с целевым сервером.
    */
-  val properties: CommandProperties
-
-  /**
-   * Выполняет команду.
-   *
-   * @param session Сессия команды.
-   *
-   * @see CommandSession
-   */
-  suspend fun execute(session: CommandSession)
+  val isAnonymous: Boolean
 }

@@ -19,6 +19,8 @@ package net.monarch.app.core.command.list.network
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import net.monarch.app.core.command.Command
+import net.monarch.app.core.command.properties.CommandProperties
+import net.monarch.app.core.command.properties.CommandPropertiesImpl
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.message.model.payload.buttons.LinkButtonPayload
@@ -37,8 +39,6 @@ import java.util.*
 object IpInfoCommand : Command {
   override val triggers: List<String> = listOf(
     "ipinfo",
-    "ip",
-    "айпи",
     "информация об айпи",
     "проверь айпи",
     "проверка айпи",
@@ -46,14 +46,17 @@ object IpInfoCommand : Command {
     "проверь ip",
     "проверка ip",
     "ипинфо",
-    "ип"
+    "айпиинфо",
+    "айпи инфо"
   )
 
   override val description: String = "Получение информации об IP"
 
-  override val isInBeta: Boolean = false
-  override val isRequireNetwork: Boolean = true
-  override val isAnonymous: Boolean = true
+  override val properties: CommandProperties = CommandPropertiesImpl(
+    isInBeta = false,
+    isRequireNetwork = true,
+    isAnonymous = true
+  )
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.isEmpty()) {

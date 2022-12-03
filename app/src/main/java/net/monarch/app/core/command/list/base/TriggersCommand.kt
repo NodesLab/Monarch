@@ -18,6 +18,8 @@ package net.monarch.app.core.command.list.base
 
 import net.monarch.app.core.command.Command
 import net.monarch.app.core.command.manager.CommandManagerImpl
+import net.monarch.app.core.command.properties.CommandProperties
+import net.monarch.app.core.command.properties.CommandPropertiesImpl
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
 
@@ -34,11 +36,15 @@ object TriggersCommand : Command {
     "покажи триггеры"
   )
 
+//  override val triggers: List<String> = TextUtility.generateStringsFromRegEx(pattern = "((список|покажи) (триггер(ов|ы))|tr(ig)?g(er)?s|триггеры)")
+
   override val description: String = "Информация о триггерах команд"
 
-  override val isInBeta: Boolean = false
-  override val isRequireNetwork: Boolean = false
-  override val isAnonymous: Boolean = true
+  override val properties: CommandProperties = CommandPropertiesImpl(
+    isInBeta = false,
+    isRequireNetwork = false,
+    isAnonymous = true
+  )
 
   override suspend fun execute(session: CommandSession) {
     val messageScheme: MutableList<String> = mutableListOf()

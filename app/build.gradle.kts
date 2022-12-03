@@ -68,7 +68,7 @@ android {
 
   signingConfigs {
     create("release") {
-      storeFile = file("monarch_key.jks")
+      storeFile = file("monarch_public_key.jks")
       storePassword = "public"
       keyAlias = "public_key"
       keyPassword = "public"
@@ -153,6 +153,8 @@ dependencies {
   implementation("io.ktor:ktor-client-cio:2.1.3")
 
   implementation("com.linkedin.urls:url-detector:0.1.17")
+
+//  implementation("com.github.curious-odd-man:rgxgen:1.4")
 
   // endregion
 }

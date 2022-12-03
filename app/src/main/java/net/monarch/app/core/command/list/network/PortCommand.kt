@@ -17,6 +17,8 @@
 package net.monarch.app.core.command.list.network
 
 import net.monarch.app.core.command.Command
+import net.monarch.app.core.command.properties.CommandProperties
+import net.monarch.app.core.command.properties.CommandPropertiesImpl
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
@@ -37,9 +39,11 @@ object PortCommand : Command {
 
   override val description: String = "Проверка порта на доступность"
 
-  override val isInBeta: Boolean = false
-  override val isRequireNetwork: Boolean = true
-  override val isAnonymous: Boolean = false
+  override val properties: CommandProperties = CommandPropertiesImpl(
+    isInBeta = false,
+    isRequireNetwork = true,
+    isAnonymous = false
+  )
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.isEmpty()) {

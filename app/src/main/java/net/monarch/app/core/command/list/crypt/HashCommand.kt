@@ -17,6 +17,8 @@
 package net.monarch.app.core.command.list.crypt
 
 import net.monarch.app.core.command.Command
+import net.monarch.app.core.command.properties.CommandProperties
+import net.monarch.app.core.command.properties.CommandPropertiesImpl
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.message.model.payload.MessagePayload
@@ -38,11 +40,15 @@ object HashCommand : Command {
     "хеш"
   )
 
+//  override val triggers: List<String> = TextUtility.generateStringsFromRegEx(pattern = "(hash|хеш(ир(уй|ова(ние|ть)))?)")
+
   override val description: String = "Хеширование строки"
 
-  override val isInBeta: Boolean = false
-  override val isRequireNetwork: Boolean = false
-  override val isAnonymous: Boolean = true
+  override val properties: CommandProperties = CommandPropertiesImpl(
+    isInBeta = false,
+    isRequireNetwork = false,
+    isAnonymous = true
+  )
 
   override suspend fun execute(session: CommandSession) {
     if (session.arguments.isEmpty()) {

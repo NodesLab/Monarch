@@ -18,6 +18,8 @@ package net.monarch.app.core.command.list.base
 
 import net.monarch.app.core.command.Command
 import net.monarch.app.core.command.manager.CommandManagerImpl
+import net.monarch.app.core.command.properties.CommandProperties
+import net.monarch.app.core.command.properties.CommandPropertiesImpl
 import net.monarch.app.core.command.session.CommandSession
 import net.monarch.app.core.message.manager.MessageManagerImpl
 import net.monarch.app.core.message.model.payload.buttons.CommandButtonPayload
@@ -38,11 +40,15 @@ object CommandsCommand : Command {
     "покажи команды"
   )
 
+//  override val triggers: List<String> = TextUtility.generateStringsFromRegEx(pattern = "((список|покажи) (команды|команд)|помощь|c(om)?m(an)?ds|help|команды)")
+
   override val description: String = "Информация о доступных командах"
 
-  override val isInBeta: Boolean = false
-  override val isRequireNetwork: Boolean = false
-  override val isAnonymous: Boolean = true
+  override val properties: CommandProperties = CommandPropertiesImpl(
+    isInBeta = false,
+    isRequireNetwork = false,
+    isAnonymous = true
+  )
 
   override suspend fun execute(session: CommandSession) {
     val messageScheme: MutableList<String> = mutableListOf()
@@ -81,9 +87,9 @@ object CommandsCommand : Command {
     val output: MutableList<String> = mutableListOf()
 
     for (command: Command in CommandManagerImpl.commandList) {
-      val betaStatus: String = if (command.isInBeta) "ᵇᵉᵗᵃ" else ""
-      val nonAnonymous: String = if (!command.isAnonymous) "*" else ""
-      val requireInternet: String = if (command.isRequireNetwork) "^" else ""
+      val betaStatus: String = if (command.properties.isInBeta) "ᵇᵉᵗᵃ" else ""
+      val nonAnonymous: String = if (!command.properties.isAnonymous) "*" else ""
+      val requireInternet: String = if (command.properties.isRequireNetwork) "^" else ""
 
       output.add(element = "${command.triggers[0]}$requireInternet$nonAnonymous — ${command.description} $betaStatus".trim())
     }
