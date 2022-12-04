@@ -23,7 +23,6 @@ plugins {
 
 allprojects {
   ext {
-    set("productionBuild", false)
 
     // region ВЕРСИИ ANDROID SDK.
 

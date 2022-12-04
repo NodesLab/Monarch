@@ -16,7 +16,6 @@
 
 package net.monarch.app.utility
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.lazy.LazyListState
@@ -61,7 +60,6 @@ import androidx.compose.ui.unit.dp
  *
  * @author Warlax (https://stackoverflow.com/a/71932181).
  */
-@SuppressLint("SuspiciousIndentation")
 fun Modifier.scrollbar(
   state: LazyListState,
   horizontal: Boolean,
@@ -113,10 +111,10 @@ fun Modifier.scrollbar(
 
         // Размер видового экрана, весь размер прокручиваемого композитного элемента, который
         // украшается этой полосой прокрутки.
-        val viewportSize: Float =
+        val viewportSize: Float = (
           if (horizontal) size.width
           else size.height
-          - padding.toPx() * 2
+        ) - padding.toPx() * 2
 
         // Размер первого видимого элемента. Используется, чтобы оценить, сколько элементов
         // может поместиться в окне просмотра.

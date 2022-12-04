@@ -54,19 +54,10 @@ android {
 
   signingConfigs {
     create("release") {
-      if (project.ext["productionBuild"] as Boolean) {
-        val signOptions: List<String> = readFile("production_options.txt")
-
-        storeFile = file(signOptions[0])
-        storePassword = signOptions[1]
-        keyAlias = signOptions[2]
-        keyPassword = signOptions[3]
-      } else {
-        storeFile = file("monarch_public_key.jks")
-        storePassword = "public"
-        keyAlias = "public_key"
-        keyPassword = "public"
-      }
+      storeFile = file("monarch_public_key.jks")
+      storePassword = "public"
+      keyAlias = "public_key"
+      keyPassword = "public"
     }
   }
 
