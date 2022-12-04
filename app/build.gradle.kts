@@ -15,12 +15,125 @@
  */
 
 import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.util.stream.Collectors
 
 plugins {
   id("com.android.application")
   id("org.jetbrains.kotlin.android")
 
   kotlin("kapt")
+}
+
+val appVersion = "1.9.0"
+val appVersionCode = 26
+
+android {
+  namespace = "net.monarch.app"
+
+  compileSdk = project.ext["compileSdk"] as Int
+
+  buildToolsVersion = "33.0.0"
+
+  defaultConfig {
+    applicationId = "net.monarch.app"
+
+    minSdk = project.ext["minSdk"] as Int
+    targetSdk = project.ext["targetSdk"] as Int
+    versionCode = appVersionCode
+    versionName = "$appVersion-$appVersionCode-${getShortCommit()}"
+
+    vectorDrawables {
+      useSupportLibrary = true
+    }
+  }
+
+  signingConfigs {
+    create("release") {
+      if (project.ext["productionBuild"] as Boolean) {
+        val signOptions: List<String> = readFile("production_options.txt")
+
+        storeFile = file(signOptions[0])
+        storePassword = signOptions[1]
+        keyAlias = signOptions[2]
+        keyPassword = signOptions[3]
+      } else {
+        storeFile = file("monarch_public_key.jks")
+        storePassword = "public"
+        keyAlias = "public_key"
+        keyPassword = "public"
+      }
+    }
+  }
+
+  buildTypes {
+    release {
+      isMinifyEnabled = true
+      isShrinkResources = true
+
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro"
+      )
+
+      signingConfig = signingConfigs.getByName("release")
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility = project.ext["compatibilityVersion"] as JavaVersion
+    targetCompatibility = project.ext["compatibilityVersion"] as JavaVersion
+  }
+
+  kotlinOptions {
+    jvmTarget = project.ext["jvmTarget"] as String
+  }
+
+  buildFeatures {
+    compose = true
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion =
+      "1.3.2" // https://maven.google.com/web/index.html#androidx.compose.compiler:compiler
+  }
+
+  packagingOptions {
+    resources {
+      excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    }
+  }
+}
+
+dependencies {
+  api(project(":core"))
+
+  getModuleList("commands")
+    ?.filter { name -> name != "build" }
+    ?.forEach {
+      api(project(":commands:$it"))
+    }
+
+  // region COMPOSE/ANDROID ЗАВИСИМОСТИ.
+
+  implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+  implementation("androidx.activity:activity-compose:1.6.1")
+  implementation("androidx.core:core-ktx:${project.ext["androidxCoreVersion"]}")
+  implementation("androidx.compose.ui:ui:${project.ext["composeVersion"]}")
+  implementation("androidx.compose.material:material:${project.ext["composeVersion"]}")
+  implementation("androidx.compose.material:material-icons-extended:1.3.1")
+
+  // endregion
+
+  // region СТОРОННИЕ ЗАВИСИМОСТИ.
+
+  implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
+
+  // endregion
 }
 
 /**
@@ -47,114 +160,45 @@ fun getShortCommit(): String {
   return stdout.toString().trim()
 }
 
-val projectVersion = "1.8.0"
-val projectVersionCode = 25
+/**
+ * Получает список модулей из директории.
+ *
+ * @param path Путь к директории модулей.
+ *
+ * @return Список модулей.
+ *
+ * @author hepller
+ */
+fun getModuleList(path: String): List<String>? {
+  return try {
+    val directories: List<String> = Files.walk(Paths.get(path), 1)
+      .skip(1)
+      .filter(Files::isDirectory)
+      .map(Path::toFile)
+      .map(File::getName)
+      .collect(Collectors.toList())
 
-android {
-  compileSdk = 33
-
-  defaultConfig {
-    applicationId = "net.monarch.app"
-
-    minSdk = 29
-    targetSdk = 33
-    versionCode = projectVersionCode
-    versionName = "$projectVersion-$projectVersionCode-${getShortCommit()}"
-
-    vectorDrawables {
-      useSupportLibrary = true
-    }
+    directories
+  } catch (_: IOException) {
+    null
   }
-
-  signingConfigs {
-    create("release") {
-      storeFile = file("monarch_public_key.jks")
-      storePassword = "public"
-      keyAlias = "public_key"
-      keyPassword = "public"
-    }
-  }
-
-  buildTypes {
-    release {
-      isMinifyEnabled = true
-      isShrinkResources = true
-
-      proguardFiles(
-        getDefaultProguardFile("proguard-android-optimize.txt"),
-        "proguard-rules.pro"
-      )
-
-      signingConfig = signingConfigs.getByName("release")
-    }
-  }
-
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-  }
-
-  kotlinOptions {
-    jvmTarget = "11"
-  }
-
-  buildFeatures {
-    compose = true
-  }
-
-  composeOptions {
-    kotlinCompilerExtensionVersion = "1.3.2" // https://maven.google.com/web/index.html#androidx.compose.compiler:compiler
-  }
-
-  packagingOptions {
-    resources {
-      excludes += "/META-INF/{AL2.0,LGPL2.1}"
-    }
-  }
-
-  buildToolsVersion = "33.0.0"
-
-  namespace = "net.monarch.app"
 }
 
-// region Версии библиотек.
+/**
+ * Записывает содержимое файла в список строк.
+ *
+ * @param file Имя файла.
+ *
+ * @return Содержимое файла в виде списка строк.
+ *
+ * @author hepller
+ */
+fun readFile(file: String): List<String> {
+  val inputStream: InputStream = File(file).inputStream()
 
-val composeVersion = "1.3.1" // https://developer.android.com/jetpack/androidx/releases/compose
-val moshiVersion = "1.14.0"
-val ktorVersion = "2.1.3"
+  val lineList: MutableList<String> = mutableListOf()
 
-// endregion
+  inputStream.bufferedReader().forEachLine { lineList.add(it) }
 
-dependencies {
-
-  // region Compose/Android зависимости.
-
-  implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-  implementation("androidx.activity:activity-compose:1.6.1")
-  implementation("androidx.core:core-ktx:1.9.0")
-  implementation("androidx.compose.ui:ui:$composeVersion")
-  implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-  implementation("androidx.compose.material:material:$composeVersion")
-  implementation("androidx.compose.material:material-icons-extended:1.3.1")
-
-  // endregion
-
-  // region Сторонние зависимости.
-
-  implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
-
-  implementation("com.squareup.moshi:moshi:$moshiVersion")
-  implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
-  implementation("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-
-  kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-
-  implementation("io.ktor:ktor-client-core:$ktorVersion")
-  implementation("io.ktor:ktor-client-cio:2.1.3")
-
-  implementation("com.linkedin.urls:url-detector:0.1.17")
-
-//  implementation("com.github.curious-odd-man:rgxgen:1.4")
-
-  // endregion
+  return lineList
 }

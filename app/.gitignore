@@ -1,3 +1,6 @@
 /build
 /debug
 /release
+
+monarch_production_key.jks
+production_options.txt

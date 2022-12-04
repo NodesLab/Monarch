@@ -17,15 +17,41 @@
 plugins {
   id("com.android.application") version "7.3.1" apply false
   id("com.android.library") version "7.3.1" apply false
+
   id("org.jetbrains.kotlin.android") version "1.7.20" apply false
 }
 
-// TODO: Сделать задачу удаления "build" директорий.
+allprojects {
+  ext {
+    set("productionBuild", false)
 
-//task("clean") {
-//  delete(rootProject.buildDir)
-//}
+    // region ВЕРСИИ ANDROID SDK.
 
-//task clean(type: Delete) {
-//  delete rootProject.buildDir
-//}
+    set("compileSdk", 33)
+    set("targetSdk", 33)
+    set("minSdk", 29)
+
+    // endregion
+
+    // region ВЕРСИИ JAVA.
+
+    set("compatibilityVersion", JavaVersion.VERSION_11)
+    set("jvmTarget", "11")
+
+    // endregion
+
+    // region ВЕРСИИ ОБЩИХ ЗАВИСИМОСТЕЙ.
+
+    set("androidxCoreVersion", "1.9.0")
+    set("composeVersion", "1.3.1") // https://developer.android.com/jetpack/androidx/releases/compose
+
+    set("moshiVersion", "1.14.0")
+
+    // endregion
+  }
+}
+
+tasks.register("clean", Delete::class) {
+  delete(rootProject.buildDir)
+  delete(project.buildDir)
+}
