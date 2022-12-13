@@ -31,7 +31,7 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = project.ext["isMinifyEnabled"] as Boolean
 
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),

@@ -20,7 +20,7 @@ import net.monarch.core.message.model.payload.MessagePayload
 import net.monarch.core.message.model.payload.buttons.color.ButtonColor
 
 /**
- * Полезная нагрузка сообщения с кнопкой-ссылкой.
+ * Полезная нагрузка в виде кнопки-ссылки.
  */
 data class LinkButtonPayload(
 

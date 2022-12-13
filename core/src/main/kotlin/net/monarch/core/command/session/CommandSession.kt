@@ -28,7 +28,6 @@ interface CommandSession {
 
   /**
    * Список аргументов.
-   * Первый аргумент - имя алиаса, через который была вызвана команда.
    */
   val arguments: List<String>
 
@@ -38,7 +37,7 @@ interface CommandSession {
   val properties: CommandSessionProperties
 
   /**
-   * Контекст ([Context]).
+   * Контекст Android ([Context]).
    */
   val context: Context
 }

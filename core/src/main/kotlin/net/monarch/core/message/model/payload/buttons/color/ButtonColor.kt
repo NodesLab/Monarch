@@ -22,8 +22,24 @@ package net.monarch.core.message.model.payload.buttons.color
  * @author hepller
  */
 enum class ButtonColor {
+
+  /**
+   * Основной цвет.
+   */
   PRIMARY,
+
+  /**
+   * Дополнительный цвет.
+   */
   SECONDARY,
+
+  /**
+   * Зелёный цвет.
+   */
   GREEN,
+
+  /**
+   * Красный цвет.
+   */
   RED,
 }

@@ -39,6 +39,13 @@ allprojects {
 
     // endregion
 
+    // region НАСТРОЙКИ СБОРКИ
+
+    set("isMinifyEnabled", true)
+    set("isShrinkResources", true)
+
+    // endregion
+
     // region ВЕРСИИ ОБЩИХ ЗАВИСИМОСТЕЙ.
 
     set("androidxCoreVersion", "1.9.0")

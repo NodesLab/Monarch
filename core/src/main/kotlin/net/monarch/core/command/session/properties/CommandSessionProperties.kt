@@ -24,7 +24,7 @@ package net.monarch.core.command.session.properties
 interface CommandSessionProperties {
 
   /**
-   * Имеется ли у устройства доступ к интернету.
+   * Свойство, отражающее доступ устройства к интернету.
    */
   val isNetworkAvailable: Boolean
 }

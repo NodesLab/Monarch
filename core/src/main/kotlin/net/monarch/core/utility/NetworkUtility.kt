@@ -32,7 +32,6 @@ import java.io.IOException
 import java.net.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.math.pow
 
 
 /**
@@ -61,8 +60,24 @@ object NetworkUtility {
    * Moshi-клиент.
    */
   private val moshiClient: Moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory()) // Для поддержки своих моделей.
+    .add(KotlinJsonAdapterFactory()) // Для поддержки своих моделей данных.
     .build()
+
+  /**
+   * Проверяет имя хоста на корректность.
+   *
+   * @param hostname Имя хоста.
+   * @param pattern Регулярное выражение для проверки.
+   *
+   * @return `true`, если имя хоста корректно и `false`, если нет.
+   */
+  private fun isValidAddress(hostname: String?, pattern: Pattern): Boolean {
+    if (hostname == null) return true
+
+    val matcher: Matcher = pattern.matcher(hostname)
+
+    return matcher.matches()
+  }
 
   /**
    * Получает ответ с URL-адреса.
@@ -70,7 +85,7 @@ object NetworkUtility {
    * @return Ответ сервера.
    */
   private suspend fun requestHttp(url: String): String {
-    val httpResponse: HttpResponse = ktorClient.get(url)
+    val httpResponse: HttpResponse = ktorClient.get(urlString = url)
 
     return httpResponse.body()
   }
@@ -86,7 +101,7 @@ object NetworkUtility {
   // TODO: Переписать на неблокирующий метод.
   @Suppress("BlockingMethodInNonBlockingContext")
   suspend fun <T> readJsonHttp(url: String, adapter: Class<T>): T? {
-    val response: String = requestHttp(url)
+    val response: String = requestHttp(url = url)
 
     val jsonAdapter: JsonAdapter<T> = moshiClient.adapter(adapter)
 
@@ -143,61 +158,45 @@ object NetworkUtility {
     return isValidAddress(hostname = ip, pattern = VALID_IPV6_PATTERN)
   }
 
-  /**
-   * Проверяет имя хоста на корректность.
-   *
-   * @param hostname Имя хоста.
-   * @param pattern Регулярное выражение для проверки.
-   *
-   * @return `true`, если имя хоста корректно и `false`, если нет.
-   */
-  private fun isValidAddress(hostname: String?, pattern: Pattern): Boolean {
-    if (hostname == null) return true
-
-    val matcher: Matcher = pattern.matcher(hostname)
-
-    return matcher.matches()
-  }
-
-  /**
-   * Проверяет ссылку на корректность.
-   *
-   * @param url Ссылка в виде строки.
-   *
-   * @return `true`, если ссылка корректна и `false`, если нет.
-   */
-  fun isValidURL(url: String?): Boolean {
-    try {
-      URL(url).toURI()
-    } catch (_: MalformedURLException) {
-      return false
-    } catch (_: URISyntaxException) {
-      return false
-    }
-
-    return true
-  }
-
-  /**
-   * Конвертирует IPv4 в десятеричный формат.
-   *
-   * @param ipv4 IPv4 адрес.
-   *
-   * @return IP в десятеричном формате.
-   */
-  fun ipV4toLong(ipv4: String): Long {
-    val ipAddressInArray: Array<String> = ipv4.split("\\.").toTypedArray()
-    var decimalIp: Long = 0
-
-    for (i in ipAddressInArray.indices) {
-      val power: Int = 3 - i
-      val intIp: Int = ipAddressInArray[i].toInt()
-
-      decimalIp += (intIp * 256.0.pow(power.toDouble())).toLong()
-    }
-
-    return decimalIp
-  }
+//  /**
+//   * Проверяет ссылку на корректность.
+//   *
+//   * @param url Ссылка в виде строки.
+//   *
+//   * @return `true`, если ссылка корректна и `false`, если нет.
+//   */
+//  fun isValidURL(url: String?): Boolean {
+//    try {
+//      URL(url).toURI()
+//    } catch (_: MalformedURLException) {
+//      return false
+//    } catch (_: URISyntaxException) {
+//      return false
+//    }
+//
+//    return true
+//  }
+//
+//  /**
+//   * Конвертирует IPv4 в десятеричный формат.
+//   *
+//   * @param ipv4 IPv4 адрес.
+//   *
+//   * @return IP в десятеричном формате.
+//   */
+//  fun ipV4toLong(ipv4: String): Long {
+//    val ipAddressInArray: Array<String> = ipv4.split("\\.").toTypedArray()
+//    var decimalIp: Long = 0
+//
+//    for (i in ipAddressInArray.indices) {
+//      val power: Int = 3 - i
+//      val intIp: Int = ipAddressInArray[i].toInt()
+//
+//      decimalIp += (intIp * 256.0.pow(power.toDouble())).toLong()
+//    }
+//
+//    return decimalIp
+//  }
 
   /**
    * Конвертирует десятеричный IP в IPv4.

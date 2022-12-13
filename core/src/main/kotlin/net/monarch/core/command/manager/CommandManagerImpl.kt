@@ -94,7 +94,7 @@ object CommandManagerImpl : CommandManager {
     )
 
     GlobalScope.launch {
-      val coroutineContext: CoroutineContext = this.coroutineContext // getDispatcherFromCurrentThread(scope = this)
+      val coroutineContext: CoroutineContext = this.coroutineContext
 
       executeCommand(command = command, session = commandSession, context = coroutineContext)
     }
@@ -135,9 +135,10 @@ object CommandManagerImpl : CommandManager {
   private fun resolveTrigger(text: String): String? {
     for (command: Command in commandList) {
       for (trigger: String in command.triggers) {
-        // TODO: Переписать.
+
         // Не самое лучшее решение, т.к. если у какой-либо команды есть триггер, который начинается
         // так-же как триггер другой команды, то будет выполнена неподходящая команда.
+        // TODO: Переписать.
         if (text.startsWith(trigger, ignoreCase = true)) return trigger
       }
     }

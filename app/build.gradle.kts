@@ -63,8 +63,8 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = true
-      isShrinkResources = true
+      isMinifyEnabled = project.ext["isMinifyEnabled"] as Boolean
+      isShrinkResources = project.ext["isShrinkResources"] as Boolean
 
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),

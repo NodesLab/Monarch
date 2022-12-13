@@ -33,7 +33,7 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = true
+      isMinifyEnabled = project.ext["isMinifyEnabled"] as Boolean
 
       proguardFiles(
         getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -53,7 +53,7 @@ android {
 }
 
 dependencies {
-  val ktorVersion = "2.1.3"
+  val ktorVersion = "2.2.1"
 
   // region COMPOSE/ANDROID ЗАВИСИМОСТИ.
 
