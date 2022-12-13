@@ -51,16 +51,18 @@ object CurrencyCommand : Command {
   )
 
   override suspend fun execute(session: CommandSession) {
+    MessageManagerImpl.appMessage(text = "⚙️ Получение информации об курсе валют ...")
+
     val response: CbrApiAdapter = NetworkUtility.readJsonHttp(url = "https://www.cbr-xml-daily.ru/daily_json.js", CbrApiAdapter::class.java)
       ?: return MessageManagerImpl.appMessage(text = "⚠️️ Не удалось получить информацию о курсе валют")
 
     // TODO: Брать напрямую с https://www.cbr.ru/scripts/XML_daily.asp (возможно при необходимости парсить в JSON).
 
-    val usdCurrent: Float = MathUtility.roundFloat(response.currencies.usd.value)
-    val usdPrevious: Float = MathUtility.roundFloat(response.currencies.usd.previous)
+    val usdCurrent: Float = MathUtility.roundFloat(number = response.currencies.usd.value)
+    val usdPrevious: Float = MathUtility.roundFloat(number = response.currencies.usd.previous)
 
-    val eurCurrent: Float = MathUtility.roundFloat(response.currencies.eur.value)
-    val eurPrevious: Float = MathUtility.roundFloat(response.currencies.eur.previous)
+    val eurCurrent: Float = MathUtility.roundFloat(number = response.currencies.eur.value)
+    val eurPrevious: Float = MathUtility.roundFloat(number = response.currencies.eur.previous)
 
     val messageScheme: MutableList<String> = mutableListOf()
 
